@@ -154,30 +154,38 @@ class _information_ScreenState extends State<information_Screen> {
                   child: TextField(
                     controller: datecontroller,
                     decoration: InputDecoration(
-                      suffixIcon: IconButton(onPressed: date, icon: Icon(Icons.calendar_today)),
-                        hintText:
-                            '${DateFormat("dd-MM-yyyy").format(DateTime.now())}',
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(21),
-                            borderSide:
-                                BorderSide(color: Colors.greenAccent, width: 3),),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(21),
-                            borderSide:
-                            BorderSide(color: Colors.green, width: 3)),
+                      suffixIcon: IconButton(
+                          onPressed: date, icon: Icon(Icons.calendar_today)),
+                      hintText:
+                          '${DateFormat("dd-MM-yyyy").format(DateTime.now())}',
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(21),
+                        borderSide:
+                            BorderSide(color: Colors.greenAccent, width: 3),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(21),
+                          borderSide:
+                              BorderSide(color: Colors.green, width: 3)),
                     ),
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     style: const ButtonStyle(
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5))
-                        )),
-                        backgroundColor: MaterialStatePropertyAll(Colors.green)
-                    ),child: const Text('Next Day', style: TextStyle(fontSize: 12,fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                    ),)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5)))),
+                        backgroundColor:
+                            MaterialStatePropertyAll(Colors.green)),
+                    child: const Text(
+                      'Next Day',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                      ),
+                    )),
               ],
             )
           ],
