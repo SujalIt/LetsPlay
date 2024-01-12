@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letsplay/info_Screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+      home: information_Screen(),
     );
   }
 }
