@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letsplay/firstpage.dart';
 import 'package:letsplay/info_Screen.dart';
 
 void main() {
@@ -12,11 +13,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: "f",
+      routes: {
+        "f":(context) => Myfirstpage(),
+        "i":(context) => information_Screen(),
+      },
+      debugShowCheckedModeBanner: false,
+
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      debugShowCheckedModeBanner: false,
-      home: information_Screen(),
+      home:const MyHomePage(),
     );
   }
 }
@@ -36,12 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return const Scaffold(
       
-      body: Center(
-        
-      ),
-      
+      body: Myfirstpage(),
     );
   }
 }

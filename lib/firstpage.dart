@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:letsplay/p1container.dart';
+import 'package:letsplay/p1image.dart';
 import 'package:letsplay/p1groundlist.dart';
 import 'package:letsplay/p1searchbar.dart';
 
@@ -17,28 +17,25 @@ class MyfirstpageState extends State<Myfirstpage> {
     
     return const Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(25.0),
         child: Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 30,),
               p1container(),
               SizedBox(
-                height: 24,
+                height: 20,
               ),
               p1searchbar(),
               SizedBox(
-                height: 24,
+                height: 10,
               ),
               Text("Grounds", style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
-                fontSize: 15,
+                fontSize: 20,
               ),),
-              SizedBox(
-                height: 15,
-              ),
+              SizedBox(height: 13,),
               p1groundlist()
             ],
           ),

@@ -69,7 +69,7 @@ final caller=Uri.parse('tel:+917043331929');
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 60,
+          top: 20,
           right: 20,
           left: 20,
         ),
@@ -139,7 +139,9 @@ final caller=Uri.parse('tel:+917043331929');
                                       Icons.add_call,
                                       color: Colors.blue,
                                     ),
-                                  )
+                                  ),
+                                  ElevatedButton(onPressed: (){
+                                    Navigator.pop(context);}, child: Text("Back"))
                                 ],
                               ),
                             ],

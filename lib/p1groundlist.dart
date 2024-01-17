@@ -9,25 +9,22 @@ class p1groundlist extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemCount: 3,
+        itemCount: 10,
         itemBuilder: (context, index){
           return SizedBox(
-            height: 111,
+            height: 130,
             child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 95,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    style: BorderStyle.solid,
-                  )
-                ),
-                width: 85,
-                child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ14kWhEzjxa7WMypn5ykydcGG_O_Nbrc6U1QNfd95zb2YAGjN_H2FuDqtqQUGFJ6Bgll0&usqp=CAU", fit: BoxFit.cover,),
+                height: 108,
+                width: 147,
+                child: ClipRRect(
+                   borderRadius: BorderRadius.circular(4),
+                  child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ14kWhEzjxa7WMypn5ykydcGG_O_Nbrc6U1QNfd95zb2YAGjN_H2FuDqtqQUGFJ6Bgll0&usqp=CAU", fit: BoxFit.cover,)),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 27, right: 2),
+                padding: const EdgeInsets.only(left: 27,),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -41,11 +38,13 @@ class p1groundlist extends StatelessWidget {
                       fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(
-                        height: 7,
+                        height: 1,
                         ),
                     SizedBox(
-                      width: 140,
-                      child: ElevatedButton(onPressed: (){}, 
+                      width: 160,
+                      child: ElevatedButton(onPressed: (){
+                        Navigator.pushNamed(context, "i");
+                      }, 
                       style: const ButtonStyle(
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(3))
@@ -53,7 +52,7 @@ class p1groundlist extends StatelessWidget {
                         backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 72, 255, 78))
                       ),child: const Text('Check availability', style: TextStyle(
                         color: Color.fromARGB(255, 44, 27, 27),
-                        fontSize: 11.5,
+                        fontSize: 13,
                       ),)),
                     )
                   ],

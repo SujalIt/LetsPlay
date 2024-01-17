@@ -10,14 +10,14 @@ class p1searchbar extends StatelessWidget {
     return const Row(
       children: [
         SizedBox(
-          height: 28,
-          width: 218,
+          height: 48,
+          width: 290,
           child: TextField(
             textAlignVertical: TextAlignVertical.bottom,
             decoration: InputDecoration(
               hintText: "Search",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.zero),
+                borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
             )
           ),
