@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:letsplay/p1container.dart';
+import 'package:letsplay/p1image.dart';
 import 'package:letsplay/p1groundlist.dart';
 import 'package:letsplay/p1searchbar.dart';
 
@@ -22,7 +22,6 @@ class MyfirstpageState extends State<Myfirstpage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20,),
               p1container(),
               SizedBox(
                 height: 20,
@@ -36,6 +35,7 @@ class MyfirstpageState extends State<Myfirstpage> {
                 fontWeight: FontWeight.w600,
                 fontSize: 20,
               ),),
+              SizedBox(height: 13,),
               p1groundlist()
             ],
           ),
