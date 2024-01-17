@@ -17,28 +17,25 @@ class MyfirstpageState extends State<Myfirstpage> {
     
     return const Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(25.0),
         child: Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 30,),
+              SizedBox(height: 20,),
               p1container(),
               SizedBox(
-                height: 24,
+                height: 20,
               ),
               p1searchbar(),
               SizedBox(
-                height: 24,
+                height: 10,
               ),
               Text("Grounds", style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
-                fontSize: 15,
+                fontSize: 20,
               ),),
-              SizedBox(
-                height: 15,
-              ),
               p1groundlist()
             ],
           ),
