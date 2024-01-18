@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-class p1groundlist extends StatelessWidget {
-  const p1groundlist({
-    super.key,
-  });
+class p1groundlist extends StatefulWidget {
+  const p1groundlist({super.key});
 
+  @override
+  State<p1groundlist> createState() => _p1groundlistState();
+}
+
+class _p1groundlistState extends State<p1groundlist> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -34,11 +37,11 @@ class p1groundlist extends StatelessWidget {
                       ),
                     ),
                     const Text(
-                      'Vandematram Road Gota,\nAhmedabad', style: TextStyle(fontSize: 12,
+                      'Vandematram Road Gota,\nAhmedabad', style: TextStyle(fontSize: 13,
                       fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(
-                        height: 1,
+                        height: 18,
                         ),
                     SizedBox(
                       width: 160,
