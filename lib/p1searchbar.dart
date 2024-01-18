@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 
-class p1searchbar extends StatelessWidget {
-  const p1searchbar({
-    super.key,
-  });
+class p1searchbar extends StatefulWidget {
+  const p1searchbar({super.key});
+
+  @override
+  State<p1searchbar> createState() => _p1searchbarState();
+}
+
+class _p1searchbarState extends State<p1searchbar> {
+
+  void updatelist(String value){
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +25,7 @@ class p1searchbar extends StatelessWidget {
           child: TextField(
             textAlignVertical: TextAlignVertical.bottom,
             decoration: InputDecoration(
-              hintText: "Search",
+              hintText: "Search grounds",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
