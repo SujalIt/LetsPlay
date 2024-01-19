@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:letsplay/info_Screen.dart';
 
+import 'p1searchbar.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home:const MyHomePage(),
+      home:const p1searchbar(),
     );
   }
 }
