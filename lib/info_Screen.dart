@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:share_plus/share_plus.dart';
 
 class information_Screen extends StatefulWidget {
   const information_Screen({super.key});
@@ -149,7 +150,9 @@ final caller=Uri.parse('tel:+917043331929');
                     ],
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.share))
+                IconButton(onPressed: () {
+                  Share.share('sujal');
+                }, icon: Icon(Icons.share))
               ],
             ),
             const Text(
