@@ -21,11 +21,12 @@ class information_Screen extends StatefulWidget {
 class _information_ScreenState extends State<information_Screen> {
   List<Widget> images = [
     Image.network(
-        "https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_1316/https://media.insider.in/image/upload/c_crop%2Cg_custom/v1632513596/olppsqyedxdb7uhq5yrs.jpg"),
+        "https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_1316/https://media.insider.in/image/upload/c_crop%2Cg_custom/v1632513596/olppsqyedxdb7uhq5yrs.jpg",fit: BoxFit.cover,),
     Image.network(
-        'https://v3img.voot.com/kimg/kimg/536c156e50c34bf9b6fd8bd64e4b4780_1280X720.jpg'),
+        'https://v3img.voot.com/kimg/kimg/536c156e50c34bf9b6fd8bd64e4b4780_1280X720.jpg',fit: BoxFit.cover,),
     Image.network(
-        'http://1.bp.blogspot.com/-vSDShmvpuVU/VE9dE1NwQiI/AAAAAAAACAA/9SnMCdBKNCE/w1200-h630-p-k-no-nu/Team%2BAhmedabad%2BExpress%2Bof%2BBox%2BCricket%2BLeague%2BPhoto%2Band%2BWallpaper%2B(1).jpg')
+        'http://1.bp.blogspot.com/-vSDShmvpuVU/VE9dE1NwQiI/AAAAAAAACAA/9SnMCdBKNCE/w1200-h630-p-k-no-nu/Team%2BAhmedabad%2BExpress%2Bof%2BBox%2BCricket%2BLeague%2BPhoto%2Band%2BWallpaper%2B(1).jpg',fit: BoxFit.cover,),
+
   ];
   var no = 0;
 
@@ -77,9 +78,9 @@ final caller=Uri.parse('tel:+91$num');
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 20,
-          right: 20,
-          left: 20,
+          top: 50,
+          right: 30,
+          left: 30,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,15 +111,16 @@ final caller=Uri.parse('tel:+91$num');
                           title: Text(
                             widget.name,
                             style: TextStyle(
+                              fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("${widget.address1},${widget.address2},\n${widget.city}"
+                              Text("${widget.address1},${widget.address2},${widget.city}"
                                 ,
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(fontSize: 11,fontWeight: FontWeight.w500),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -169,26 +171,27 @@ final caller=Uri.parse('tel:+91$num');
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+
                 children: [
-                  SizedBox(
+                  Container(
                     height: 150,
-                    width: double.infinity,
-                    child: CarouselSlider(
-                        options: CarouselOptions(
-                            autoPlay: true,
-                            height: 300,
-                            aspectRatio: 2.0,
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            autoPlayInterval: Duration(seconds: 2),
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                no = index;
-                              });
-                            }),
-                        items: images),
+                    child: Stack(
+                      children:[ CarouselSlider(
+                          options: CarouselOptions(
+                              autoPlay: true,
+                              enlargeCenterPage: true,
+                              viewportFraction: 1,
+                              autoPlayCurve: Curves.easeInOut,
+                              autoPlayInterval: Duration(seconds: 2),
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  no = index;
+                                });
+                              }),
+                          items: images),
+                   ] ),
                   ),
                   AnimatedSmoothIndicator(
                     activeIndex: no,
