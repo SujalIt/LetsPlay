@@ -101,37 +101,48 @@ class _apiIntigration extends State<apiIntigration> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: NewList.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          dense: true,
-                          leading: Image.network(
-                            NewList[index].profilePic ?? '',
-                            width: 100,
-                            fit: BoxFit.fill,
-                          ),
-                          title: Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              "${NewList[index].name}",
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                          subtitle: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        return SizedBox(
+                          height: 130,
+                          child: Row(
                             children: [
-                              Text(
-                                '${NewList[index].addressLine1},${NewList[index].addressLine2},${NewList[index].city}',
-                                style: const TextStyle(
-                                    fontSize: 13,
+                              Container(
+                            height: 108,
+                            width: 137,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: Image.network(
+                              NewList[index].profilePic ?? '',
+                              fit: BoxFit.fill,
+                            ),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15, top: 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("${NewList[index].name}",style: TextStyle(
+                                    fontWeight: FontWeight.w700
+                                ),),
+                                Text(
+                                  "${NewList[index].addressLine1},", style: TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                width: 160,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
+                                ),
+                                Text(
+                                  "${NewList[index].addressLine2},", style: TextStyle(fontSize: 13,
+                                    fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "${NewList[index].city}", style: TextStyle(fontSize: 13,
+                                    fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 3,
+                                ),
+                                SizedBox(
+                                width: 152,
+                                child: ElevatedButton(onPressed: (){
+                                  Navigator.push(context,
+                                  MaterialPageRoute(
                                             builder: (context) =>
                                                 information_Screen(
                                               num: NewList[index].phone,
@@ -144,27 +155,22 @@ class _apiIntigration extends State<apiIntigration> {
                                               photo:
                                                   NewList[index].profilePic,
                                             ),
-                                          ));
-                                    },
+                                          )
+                                  );
+                                },
                                     style: const ButtonStyle(
-                                        shape: MaterialStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.all(
-                                                        Radius.circular(3)))),
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Color.fromARGB(
-                                                    255, 72, 255, 78))),
-                                    child: const Text(
-                                      'Check availability',
-                                      style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 44, 27, 27),
-                                        fontSize: 13,
-                                      ),
-                                    )),
+                                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(3))
+                                        )),
+                                        backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 72, 255, 78))
+                                    ),child: const Text('Check availability', style: TextStyle(
+                                      color: Color.fromARGB(255, 44, 27, 27),
+                                      fontSize: 13,
+                                    ),)),
                               )
+                              ],
+                            ),
+                          )
                             ],
                           ),
                         );
