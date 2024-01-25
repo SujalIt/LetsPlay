@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:letsplay/info_Screen.dart';
-
-import 'p1searchbar.dart';
+import 'package:letsplay/p1searchbar.dart';
+import 'package:letsplay/searchBarWithApi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,14 +18,13 @@ class MyApp extends StatelessWidget {
       initialRoute: "f",
       routes: {
         "f":(context) => Myfirstpage(),
-        "i":(context) => information_Screen(),
       },
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home:const p1searchbar(),
+      // home:const MyHomePage(),
     );
   }
 }
@@ -46,8 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return const Scaffold(
-      
-      body: Myfirstpage(),
+
+      body:Myfirstpage(),
     );
   }
 }

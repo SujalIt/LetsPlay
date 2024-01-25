@@ -6,9 +6,15 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 
 class information_Screen extends StatefulWidget {
-  const information_Screen({super.key});
+  var name;
+  var address1;
+  var address2;
+  var city;
+  var num;
+  var photo;
+   information_Screen({super.key,required this.name,required this.address1,required this.address2,required this.city,required this.num,required this.photo});
+   @override
 
-  @override
   State<information_Screen> createState() => _information_ScreenState();
 }
 
@@ -38,8 +44,9 @@ class _information_ScreenState extends State<information_Screen> {
     });
     return datepikeker;
   }
-final caller=Uri.parse('tel:+917043331929');
-  final whatsapp=Uri.parse('https://wa.me/919510292323');
+
+final caller=Uri.parse('tel:+91$num');
+  final whatsapp=Uri.parse("https://wa.me/91$num");
   TextEditingController datecontroller = TextEditingController();
   List<String> Timing = [
     "7-8 AM",
@@ -90,8 +97,7 @@ final caller=Uri.parse('tel:+917043331929');
 
                     child: ClipRRect(
                       borderRadius:BorderRadius.all(Radius.circular(10)),
-                      child: Image.network(
-                        'https://lh3.googleusercontent.com/p/AF1QipPsfa8Hfuulq9Q5xQjXz1DZLvFfxaP5zYkVVWTu=w1080-h608-p-no-v0',
+                      child: Image.network(widget.photo,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -102,7 +108,7 @@ final caller=Uri.parse('tel:+917043331929');
                     children: [
                       ListTile(
                           title: Text(
-                            'SK Sports',
+                            widget.name,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                             ),
@@ -110,8 +116,8 @@ final caller=Uri.parse('tel:+917043331929');
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Vandematram Road Gota,Ahmedabad',
+                              Text("${widget.address1},${widget.address2},\n${widget.city}"
+                                ,
                                 style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                               Row(
@@ -141,8 +147,7 @@ final caller=Uri.parse('tel:+917043331929');
                                       color: Colors.blue,
                                     ),
                                   ),
-                                  ElevatedButton(onPressed: (){
-                                    Navigator.pop(context);}, child: Text("Back"))
+
                                 ],
                               ),
                             ],

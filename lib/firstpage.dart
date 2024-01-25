@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/p1image.dart';
 import 'package:letsplay/p1searchbar.dart';
+import 'package:letsplay/searchBarWithApi.dart';
 
 class Myfirstpage extends StatefulWidget {
   const Myfirstpage({super.key});
@@ -15,8 +16,8 @@ class MyfirstpageState extends State<Myfirstpage> {
   Widget build(BuildContext context) {
     
     return const Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(25.0),
+      body:  Padding(
+        padding: EdgeInsets.only(top: 25,left: 25,right: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -24,10 +25,7 @@ class MyfirstpageState extends State<Myfirstpage> {
             SizedBox(
               height: 20,
             ),
-            p1searchbar(),
-            SizedBox(
-              height: 10,
-            ),
+            Expanded(child: SingleChildScrollView(child: apiIntigration())),
           ],
         ),
       ),
