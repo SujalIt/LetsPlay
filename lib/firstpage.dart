@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/p1image.dart';
-import 'package:letsplay/p1searchbar.dart';
 import 'package:letsplay/searchBarWithApi.dart';
 
 class Myfirstpage extends StatefulWidget {
