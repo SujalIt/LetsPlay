@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/firstpage.dart';
-import 'package:letsplay/info_Screen.dart';
-import 'package:letsplay/p1searchbar.dart';
-import 'package:letsplay/searchBarWithApi.dart';
+
 
 void main() {
   runApp(const MyApp());
