@@ -10,12 +10,17 @@ class p1container extends StatefulWidget {
 class _p1containerState extends State<p1container> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 147,
-      width: 358,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(4),
-        child: Image.network('https://i.ytimg.com/vi/5Ygl2rD3bYk/maxresdefault.jpg',fit: BoxFit.cover, )),
+    return Column(
+      children: [
+        SizedBox( height: 33,),
+        Container(
+          height: 157,
+          width: 358,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: Image.network('https://i.ytimg.com/vi/5Ygl2rD3bYk/maxresdefault.jpg',fit: BoxFit.cover, )),
+        ),
+      ],
     );
   }
 }
