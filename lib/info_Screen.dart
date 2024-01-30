@@ -29,8 +29,6 @@ class _information_ScreenState extends State<information_Screen> {
 
   ];
   var no = 0;
-
-  // var name= DateTime.now().add(Duration(days: 1));
   date() async {
     DateTime? datepikeker = await showDatePicker(
         context: context,
@@ -171,7 +169,7 @@ final caller=Uri.parse('tel:+91$num');
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.only(top: 15),
               child: Column(
 
                 children: [
@@ -191,8 +189,9 @@ final caller=Uri.parse('tel:+91$num');
                                 });
                               }),
                           items: images),
-                   ] ),
+                                       ] ),
                   ),
+                  SizedBox(height: 10,),
                   AnimatedSmoothIndicator(
                     activeIndex: no,
                     count: images.length,
@@ -206,6 +205,7 @@ final caller=Uri.parse('tel:+91$num');
                 ],
               ),
             ),
+            SizedBox(height: 15,),
             Row(
               children: [
                 Flexible(

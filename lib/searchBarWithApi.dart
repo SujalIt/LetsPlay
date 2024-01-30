@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +15,6 @@ class apiIntigration extends StatefulWidget {
 }
 
 List<LetsPlay> ApiList = [];
-// List<LetsPlay> SecondApiList = List.from(ApiList);
 
 class _apiIntigration extends State<apiIntigration> {
   Future<List<LetsPlay>> ground() async {
@@ -46,18 +44,18 @@ class _apiIntigration extends State<apiIntigration> {
   }
 
   updatedlist(String keyword) {
-    List<LetsPlay> _result = [];
+    List<LetsPlay> result = [];
     if (keyword.isEmpty) {
-      _result = ApiList;
+      result = ApiList;
     } else {
-      _result = ApiList.where((users) =>
+      result = ApiList.where((users) =>
           users.name!.toLowerCase().contains(keyword.toLowerCase()) ||
           users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
           users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
           users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
     }
     setState(() {
-      NewList = _result;
+      NewList = result;
     });
   }
 
@@ -93,7 +91,7 @@ class _apiIntigration extends State<apiIntigration> {
           future: ground(),
           builder: (context, AsyncSnapshot<List<LetsPlay>> snapshot) {
             if (!snapshot.hasData) {
-              return const Text('Loading');
+              return Center(child: const Text('Loading'));
             } else {
               return NewList.length == 0
                   ? const Center(child: Text("Result not found"))
