@@ -76,9 +76,11 @@ class _information_ScreenState extends State<information_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+       forceMaterialTransparency: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 50,
           right: 30,
           left: 30,
         ),
