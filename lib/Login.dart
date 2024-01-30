@@ -1,4 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:letsplay/firstpage.dart';
+import 'package:letsplay/searchBarWithApi.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,10 +15,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   var Email = TextEditingController();
   var Password = TextEditingController();
+  final supabase = Supabase.instance.client;
+  Future<void> Signin(String email,String password)async{
+        await supabase.auth.signInWithPassword(password: password,email: email,).then(
+                (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Myfirstpage(),)));
+    }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(72, 239, 6, 0.2),
+        backgroundColor:Colors.white,
 
         body: Center(
           child: SingleChildScrollView(
@@ -57,10 +67,12 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                     height: 10,
                   ),
-                  ElevatedButton(
-                      onPressed: () {
-                      },
-                      child:Text('Login'),style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
+                  SizedBox(
+                    width: 125,
+                    child: ElevatedButton(
+                        onPressed:(){ Signin(Email.text.toString(),Password.text.toString());},
+                        child:Text('Login',style: TextStyle(color: Colors.white),),style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
+                  ),
                 ],
               ),
             ),
