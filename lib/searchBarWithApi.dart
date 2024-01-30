@@ -139,6 +139,7 @@ class _apiIntigration extends State<apiIntigration> {
                                   height: 3,
                                 ),
                                 SizedBox(
+                                  height: 30,
                                 width: 152,
                                 child: ElevatedButton(onPressed: (){
                                   Navigator.push(context,

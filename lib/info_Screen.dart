@@ -46,8 +46,7 @@ class _information_ScreenState extends State<information_Screen> {
     return datepikeker;
   }
 
-final caller=Uri.parse('tel:+91$num');
-  final whatsapp=Uri.parse("https://wa.me/91$num");
+
   TextEditingController datecontroller = TextEditingController();
   List<String> Timing = [
     "7-8 AM",
@@ -72,6 +71,7 @@ final caller=Uri.parse('tel:+91$num');
     super.initState();
     currentDate = DateTime.now();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,7 @@ final caller=Uri.parse('tel:+91$num');
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      launchUrl(whatsapp);
+                                      launchUrl(Uri.parse("https://wa.me/91${widget.num}"));
                                     },
                                     child: SizedBox(
                                         width: 22,
@@ -139,9 +139,9 @@ final caller=Uri.parse('tel:+91$num');
                                   ),
                                   IconButton(
                                     onPressed: ()async {
-                                      canLaunchUrl(caller);
-                                      if (await canLaunchUrl(caller)) {
-                                      await launchUrl(caller);
+                                      canLaunchUrl(Uri.parse('tel:+91${widget.num}'));
+                                      if (await canLaunchUrl(Uri.parse('tel:+91${widget.num}'))) {
+                                      await launchUrl(Uri.parse('tel:+91${widget.num}'));
                                       } else {}
                                     },
                                     icon: Icon(
