@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -12,22 +13,17 @@ class information_Screen extends StatefulWidget {
   var city;
   var num;
   var photo;
-   information_Screen({super.key,required this.name,required this.address1,required this.address2,required this.city,required this.num,required this.photo});
+  OfferPics? photos_slider;
+
+   information_Screen({super.key,required this.photos_slider,required this.name,required this.address1,required this.address2,required this.city,required this.num,required this.photo});
    @override
 
   State<information_Screen> createState() => _information_ScreenState();
 }
 
 class _information_ScreenState extends State<information_Screen> {
-  List<Widget> images = [
-    Image.network(
-        "https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_1316/https://media.insider.in/image/upload/c_crop%2Cg_custom/v1632513596/olppsqyedxdb7uhq5yrs.jpg",fit: BoxFit.cover,),
-    Image.network(
-        'https://v3img.voot.com/kimg/kimg/536c156e50c34bf9b6fd8bd64e4b4780_1280X720.jpg',fit: BoxFit.cover,),
-    Image.network(
-        'http://1.bp.blogspot.com/-vSDShmvpuVU/VE9dE1NwQiI/AAAAAAAACAA/9SnMCdBKNCE/w1200-h630-p-k-no-nu/Team%2BAhmedabad%2BExpress%2Bof%2BBox%2BCricket%2BLeague%2BPhoto%2Band%2BWallpaper%2B(1).jpg',fit: BoxFit.cover,),
+  List<Widget> images = [];
 
-  ];
   var no = 0;
 
   // var name= DateTime.now().add(Duration(days: 1));
@@ -70,6 +66,12 @@ class _information_ScreenState extends State<information_Screen> {
   void initState() {
     super.initState();
     currentDate = DateTime.now();
+    for (var i in widget.photos_slider!.photos!){
+      images.add(Image.network(
+        i,height: 200,width: 350,fit: BoxFit.fitWidth,));
+    }
+
+
   }
 
 

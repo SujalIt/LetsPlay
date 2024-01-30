@@ -50,9 +50,9 @@ class _apiIntigration extends State<apiIntigration> {
     } else {
       _result = ApiList.where((users) =>
           users.name!.toLowerCase().contains(keyword.toLowerCase()) ||
-          users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
-          users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
-          users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
+              users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
+              users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
+              users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
     }
     setState(() {
       NewList = _result;
@@ -146,6 +146,7 @@ class _apiIntigration extends State<apiIntigration> {
                                   MaterialPageRoute(
                                             builder: (context) =>
                                                 information_Screen(
+                                                photos_slider: NewList[index].offerPics,
                                               num: NewList[index].phone,
                                               address1:
                                                   NewList[index].addressLine1,
