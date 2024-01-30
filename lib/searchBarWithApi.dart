@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
@@ -67,12 +68,11 @@ class _apiIntigration extends State<apiIntigration> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              height: 48,
-              width: 260,
+            Expanded(
               child: TextField(
+                  style: const TextStyle(height: 1),
                   onChanged: (value) => updatedlist(value),
-                  textAlignVertical: TextAlignVertical.bottom,
+                  textAlignVertical: TextAlignVertical.center,
                   decoration: const InputDecoration(
                     hintText: "Search grounds",
                     border: OutlineInputBorder(
@@ -93,13 +93,13 @@ class _apiIntigration extends State<apiIntigration> {
           future: ground(),
           builder: (context, AsyncSnapshot<List<LetsPlay>> snapshot) {
             if (!snapshot.hasData) {
-              return Text('Loading');
+              return const Text('Loading');
             } else {
               return NewList.length == 0
                   ? const Center(child: Text("Result not found"))
                   : ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: NewList.length,
                       itemBuilder: (context, index) {
                         return SizedBox(
@@ -121,22 +121,22 @@ class _apiIntigration extends State<apiIntigration> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("${NewList[index].name}",style: TextStyle(
+                                Text("${NewList[index].name}",style: const TextStyle(
                                     fontWeight: FontWeight.w700
                                 ),),
                                 Text(
-                                  "${NewList[index].addressLine1},", style: TextStyle(fontSize: 13,
+                                  "${NewList[index].addressLine1},", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "${NewList[index].addressLine2},", style: TextStyle(fontSize: 13,
+                                  "${NewList[index].addressLine2},", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "${NewList[index].city}", style: TextStyle(fontSize: 13,
+                                  "${NewList[index].city}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 3,
                                 ),
                                 SizedBox(
