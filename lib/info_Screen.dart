@@ -71,7 +71,6 @@ class _information_ScreenState extends State<information_Screen> {
         i,height: 200,width: 350,fit: BoxFit.fitWidth,));
     }
 
-
   }
 
 
@@ -79,7 +78,23 @@ class _information_ScreenState extends State<information_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-       forceMaterialTransparency: true,
+        backgroundColor: Color.fromARGB(
+            255, 40, 252, 7),
+        leading: GestureDetector(onTap: () {
+          Navigator.pop(context);
+        },
+          child: CircleAvatar(backgroundColor:Color.fromARGB(
+              255, 40, 252, 7) ,child:
+          Icon(
+            Icons.arrow_back,
+            color: Colors.redAccent,
+            size: 28,
+          )
+
+          ),
+        ),
+        title: Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
+        titleSpacing: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.only(
@@ -175,7 +190,7 @@ class _information_ScreenState extends State<information_Screen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
 
                 children: [

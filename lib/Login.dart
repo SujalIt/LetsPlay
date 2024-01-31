@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 import 'package:letsplay/firstpage.dart';
@@ -16,14 +16,27 @@ class _LoginPageState extends State<LoginPage> {
   var Email = TextEditingController();
   var Password = TextEditingController();
   final supabase = Supabase.instance.client;
-  Future<void> Signin(String email,String password)async{
+  Future<void> signin(String email,String password)async{
         await supabase.auth.signInWithPassword(password: password,email: email,).then(
                 (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Myfirstpage(),)));
     }
+  Future<void> signup(String email,String password)async{
+    try{
+      await supabase.auth.signUp(password: password,email: email);
+      if(mounted){
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('open your email'))
+        );
+      }
+    } on AuthException catch(error){
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(error.message)));
+    }
+    }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor:Colors.white,
+        /*backgroundColor:const Color.fromARGB(255, 162, 118, 161),*/
 
         body: Center(
           child: SingleChildScrollView(
@@ -65,13 +78,22 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.green, width: 2))),
                   ),
                   Container(
-                    height: 10,
+                    height: 30,
                   ),
-                  SizedBox(
-                    width: 125,
-                    child: ElevatedButton(
-                        onPressed:(){ Signin(Email.text.toString(),Password.text.toString());},
-                        child:Text('Login',style: TextStyle(color: Colors.white),),style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
+                  Row(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 40,
+                        child: ElevatedButton(
+                            onPressed:(){ signin(Email.text.toString(),Password.text.toString());},
+                            child:Text('LogIn',style: TextStyle(color: Colors.white),),style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
+                      ),
+                      SizedBox(width: 3,),
+                      SizedBox(height: 40,
+                        child: ElevatedButton(
+                            onPressed:(){ signup(Email.text.toString(),Password.text.toString());},
+                            child:Text('SignUp',style: TextStyle(color: Colors.white),),style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
+                      ),
+                    ],
                   ),
                 ],
               ),

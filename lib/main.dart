@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/Login.dart';
 import 'package:letsplay/firstpage.dart';
+import 'package:letsplay/redirecting_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 
@@ -16,12 +17,13 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: "f",
       routes: {
-        "f":(context) => LoginPage(),
+        "f":(context) => RedirecingPage(),
       },
       debugShowCheckedModeBanner: false,
 
@@ -50,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return const Scaffold(
 
-      body:Myfirstpage(),
+
     );
   }
 }
