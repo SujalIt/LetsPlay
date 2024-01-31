@@ -16,6 +16,7 @@ class apiIntigration extends StatefulWidget {
 
 List<LetsPlay> ApiList = [];
 
+
 class _apiIntigration extends State<apiIntigration> {
   Future<List<LetsPlay>> ground() async {
     final response = await http.get(
@@ -35,16 +36,17 @@ class _apiIntigration extends State<apiIntigration> {
     }
   }
 
-  List<LetsPlay> NewList = [];
+  List<LetsPlay> result = [];
 
   @override
   void initState() {
-    NewList = ApiList;
+    result = ApiList;
     super.initState();
   }
 
   updatedlist(String keyword) {
-    List<LetsPlay> result = [];
+    print(ApiList.length);
+    print('object');
     if (keyword.isEmpty) {
       result = ApiList;
     } else {
@@ -55,8 +57,9 @@ class _apiIntigration extends State<apiIntigration> {
           users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
     }
     setState(() {
-      NewList = result;
+
     });
+    print(ApiList.length);
   }
 
   @override
@@ -93,12 +96,13 @@ class _apiIntigration extends State<apiIntigration> {
             if (!snapshot.hasData) {
               return Center(child: const Text('Loading'));
             } else {
-              return NewList.length == 0
+
+              return result.length == 0
                   ? const Center(child: Text("Result not found"))
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: NewList.length,
+                      itemCount: result.length,
                       itemBuilder: (context, index) {
                         return SizedBox(
                           height: 130,
@@ -110,7 +114,7 @@ class _apiIntigration extends State<apiIntigration> {
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(4),
                                 child: Image.network(
-                              NewList[index].profilePic ?? '',
+                              result[index].profilePic ?? '',
                               fit: BoxFit.fill,
                             ),),
                           ),
@@ -119,19 +123,19 @@ class _apiIntigration extends State<apiIntigration> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("${NewList[index].name}",style: const TextStyle(
+                                Text("${result[index].name}",style: const TextStyle(
                                     fontWeight: FontWeight.w700
                                 ),),
                                 Text(
-                                  "${NewList[index].addressLine1},", style: const TextStyle(fontSize: 13,
+                                  "${result[index].addressLine1},", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "${NewList[index].addressLine2},", style: const TextStyle(fontSize: 13,
+                                  "${result[index].addressLine2},", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "${NewList[index].city}", style: const TextStyle(fontSize: 13,
+                                  "${result[index].city}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(
@@ -144,15 +148,15 @@ class _apiIntigration extends State<apiIntigration> {
                                   MaterialPageRoute(
                                             builder: (context) =>
                                                 information_Screen(
-                                              num: NewList[index].phone,
+                                              num: result[index].phone,
                                               address1:
-                                                  NewList[index].addressLine1,
+                                                  result[index].addressLine1,
                                               address2:
-                                                  NewList[index].addressLine2,
-                                              city: NewList[index].city,
-                                              name: NewList[index].name,
+                                                  result[index].addressLine2,
+                                              city: result[index].city,
+                                              name: result[index].name,
                                               photo:
-                                                  NewList[index].profilePic,
+                                                  result[index].profilePic,
                                             ),
                                           )
                                   );
