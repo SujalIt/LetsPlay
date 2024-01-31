@@ -24,7 +24,7 @@ class MyfirstpageState extends State<Myfirstpage> {
               .then((value) => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => RedirecingPage(),
+                builder: (context) => RedirectingPage(),
               )));
         },
           child: CircleAvatar(backgroundColor:Color.fromARGB(

@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "f",
       routes: {
-        "f":(context) => RedirecingPage(),
+        "f":(context) => RedirectingPage(),
       },
       debugShowCheckedModeBanner: false,
 

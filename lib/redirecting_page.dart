@@ -3,14 +3,14 @@ import 'package:letsplay/Login.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class RedirecingPage extends StatefulWidget {
-  const RedirecingPage({super.key});
+class RedirectingPage extends StatefulWidget {
+  const RedirectingPage({super.key});
 
   @override
-  State<RedirecingPage> createState() => _RedirecingPageState();
+  State<RedirectingPage> createState() => _RedirectingPageState();
 }
 
-class _RedirecingPageState extends State<RedirecingPage> {
+class _RedirectingPageState extends State<RedirectingPage> {
   @override
   void initState(){
     _redirect();
