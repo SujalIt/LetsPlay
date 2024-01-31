@@ -18,26 +18,29 @@ class MyfirstpageState extends State<Myfirstpage> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(
           255, 40, 252, 7),
-        leading: GestureDetector(onTap: () {
-          Supabase.instance.client.auth
-              .signOut()
-              .then((value) => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RedirectingPage(),
-              )));
-        },
-          child: CircleAvatar(backgroundColor:Color.fromARGB(
-              255, 40, 252, 7) ,child:
-               Icon(
-                Icons.logout_rounded,
-                color: Colors.redAccent,
-              )
 
-          ),
-        ),
         title: Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
-        titleSpacing: 0,
+        centerTitle: true,
+        actions: [
+          GestureDetector(onTap: () {
+            Supabase.instance.client.auth
+                .signOut()
+                .then((value) => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RedirectingPage(),
+                )));
+          },
+            child: CircleAvatar(backgroundColor:Color.fromARGB(
+                255, 40, 252, 7) ,child:
+            Icon(
+              Icons.logout_rounded,
+              color: Colors.redAccent,
+            )
+
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 25, left: 25, right: 25),

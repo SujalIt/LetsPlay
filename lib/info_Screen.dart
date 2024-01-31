@@ -78,6 +78,7 @@ class _information_ScreenState extends State<information_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(
             255, 40, 252, 7),
         leading: GestureDetector(onTap: () {
@@ -94,7 +95,7 @@ class _information_ScreenState extends State<information_Screen> {
           ),
         ),
         title: Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
-        titleSpacing: 0,
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.only(
