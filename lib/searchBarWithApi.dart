@@ -19,6 +19,7 @@ List<LetsPlay> ApiList = [];
 
 class _apiIntigration extends State<apiIntigration> {
   Future<List<LetsPlay>> ground() async {
+    print("asc");
     final response = await http.get(
         Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor'),
         headers: {
@@ -45,8 +46,7 @@ class _apiIntigration extends State<apiIntigration> {
   }
 
   updatedlist(String keyword) {
-    print(ApiList.length);
-    print('object');
+
     if (keyword.isEmpty) {
       result = ApiList;
     } else {
@@ -59,7 +59,7 @@ class _apiIntigration extends State<apiIntigration> {
     setState(() {
 
     });
-    print(ApiList.length);
+
   }
 
   @override
