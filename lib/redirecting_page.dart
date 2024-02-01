@@ -13,6 +13,7 @@ class RedirectingPage extends StatefulWidget {
 class _RedirectingPageState extends State<RedirectingPage> {
   @override
   void initState(){
+    super.initState();
     _redirect();
   }
   Future<void> _redirect()async{

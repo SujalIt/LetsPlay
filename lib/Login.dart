@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:letsplay/firstpage.dart';
-import 'package:letsplay/searchBarWithApi.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
