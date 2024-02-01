@@ -25,8 +25,6 @@ class _information_ScreenState extends State<information_Screen> {
   List<Widget> images = [];
 
   var no = 0;
-
-  // var name= DateTime.now().add(Duration(days: 1));
   date() async {
     DateTime? datepikeker = await showDatePicker(
         context: context,
@@ -191,7 +189,7 @@ class _information_ScreenState extends State<information_Screen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(top: 15),
               child: Column(
 
                 children: [
@@ -211,8 +209,9 @@ class _information_ScreenState extends State<information_Screen> {
                                 });
                               }),
                           items: images),
-                   ] ),
+                                       ] ),
                   ),
+                  SizedBox(height: 10,),
                   AnimatedSmoothIndicator(
                     activeIndex: no,
                     count: images.length,
@@ -226,6 +225,7 @@ class _information_ScreenState extends State<information_Screen> {
                 ],
               ),
             ),
+            SizedBox(height: 15,),
             Row(
               children: [
                 Flexible(

@@ -4,6 +4,7 @@ import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
 import 'package:letsplay/info_Screen.dart';
 
+
 class apiIntigration extends StatefulWidget {
   const apiIntigration({
     super.key,
@@ -13,19 +14,23 @@ class apiIntigration extends StatefulWidget {
   State<apiIntigration> createState() => _apiIntigration();
 }
 
-List<LetsPlay> ApiList = [];
-// List<LetsPlay> SecondApiList = List.from(ApiList);
 
 class _apiIntigration extends State<apiIntigration> {
+
+  List<LetsPlay> ApiList = [];
+
+
   Future<List<LetsPlay>> ground() async {
+    var data ;
     final response = await http.get(
         Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor'),
         headers: {
           "apikey":
               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU"
         });
-    var data = jsonDecode(response.body.toString());
+
     if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
       for (Map i in data) {
         ApiList.add(LetsPlay.fromJson(i));
       }
@@ -35,27 +40,33 @@ class _apiIntigration extends State<apiIntigration> {
     }
   }
 
-  List<LetsPlay> NewList = [];
+  List<LetsPlay> result = [];
 
   @override
   void initState() {
-    NewList = ApiList;
+    loadgrounds();
     super.initState();
   }
 
+  void loadgrounds() async {
+    result = await ground();
+    setState(() {
+      
+    });
+  }
+
   updatedlist(String keyword) {
-    List<LetsPlay> _result = [];
     if (keyword.isEmpty) {
-      _result = ApiList;
+      result = ApiList;
     } else {
-      _result = ApiList.where((users) =>
+      result = ApiList.where((users) =>
           users.name!.toLowerCase().contains(keyword.toLowerCase()) ||
               users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
               users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
               users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
     }
     setState(() {
-      NewList = _result;
+
     });
   }
 
@@ -66,12 +77,11 @@ class _apiIntigration extends State<apiIntigration> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              height: 48,
-              width: 260,
+            Expanded(
               child: TextField(
+                  style: const TextStyle(height: 1),
                   onChanged: (value) => updatedlist(value),
-                  textAlignVertical: TextAlignVertical.bottom,
+                  textAlignVertical: TextAlignVertical.center,
                   decoration: const InputDecoration(
                     hintText: "Search grounds",
                     border: OutlineInputBorder(
@@ -88,30 +98,22 @@ class _apiIntigration extends State<apiIntigration> {
             ),
           ],
         ),
-        FutureBuilder(
-          future: ground(),
-          builder: (context, AsyncSnapshot<List<LetsPlay>> snapshot) {
-            if (!snapshot.hasData) {
-              return Text('Loading');
-            } else {
-              return NewList.length == 0
-                  ? const Center(child: Text("Result not found"))
-                  : ListView.builder(
+                  ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: NewList.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: result.length,
                       itemBuilder: (context, index) {
                         return SizedBox(
                           height: 130,
                           child: Row(
                             children: [
-                              Container(
+                            Container(
                             height: 108,
                             width: 137,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(4),
                                 child: Image.network(
-                              NewList[index].profilePic ?? '',
+                              result[index].profilePic ?? '',
                               fit: BoxFit.fill,
                             ),),
                           ),
@@ -120,22 +122,22 @@ class _apiIntigration extends State<apiIntigration> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("${NewList[index].name}",style: TextStyle(
+                                Text("${result[index].name}",style: const TextStyle(
                                     fontWeight: FontWeight.w700
                                 ),),
                                 Text(
-                                  "${NewList[index].addressLine1},", style: TextStyle(fontSize: 13,
+                                  "${result[index].addressLine1},", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "${NewList[index].addressLine2},", style: TextStyle(fontSize: 13,
+                                  "${result[index].addressLine2},", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "${NewList[index].city}", style: TextStyle(fontSize: 13,
+                                  "${result[index].city}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 3,
                                 ),
                                 SizedBox(
@@ -146,16 +148,16 @@ class _apiIntigration extends State<apiIntigration> {
                                   MaterialPageRoute(
                                             builder: (context) =>
                                                 information_Screen(
-                                                photos_slider: NewList[index].offerPics,
-                                              num: NewList[index].phone,
+                                                photos_slider: result[index].offerPics,
+                                              num: result[index].phone,
                                               address1:
-                                                  NewList[index].addressLine1,
+                                                  result[index].addressLine1,
                                               address2:
-                                                  NewList[index].addressLine2,
-                                              city: NewList[index].city,
-                                              name: NewList[index].name,
+                                                  result[index].addressLine2,
+                                              city: result[index].city,
+                                              name: result[index].name,
                                               photo:
-                                                  NewList[index].profilePic,
+                                                  result[index].profilePic,
                                             ),
                                           )
                                   );
@@ -173,13 +175,10 @@ class _apiIntigration extends State<apiIntigration> {
                               ],
                             ),
                           )
-                            ],
-                          ),
-                        );
-                      });
-            }
-          },
-        ),
+                ],
+              ),
+            );
+        }),
       ],
     );
   }
