@@ -19,8 +19,8 @@ class _apiIntigration extends State<apiIntigration> {
 
   List<LetsPlay> ApiList = [];
 
+
   Future<List<LetsPlay>> ground() async {
-    print("A");
     var data ;
     final response = await http.get(
         Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor'),
@@ -44,12 +44,18 @@ class _apiIntigration extends State<apiIntigration> {
 
   @override
   void initState() {
-    result = ApiList;
+    loadgrounds();
     super.initState();
   }
 
-  updatedlist(String keyword) {
+  void loadgrounds() async {
+    result = await ground();
+    setState(() {
+      
+    });
+  }
 
+  updatedlist(String keyword) {
     if (keyword.isEmpty) {
       result = ApiList;
     } else {
@@ -62,7 +68,6 @@ class _apiIntigration extends State<apiIntigration> {
     setState(() {
 
     });
-
   }
 
   @override
@@ -93,15 +98,6 @@ class _apiIntigration extends State<apiIntigration> {
             ),
           ],
         ),
-        FutureBuilder(
-          future: ground(),
-          builder: (context, AsyncSnapshot<List<LetsPlay>> snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: const Text('Loading'));
-            } else {
-              return result.length == 0
-                  ? const Center(child: Text("Result not found"))
-                  : 
                   ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -111,7 +107,7 @@ class _apiIntigration extends State<apiIntigration> {
                           height: 130,
                           child: Row(
                             children: [
-                              Container(
+                            Container(
                             height: 108,
                             width: 137,
                             child: ClipRRect(
@@ -177,13 +173,10 @@ class _apiIntigration extends State<apiIntigration> {
                               ],
                             ),
                           )
-                            ],
-                          ),
-                        );
-                      });
-            }
-          },
-        ),
+                ],
+              ),
+            );
+        }),
       ],
     );
   }
