@@ -22,13 +22,13 @@ class _RedirectingPageState extends State<RedirectingPage> {
     final session= supabase.auth.currentSession;
     if(!mounted)return;
     if (session!=null){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Myfirstpage(),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Myfirstpage(),));
     }else{
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>LoginPage(),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const LoginPage(),));
     }
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

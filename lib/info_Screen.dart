@@ -67,33 +67,29 @@ class _information_ScreenState extends State<information_Screen> {
     currentDate = DateTime.now();
     for (var i in widget.photos_slider!.photos!){
       images.add(Image.network(
-        i,height: 200,width: 350,fit: BoxFit.fitWidth,));
+        i,width:double.infinity,fit: BoxFit.fitWidth,));
     }
-
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(
+        backgroundColor: const Color.fromARGB(
             255, 40, 252, 7),
         leading: GestureDetector(onTap: () {
           Navigator.pop(context);
         },
-          child: CircleAvatar(backgroundColor:Color.fromARGB(
+          child: const CircleAvatar(backgroundColor:Color.fromARGB(
               255, 40, 252, 7) ,child:
           Icon(
             Icons.arrow_back,
             color: Colors.redAccent,
             size: 28,
           )
-
           ),
         ),
-        title: Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
+        title: const Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
         centerTitle: true,
       ),
       body: Padding(
@@ -114,9 +110,8 @@ class _information_ScreenState extends State<information_Screen> {
                   child: Container(
                     height: 100,
                     width: 100,
-
                     child: ClipRRect(
-                      borderRadius:BorderRadius.all(Radius.circular(10)),
+                      borderRadius:const BorderRadius.all(Radius.circular(10)),
                       child: Image.network(widget.photo,
                         fit: BoxFit.cover,
                       ),
@@ -129,7 +124,7 @@ class _information_ScreenState extends State<information_Screen> {
                       ListTile(
                           title: Text(
                             widget.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
@@ -139,7 +134,7 @@ class _information_ScreenState extends State<information_Screen> {
                             children: [
                               Text("${widget.address1},${widget.address2},${widget.city}"
                                 ,
-                                style: TextStyle(fontSize: 11,fontWeight: FontWeight.w500),
+                                style: const TextStyle(fontSize: 11,fontWeight: FontWeight.w500),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -163,12 +158,11 @@ class _information_ScreenState extends State<information_Screen> {
                                       await launchUrl(Uri.parse('tel:+91${widget.num}'));
                                       } else {}
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.add_call,
                                       color: Colors.blue,
                                     ),
                                   ),
-
                                 ],
                               ),
                             ],
@@ -178,7 +172,7 @@ class _information_ScreenState extends State<information_Screen> {
                 ),
                 IconButton(onPressed: () {
                   Share.share('sujal');
-                }, icon: Icon(Icons.share))
+                }, icon: const Icon(Icons.share))
               ],
             ),
             const Text(
@@ -192,27 +186,23 @@ class _information_ScreenState extends State<information_Screen> {
             Padding(
               padding: const EdgeInsets.only(top: 15),
               child: Column(
-
                 children: [
-                  Container(
-                    height: 150,
-                    child: Stack(
-                      children:[ CarouselSlider(
-                          options: CarouselOptions(
-                              autoPlay: true,
-                              enlargeCenterPage: true,
-                              viewportFraction: 1,
-                              autoPlayCurve: Curves.easeInOut,
-                              autoPlayInterval: Duration(seconds: 2),
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  no = index;
-                                });
-                              }),
-                          items: images),
-                                       ] ),
-                  ),
-                  SizedBox(height: 10,),
+                  Stack(
+                    children:[ CarouselSlider(
+                        options: CarouselOptions(
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                            viewportFraction: 1,
+                            autoPlayCurve: Curves.easeInOut,
+                            autoPlayInterval: const Duration(seconds: 2),
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                no = index;
+                              });
+                            }),
+                        items: images),
+                                     ] ),
+                  const SizedBox(height: 10,),
                   AnimatedSmoothIndicator(
                     activeIndex: no,
                     count: images.length,
@@ -226,7 +216,7 @@ class _information_ScreenState extends State<information_Screen> {
                 ],
               ),
             ),
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             Row(
               children: [
                 Flexible(
@@ -240,18 +230,18 @@ class _information_ScreenState extends State<information_Screen> {
                       controller: datecontroller,
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
-                            onPressed: date, icon: Icon(Icons.calendar_today)),
+                            onPressed: date, icon: const Icon(Icons.calendar_today)),
                         hintText: DateFormat("dd-MM-yyyy").format(currentDate ?? DateTime.now() )
                            ,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide:
-                              BorderSide(color: Colors.greenAccent, width: 2),
+                              const BorderSide(color: Colors.greenAccent, width: 2),
                         ),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide:
-                                BorderSide(color: Colors.green, width: 2)),
+                                const BorderSide(color: Colors.green, width: 2)),
                       ),
                     ),
                   ),
@@ -286,10 +276,10 @@ class _information_ScreenState extends State<information_Screen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               'Slots Availability',
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -304,7 +294,7 @@ class _information_ScreenState extends State<information_Screen> {
                   itemCount: Timing.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -317,7 +307,7 @@ class _information_ScreenState extends State<information_Screen> {
                           child: Center(
                               child: Text(
                             Timing[index],
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 15),
                           ))),
                     );
