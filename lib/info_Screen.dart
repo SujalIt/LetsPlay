@@ -66,8 +66,13 @@ class _information_ScreenState extends State<information_Screen> {
     super.initState();
     currentDate = DateTime.now();
     for (var i in widget.photos_slider!.photos!){
-      images.add(Image.network(
-        i,height: 200,width: 350,fit: BoxFit.fitWidth,));
+      images.add(Expanded(
+        child: AspectRatio(
+          aspectRatio: 16.16,
+          child: Image.network(
+            i,fit: BoxFit.fitWidth,),
+        ),
+      ));
     }
 
   }
