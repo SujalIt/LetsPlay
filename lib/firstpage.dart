@@ -16,10 +16,10 @@ class MyfirstpageState extends State<Myfirstpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(
+        backgroundColor: const Color.fromARGB(
           255, 40, 252, 7),
 
-        title: Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
+        title: const Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
         centerTitle: true,
         actions: [
           GestureDetector(onTap: () {
@@ -28,10 +28,10 @@ class MyfirstpageState extends State<Myfirstpage> {
                 .then((value) => Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RedirectingPage(),
+                  builder: (context) => const RedirectingPage(),
                 )));
           },
-            child: CircleAvatar(backgroundColor:Color.fromARGB(
+            child: const CircleAvatar(backgroundColor:Color.fromARGB(
                 255, 40, 252, 7) ,child:
             Icon(
               Icons.logout_rounded,
@@ -42,7 +42,7 @@ class MyfirstpageState extends State<Myfirstpage> {
           ),
         ],
       ),
-      body: Padding(
+      body: const Padding(
         padding: EdgeInsets.only(top: 25, left: 25, right: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

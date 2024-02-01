@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -17,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final supabase = Supabase.instance.client;
   Future<void> signin(String email,String password)async{
         await supabase.auth.signInWithPassword(password: password,email: email,).then(
-                (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Myfirstpage(),)));
+                (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Myfirstpage(),)));
     }
   Future<void> signup(String email,String password)async{
     try{
@@ -40,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         body: Center(
           child: SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.all(40),
+              margin: const EdgeInsets.all(40),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -49,14 +47,14 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         hintText: 'Enter Your Email/Phone Number',
                         prefixIcon:
-                        Icon(Icons.email, color: Colors.green),
+                        const Icon(Icons.email, color: Colors.green),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.green, width: 2)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.green, width: 2))),
                   ),
                   Container(
@@ -69,11 +67,11 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: 'Enter Password',
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.green, width: 2)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.green, width: 2))),
                   ),
                   Container(
@@ -84,13 +82,13 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: 40,
                         child: ElevatedButton(
                             onPressed:(){ signin(Email.text.toString(),Password.text.toString());},
-                            child:Text('LogIn',style: TextStyle(color: Colors.white),),style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
+                            child:const Text('LogIn',style: TextStyle(color: Colors.white),),style: const ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
                       ),
-                      SizedBox(width: 3,),
+                      const SizedBox(width: 3,),
                       SizedBox(height: 40,
                         child: ElevatedButton(
                             onPressed:(){ signup(Email.text.toString(),Password.text.toString());},
-                            child:Text('SignUp',style: TextStyle(color: Colors.white),),style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
+                            child:const Text('SignUp',style: TextStyle(color: Colors.white),),style: const ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
                       ),
                     ],
                   ),
