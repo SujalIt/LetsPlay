@@ -12,10 +12,7 @@ class _p1containerState extends State<p1container> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox( height: 33,),
         AspectRatio(
-          // height: 157,
-          // width: 358,
           aspectRatio: 2.11,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(4),
