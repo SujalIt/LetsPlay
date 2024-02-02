@@ -126,11 +126,11 @@ class _apiIntigration extends State<apiIntigration> {
                                     fontWeight: FontWeight.w700
                                 ),),
                                 Text(
-                                  "${result[index].addressLine1},", style: const TextStyle(fontSize: 13,
+                                  "${result[index].addressLine1}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "${result[index].addressLine2},", style: const TextStyle(fontSize: 13,
+                                  "${result[index].addressLine2}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
                                 Text(
