@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
 import 'package:letsplay/info_Screen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 
 class apiIntigration extends StatefulWidget {
@@ -122,14 +123,14 @@ class _apiIntigration extends State<apiIntigration> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("${result[index].name}",style: const TextStyle(
+                                AutoSizeText("${result[index].name}",style: const TextStyle(
                                     fontWeight: FontWeight.w700
                                 ),),
-                                Text(
+                                AutoSizeText(
                                   "${result[index].addressLine1}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
-                                Text(
+                                AutoSizeText(
                                   "${result[index].addressLine2}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
