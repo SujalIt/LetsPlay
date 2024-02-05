@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
-import 'package:letsplay/info_Screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+import 'infoscreen.dart';
 
 class apiIntigration extends StatefulWidget {
   const apiIntigration({
@@ -15,14 +15,11 @@ class apiIntigration extends StatefulWidget {
   State<apiIntigration> createState() => _apiIntigration();
 }
 
-
 class _apiIntigration extends State<apiIntigration> {
-
   List<LetsPlay> ApiList = [];
 
-
   Future<List<LetsPlay>> ground() async {
-    var data ;
+    var data;
     final response = await http.get(
         Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor'),
         headers: {
@@ -51,9 +48,7 @@ class _apiIntigration extends State<apiIntigration> {
 
   void loadgrounds() async {
     result = await ground();
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   updatedlist(String keyword) {
@@ -62,124 +57,127 @@ class _apiIntigration extends State<apiIntigration> {
     } else {
       result = ApiList.where((users) =>
           users.name!.toLowerCase().contains(keyword.toLowerCase()) ||
-              users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
-              users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
-              users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
+          users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
+          users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
+          users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
     }
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: TextField(
-                  style: const TextStyle(height: 1),
-                  onChanged: (value) => updatedlist(value),
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: const InputDecoration(
-                    hintText: "Search grounds",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                  )),
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            const Icon(
-              Icons.search,
-              size: 39,
-            ),
-          ],
+        SizedBox(
+          height: 50,
+          child: TextField(
+              onChanged: (value) => updatedlist(value),
+              textAlignVertical: TextAlignVertical.center,
+              textAlign: TextAlign.start,
+              cursorColor: Colors.black45,
+              decoration: InputDecoration(
+                hintText: "Search grounds",
+                suffixIcon: Icon(Icons.search_rounded),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.green, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide:
+                        const BorderSide(color: Colors.green, width: 2)),
+              )),
         ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: result.length,
-                      itemBuilder: (context, index) {
-                        return SizedBox(
-                          height: 130,
-                          child: Row(
-                            children: [
-                            Container(
-                            height: 108,
-                            width: 137,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: Image.network(
-                              result[index].profilePic ?? '',
-                              fit: BoxFit.fill,
-                            ),),
+        ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: result.length,
+            itemBuilder: (context, index) {
+              return SizedBox(
+                height: 130,
+                child: Row(
+                  children: [
+                    Container(
+                      height: 108,
+                      width: 108,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: Image.network(
+                          result[index].profilePic ?? '',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, top: 8,),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AutoSizeText(
+                            "${result[index].name}",
+                            style: const TextStyle(fontWeight: FontWeight.w700),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15, top: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AutoSizeText("${result[index].name}",style: const TextStyle(
-                                    fontWeight: FontWeight.w700
-                                ),),
-                                AutoSizeText(
-                                  "${result[index].addressLine1}", style: const TextStyle(fontSize: 13,
-                                    fontWeight: FontWeight.w500),
-                                ),
-                                AutoSizeText(
-                                  "${result[index].addressLine2}", style: const TextStyle(fontSize: 13,
-                                    fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  "${result[index].city}", style: const TextStyle(fontSize: 13,
-                                    fontWeight: FontWeight.w500),
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                width: 152,
-                                child: ElevatedButton(onPressed: (){
-                                  Navigator.push(context,
-                                  MaterialPageRoute(
-                                            builder: (context) =>
-                                                information_Screen(
-                                                photos_slider: result[index].offerPics,
-                                              num: result[index].phone,
-                                              address1:
-                                                  result[index].addressLine1,
-                                              address2:
-                                                  result[index].addressLine2,
-                                              city: result[index].city,
-                                              name: result[index].name,
-                                              photo:
-                                                  result[index].profilePic,
-                                            ),
-                                          )
-                                  );
+                          AutoSizeText(
+                            "${result[index].addressLine1}",
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w500),
+                          ),
+                          AutoSizeText(
+                            "${result[index].addressLine2}",
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            "${result[index].city}",
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w500),
+                          ),
+                          const SizedBox(
+                            height: 3,
+                          ),
+                          SizedBox(
+                            height: 30,
+                            width: 152,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            information_Screen(
+                                          photos_slider:
+                                              result[index].offerPics,
+                                          num: result[index].phone,
+                                          address1: result[index].addressLine1,
+                                          address2: result[index].addressLine2,
+                                          city: result[index].city,
+                                          name: result[index].name,
+                                          photo: result[index].profilePic,
+                                        ),
+                                      ));
                                 },
-                                    style: const ButtonStyle(
-                                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(3))
-                                        )),
-                                        backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 72, 255, 78))
-                                    ),child: const Text('Check availability', style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 27, 27),
-                                      fontSize: 13,
-                                    ),)),
-                              )
-                              ],
-                            ),
+                                style: const ButtonStyle(
+                                    shape: MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(3)))),
+                                    backgroundColor:
+                                        MaterialStatePropertyAll(Colors.green)),
+                                child: const Text(
+                                  'Check availability',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                  ),
+                                )),
                           )
-                ],
-              ),
-            );
-        }),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }),
       ],
     );
   }
