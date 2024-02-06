@@ -107,24 +107,24 @@ class _apiIntigration extends State<apiIntigration> {
                             ),),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 15, top: 8),
+                            padding: const EdgeInsets.only(left: 10, top: 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("${result[index].name}",style: const TextStyle(
-                                    fontWeight: FontWeight.w700
+                                AutoSizeText("${result[index].name}",style: const TextStyle(fontWeight: FontWeight.bold,
+                                     fontSize: 0.10,color: Colors.black
                                 ),),
-                                Text(
-                                  "${result[index].addressLine1}", style: const TextStyle(fontSize: 13,
-                                    fontWeight: FontWeight.w500),
+                                AutoSizeText(
+                                  "${result[index].addressLine1}", style: const TextStyle(fontSize: 10,
+                                    ),
+                                ),
+                                AutoSizeText(
+                                  "${result[index].addressLine2}", style: const TextStyle(fontSize: 10,
+                                    ),
                                 ),
                                 Text(
-                                  "${result[index].addressLine2}", style: const TextStyle(fontSize: 13,
-                                    fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  "${result[index].city}", style: const TextStyle(fontSize: 13,
-                                    fontWeight: FontWeight.w500),
+                                  "${result[index].city}", style: const TextStyle(fontSize: 10,
+                                    ),
                                 ),
                                 const SizedBox(
                                   height: 3,
