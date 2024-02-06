@@ -16,8 +16,7 @@ class MyfirstpageState extends State<Myfirstpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(
-          255, 40, 252, 7),
+        backgroundColor: Colors.green,
 
         title: const Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
         centerTitle: true,
@@ -31,25 +30,24 @@ class MyfirstpageState extends State<Myfirstpage> {
                   builder: (context) => const RedirectingPage(),
                 )));
           },
-            child: const CircleAvatar(backgroundColor:Color.fromARGB(
-                255, 40, 252, 7) ,child:
-            Icon(
-              Icons.logout_rounded,
-              color: Colors.redAccent,
-            )
-
+            child: const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Icon(
+                Icons.logout_rounded,
+                color: Colors.black,
+              ),
             ),
           ),
         ],
       ),
       body: const Padding(
-        padding: EdgeInsets.only(top: 25, left: 25, right: 25),
+        padding: EdgeInsets.only(top: 10, left: 15, right: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             p1container(),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             Expanded(child: SingleChildScrollView(child: apiIntigration())),
           ],

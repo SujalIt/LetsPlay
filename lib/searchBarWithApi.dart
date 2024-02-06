@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
-import 'package:letsplay/info_Screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-
+import 'infoscreen.dart';
 
 class apiIntigration extends StatefulWidget {
   const apiIntigration({
@@ -15,14 +14,11 @@ class apiIntigration extends StatefulWidget {
   State<apiIntigration> createState() => _apiIntigration();
 }
 
-
 class _apiIntigration extends State<apiIntigration> {
-
   List<LetsPlay> ApiList = [];
 
-
   Future<List<LetsPlay>> ground() async {
-    var data ;
+    var data;
     final response = await http.get(
         Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor'),
         headers: {
@@ -51,9 +47,7 @@ class _apiIntigration extends State<apiIntigration> {
 
   void loadgrounds() async {
     result = await ground();
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   updatedlist(String keyword) {
@@ -62,42 +56,36 @@ class _apiIntigration extends State<apiIntigration> {
     } else {
       result = ApiList.where((users) =>
           users.name!.toLowerCase().contains(keyword.toLowerCase()) ||
-              users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
-              users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
-              users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
+          users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
+          users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
+          users.city!.toLowerCase().contains(keyword.toLowerCase())).toList();
     }
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: TextField(
-                  style: const TextStyle(height: 1),
-                  onChanged: (value) => updatedlist(value),
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: const InputDecoration(
-                    hintText: "Search grounds",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                  )),
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            const Icon(
-              Icons.search,
-              size: 39,
-            ),
-          ],
+        SizedBox(
+          height: 50,
+          child: TextField(
+              onChanged: (value) => updatedlist(value),
+              textAlignVertical: TextAlignVertical.center,
+              textAlign: TextAlign.start,
+              cursorColor: Colors.black45,
+              decoration: InputDecoration(
+                hintText: "Search grounds",
+                suffixIcon: Icon(Icons.search_rounded),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.green, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide:
+                        const BorderSide(color: Colors.green, width: 2)),
+              )),
         ),
                   ListView.builder(
                       shrinkWrap: true,
@@ -123,14 +111,14 @@ class _apiIntigration extends State<apiIntigration> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                AutoSizeText("${result[index].name}",style: const TextStyle(
+                                Text("${result[index].name}",style: const TextStyle(
                                     fontWeight: FontWeight.w700
                                 ),),
-                                AutoSizeText(
+                                Text(
                                   "${result[index].addressLine1}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
-                                AutoSizeText(
+                                Text(
                                   "${result[index].addressLine2}", style: const TextStyle(fontSize: 13,
                                     fontWeight: FontWeight.w500),
                                 ),
@@ -163,23 +151,28 @@ class _apiIntigration extends State<apiIntigration> {
                                           )
                                   );
                                 },
-                                    style: const ButtonStyle(
-                                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(3))
-                                        )),
-                                        backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 72, 255, 78))
-                                    ),child: const Text('Check availability', style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 27, 27),
-                                      fontSize: 13,
-                                    ),)),
-                              )
-                              ],
-                            ),
+                                style: const ButtonStyle(
+                                    shape: MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(3)))),
+                                    backgroundColor:
+                                        MaterialStatePropertyAll(Colors.green)),
+                                child: const Text(
+                                  'Check availability',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                  ),
+                                )),
                           )
-                ],
-              ),
-            );
-        }),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }),
       ],
     );
   }
