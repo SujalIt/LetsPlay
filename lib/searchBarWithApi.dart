@@ -107,7 +107,7 @@ class _apiIntigration extends State<apiIntigration> {
                             ),),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10, top: 8),
+                            padding: const EdgeInsets.only(left: 8, top: 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -122,12 +122,12 @@ class _apiIntigration extends State<apiIntigration> {
                                   "${result[index].addressLine2}", style: const TextStyle(fontSize: 10,
                                     ),
                                 ),
-                                Text(
+                                AutoSizeText(
                                   "${result[index].city}", style: const TextStyle(fontSize: 10,
                                     ),
                                 ),
                                 const SizedBox(
-                                  height: 3,
+                                  height: 10,
                                 ),
                                 SizedBox(
                                   height: 30,
