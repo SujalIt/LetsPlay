@@ -1,13 +1,17 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../APIS/LetsPlay.dart';
 import 'package:http/http.dart'as http;
-List<LetsPlay> ApiList = [];
 
-
-Future<List<LetsPlay>> ground() async {
-  var data ;
+class ApiCallingFunction{
+  static List<LetsPlay>apiList(String inputes){
+    var data=jsonDecode(inputes) as List<dynamic>;
+    List<LetsPlay>output=data.map((e) => LetsPlay.fromJson(e)).toList();
+    return output;
+  }
+static Future<List<LetsPlay>> ground() async {
   final response = await http.get(
       Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor'),
       headers: {
@@ -16,16 +20,9 @@ Future<List<LetsPlay>> ground() async {
       });
 
   if (response.statusCode == 200) {
-    data = jsonDecode(response.body.toString());
-    for (Map i in data) {
-      ApiList.add(LetsPlay.fromJson(i));
-    }
-    return ApiList;
-  } else {
-    return ApiList;
+    return compute(apiList, response.body);
+  }else{
+    throw Exception('Error');
   }
 }
-Stream ground2(){
-  final data=Supabase.instance.client.from('vendor').stream(primaryKey: ['id']);
-  return data;
 }

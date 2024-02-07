@@ -8,23 +8,11 @@ import 'package:share_plus/share_plus.dart';
 import 'datepiker.dart';
 
 class information_Screen extends StatefulWidget {
-  var name;
-  var address1;
-  var address2;
-  var city;
-  var num;
-  var photo;
-  OfferPics? photos_slider;
+  LetsPlay groundOfObject;
 
-  information_Screen(
-      {super.key,
-      required this.photos_slider,
-      required this.name,
-      required this.address1,
-      required this.address2,
-      required this.city,
-      required this.num,
-      required this.photo});
+  information_Screen({super.key,
+    required this.groundOfObject,
+  });
 
   @override
   State<information_Screen> createState() => _information_ScreenState();
@@ -32,35 +20,24 @@ class information_Screen extends StatefulWidget {
 
 class _information_ScreenState extends State<information_Screen> {
   List<Widget> images = [];
+  num? slots;
 
   var no = 0;
 
-  List<String> Timing = [
-    "7-8 AM",
-    "8-9 AM",
-    "9-10 AM",
-    "10-11 AM",
-    "11-12 AM",
-    "5-6 PM",
-    "6-7 PM",
-    "7-8 PM",
-    "8-9 PM",
-    "9-10 PM",
-    "10-11 PM",
-    "11-12 PM",
-  ];
 
   @override
   void initState() {
     super.initState();
-    for (var i in widget.photos_slider!.photos!) {
+    dynamic times=1440;
+    dynamic sloting=widget.groundOfObject.slotInternval;
+     slots=times/sloting;
+    for (var i in widget.groundOfObject.offerPics!.photos! ) {
       images.add(Image.network(
         i,
         width: double.infinity,
         fit: BoxFit.fitWidth,
       ));
-    }
-  }
+  }}
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +84,9 @@ class _information_ScreenState extends State<information_Screen> {
                         width: 100,
                         child: ClipRRect(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
+                          const BorderRadius.all(Radius.circular(10)),
                           child: Image.network(
-                            widget.photo,
+                            widget.groundOfObject.offerPics?.photos?.first ?? '',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -121,14 +98,17 @@ class _information_ScreenState extends State<information_Screen> {
                         child: Column(
                           children: [
                             Text(
-                              widget.name,
+                              widget.groundOfObject.name.toString(),
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
-                              "${widget.name} ${widget.address1} ${widget.address2} ${widget.city}",
+                              "${widget.groundOfObject.name} ${widget
+                                  .groundOfObject.addressLine1} ${widget
+                                  .groundOfObject.addressLine2} ${widget
+                                  .groundOfObject.city}",
                               style: const TextStyle(
                                   fontSize: 11, fontWeight: FontWeight.w500),
                             ),
@@ -142,17 +122,20 @@ class _information_ScreenState extends State<information_Screen> {
                         IconButton(
                             onPressed: () {
                               Share.share(
-                                "${widget.address1} ${widget.address2} ${widget.city}",
+                                "${widget.groundOfObject.name} ${widget
+                                    .groundOfObject.addressLine1} ${widget
+                                    .groundOfObject.addressLine2} ${widget
+                                    .groundOfObject.city}",
                               );
                             },
                             icon: const Icon(Icons.share)),
                         IconButton(
                           onPressed: () async {
-                            canLaunchUrl(Uri.parse('tel:+91${widget.num}'));
+                            canLaunchUrl(Uri.parse('tel:+91${widget.groundOfObject.phone}'));
                             if (await canLaunchUrl(
-                                Uri.parse('tel:+91${widget.num}'))) {
+                                Uri.parse('tel:+91${widget.groundOfObject.phone}'))) {
                               await launchUrl(
-                                  Uri.parse('tel:+91${widget.num}'));
+                                  Uri.parse('tel:+91${widget.groundOfObject.phone}'));
                             } else {}
                           },
                           icon: const Icon(
@@ -166,7 +149,7 @@ class _information_ScreenState extends State<information_Screen> {
                         InkWell(
                           onTap: () {
                             launchUrl(
-                                Uri.parse("https://wa.me/91${widget.num}"));
+                                Uri.parse("https://wa.me/91${widget.groundOfObject.phone}"));
                           },
                           child: SizedBox(
                               width: 22,
@@ -192,14 +175,13 @@ class _information_ScreenState extends State<information_Screen> {
                   ),
                 ),
                 Datepiker(),
-
                 GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3, childAspectRatio: 2.0),
-                    itemCount: Timing.length,
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3, childAspectRatio: 2.0),
+                    itemCount:slots?.toInt(),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(7.0),
@@ -214,10 +196,11 @@ class _information_ScreenState extends State<information_Screen> {
                             ),
                             child: Center(
                                 child: Text(
-                              Timing[index],
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 15),
-                            ))),
+                                  widget.groundOfObject.slotInternval.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 15),
+                                ))),
                       );
                     }),
                 SizedBox(

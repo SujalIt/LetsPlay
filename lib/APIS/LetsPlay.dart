@@ -64,7 +64,7 @@ class LetsPlay {
     _offerPics = json['offer_pics'] != null ? OfferPics.fromJson(json['offer_pics']) : null;
     _groundPics = json['ground_pics'] != null ? GroundPics.fromJson(json['ground_pics']) : null;
     _pricing = json['pricing'] != null ? Pricing.fromJson(json['pricing']) : null;
-    _slotInternval = json['slot_internval'];
+    _slotInternval = json['slotinternval'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
@@ -150,7 +150,7 @@ LetsPlay copyWith({  num? id,
     if (_pricing != null) {
       map['pricing'] = _pricing?.toJson();
     }
-    map['slot_internval'] = _slotInternval;
+    map['slotinternval'] = _slotInternval;
     map['created_at'] = _createdAt;
     map['updated_at'] = _updatedAt;
     return map;

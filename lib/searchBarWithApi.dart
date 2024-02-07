@@ -138,16 +138,9 @@ class _apiIntigration extends State<apiIntigration> {
                                     MaterialPageRoute(
                                               builder: (context) =>
                                                   information_Screen(
-                                                  photos_slider: result[index].offerPics,
-                                                num: result[index].phone,
-                                                address1:
-                                                    result[index].addressLine1,
-                                                address2:
-                                                    result[index].addressLine2,
-                                                city: result[index].city,
-                                                name: result[index].name,
-                                                photo:
-                                                    result[index].profilePic,
+                                                  groundOfObject:
+
+                                                    result[index]
                                               ),
                                             )
                                     );
