@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -6,11 +7,13 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'datepiker.dart';
+import 'functions/sloting.dart';
 
 class information_Screen extends StatefulWidget {
   LetsPlay groundOfObject;
 
-  information_Screen({super.key,
+  information_Screen({
+    super.key,
     required this.groundOfObject,
   });
 
@@ -20,24 +23,33 @@ class information_Screen extends StatefulWidget {
 
 class _information_ScreenState extends State<information_Screen> {
   List<Widget> images = [];
-  num? slots;
-
   var no = 0;
+  List<String> timeList = [];
 
+  sloteBooking(DateTime now, DateTime end, int interwall) {
+    DateTime currentTime = now;
+    while (currentTime.isBefore(end)) {
+      String formattedTime = DateFormat('HH:mm').format(currentTime);
+      timeList.add(formattedTime);
+      currentTime = currentTime.add(Duration(minutes: interwall));
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    dynamic times=1440;
-    dynamic sloting=widget.groundOfObject.slotInternval;
-     slots=times/sloting;
-    for (var i in widget.groundOfObject.offerPics!.photos! ) {
+    final DateTime startTime = DateTime(2024, 2, 7, 0, 0); // Example start time
+    final DateTime endTime = DateTime(2024, 2, 7, 24, 0); // Example end time
+    final int intervalMinutes = widget.groundOfObject.slotInternval?.toInt() ?? 0; // Example interval in minutes
+    sloteBooking(startTime, endTime, intervalMinutes);
+    for (var i in widget.groundOfObject.offerPics!.photos!) {
       images.add(Image.network(
         i,
         width: double.infinity,
         fit: BoxFit.fitWidth,
       ));
-  }}
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +96,10 @@ class _information_ScreenState extends State<information_Screen> {
                         width: 100,
                         child: ClipRRect(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(10)),
+                              const BorderRadius.all(Radius.circular(10)),
                           child: Image.network(
-                            widget.groundOfObject.offerPics?.photos?.first ?? '',
+                            widget.groundOfObject.offerPics?.photos?.first ??
+                                '',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -105,10 +118,7 @@ class _information_ScreenState extends State<information_Screen> {
                               ),
                             ),
                             Text(
-                              "${widget.groundOfObject.name} ${widget
-                                  .groundOfObject.addressLine1} ${widget
-                                  .groundOfObject.addressLine2} ${widget
-                                  .groundOfObject.city}",
+                              "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city}",
                               style: const TextStyle(
                                   fontSize: 11, fontWeight: FontWeight.w500),
                             ),
@@ -122,20 +132,18 @@ class _information_ScreenState extends State<information_Screen> {
                         IconButton(
                             onPressed: () {
                               Share.share(
-                                "${widget.groundOfObject.name} ${widget
-                                    .groundOfObject.addressLine1} ${widget
-                                    .groundOfObject.addressLine2} ${widget
-                                    .groundOfObject.city}",
+                                "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city}",
                               );
                             },
                             icon: const Icon(Icons.share)),
                         IconButton(
                           onPressed: () async {
-                            canLaunchUrl(Uri.parse('tel:+91${widget.groundOfObject.phone}'));
-                            if (await canLaunchUrl(
-                                Uri.parse('tel:+91${widget.groundOfObject.phone}'))) {
-                              await launchUrl(
-                                  Uri.parse('tel:+91${widget.groundOfObject.phone}'));
+                            canLaunchUrl(Uri.parse(
+                                'tel:+91${widget.groundOfObject.phone}'));
+                            if (await canLaunchUrl(Uri.parse(
+                                'tel:+91${widget.groundOfObject.phone}'))) {
+                              await launchUrl(Uri.parse(
+                                  'tel:+91${widget.groundOfObject.phone}'));
                             } else {}
                           },
                           icon: const Icon(
@@ -148,8 +156,8 @@ class _information_ScreenState extends State<information_Screen> {
                         ),
                         InkWell(
                           onTap: () {
-                            launchUrl(
-                                Uri.parse("https://wa.me/91${widget.groundOfObject.phone}"));
+                            launchUrl(Uri.parse(
+                                "https://wa.me/91${widget.groundOfObject.phone}"));
                           },
                           child: SizedBox(
                               width: 22,
@@ -179,9 +187,9 @@ class _information_ScreenState extends State<information_Screen> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, childAspectRatio: 2.0),
-                    itemCount:slots?.toInt(),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, childAspectRatio: 2.0),
+                    itemCount: timeList.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(7.0),
@@ -196,11 +204,10 @@ class _information_ScreenState extends State<information_Screen> {
                             ),
                             child: Center(
                                 child: Text(
-                                  widget.groundOfObject.slotInternval.toString(),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15),
-                                ))),
+                              timeList[index],
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 15),
+                            ))),
                       );
                     }),
                 SizedBox(
