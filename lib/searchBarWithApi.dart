@@ -158,12 +158,13 @@ class _apiIntigration extends State<apiIntigration> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(3)))),
                                       backgroundColor:
-                                          MaterialStatePropertyAll(Colors.green)),
+                                          MaterialStatePropertyAll(Color.fromARGB(255, 95, 251, 100),)),
                                   child: const Text(
                                     'Check availability',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontSize: 13,
+                                      fontWeight: FontWeight.w600
                                     ),
                                   )),
                                                         )

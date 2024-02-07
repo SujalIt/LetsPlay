@@ -67,7 +67,7 @@ class _information_ScreenState extends State<information_Screen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromARGB(255, 95, 251, 100),
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
