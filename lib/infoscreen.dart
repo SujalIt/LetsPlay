@@ -7,7 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'datepiker.dart';
-import 'functions/sloting.dart';
+
 
 class information_Screen extends StatefulWidget {
   LetsPlay groundOfObject;
