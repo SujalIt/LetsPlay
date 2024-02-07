@@ -16,8 +16,7 @@ class MyfirstpageState extends State<Myfirstpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
-
+        backgroundColor: Color.fromARGB(255, 95, 251, 100),
         title: const Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
         centerTitle: true,
         actions: [

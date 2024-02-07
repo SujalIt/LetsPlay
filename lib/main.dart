@@ -19,12 +19,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "f",
       routes: {
-        "f":(context) => RedirectingPage(),
+        "f":(context) => const RedirectingPage(),
       },
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
     );
   }
 }

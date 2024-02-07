@@ -84,13 +84,13 @@ class _DatepikerState extends State<Datepiker> {
                             borderRadius: BorderRadius.all(
                                 Radius.circular(10)))),
                     backgroundColor:
-                    MaterialStatePropertyAll(Colors.green)),
+                    MaterialStatePropertyAll(Color.fromARGB(255, 95, 251, 100),)),
                 child: const Text(
                   'Next Day',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
                   ),
                 )),
           ),
