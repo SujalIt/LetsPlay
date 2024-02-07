@@ -56,7 +56,7 @@ class _information_ScreenState extends State<information_Screen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromARGB(255, 95, 251, 100),
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
@@ -172,7 +172,7 @@ class _information_ScreenState extends State<information_Screen> {
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 const Text(
                   'Slots Availability',
@@ -182,6 +182,7 @@ class _information_ScreenState extends State<information_Screen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+                SizedBox(height: 5,),
                 Datepiker(),
                 GridView.builder(
                     shrinkWrap: true,
@@ -211,7 +212,7 @@ class _information_ScreenState extends State<information_Screen> {
                       );
                     }),
                 SizedBox(
-                  height: 30,
+                  height: 5,
                 ),
                 const Text(
                   'Pricing and Offers',
