@@ -70,105 +70,146 @@ class _apiIntigration extends State<apiIntigration> {
         SizedBox(
           height: 50,
           child: TextField(
-              onChanged: (value) => updatedlist(value),
-              textAlignVertical: TextAlignVertical.center,
-              textAlign: TextAlign.start,
-              cursorColor: Colors.black45,
-              decoration: InputDecoration(
-                hintText: "Search grounds",
-                suffixIcon: Icon(Icons.search_rounded),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.green, width: 2),
+            onChanged: (value) => updatedlist(value),
+            textAlignVertical: TextAlignVertical.center,
+            textAlign: TextAlign.start,
+            cursorColor: Colors.black45,
+            decoration: InputDecoration(
+              hintText: "Search grounds",
+              suffixIcon: const Icon(Icons.search_rounded),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: Colors.green,
+                  width: 2,
                 ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        const BorderSide(color: Colors.green, width: 2)),
-              )),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: Colors.green,
+                  width: 2,
+                ),
+              ),
+            ),
+          ),
         ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: result.length,
-                      itemBuilder: (context, index) {
-                        return SizedBox(
-                          height: 130,
-                          child: Row(
-                            children: [
-                            Container(
-                            height: 108,
-                            width: 137,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: Image.network(
-                              result[index].profilePic ?? '',
-                              fit: BoxFit.fill,
-                            ),),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8, top: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("${result[index].name}",overflow: TextOverflow.ellipsis,style: const TextStyle(fontWeight: FontWeight.bold,
-                                       fontSize: 15,color: Colors.black,
-                                  ),),
-                                  Text(
-                                    "${result[index].addressLine1}", style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600
-                                      ),
-                                  ),
-                                  Text(
-                                    "${result[index].addressLine2}", style: const TextStyle(fontSize: 13,fontWeight: FontWeight.w600,
-                                      ),
-                                  ),
-                                  Text(
-                                    "${result[index].city}", style: const TextStyle(fontSize: 13,fontWeight: FontWeight.w600,
-                                      ),
-                                  ),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  width: 152,
-                                  child: ElevatedButton(onPressed: (){
-                                    Navigator.push(context,
-                                    MaterialPageRoute(
-                                              builder: (context) =>
-                                                  information_Screen(
-                                                  groundOfObject:
-
-                                                    result[index]
-                                              ),
-                                            )
-                                    );
-                                  },
-                                  style: const ButtonStyle(
-                                      shape: MaterialStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(3)))),
-                                      backgroundColor:
-                                          MaterialStatePropertyAll(Color.fromARGB(255, 95, 251, 100),)),
-                                  child: const Text(
-                                    'Check availability',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600
-                                    ),
-                                  )),
-                                                        )
-                                                      ],
-                                                    ),
-                                                ),
-                          )
-                  ],
+        if (result.isEmpty)
+          Column(
+            children: [
+              Image.network(
+                "https://cdn4.iconfinder.com/data/icons/sports-1-4/100/Sports-08-512.png",
+                width: 240,
+                height: 240,
+              ),
+              const Center(
+                child: Text(
+                  "Grounds Not Found...",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
                 ),
-              );
-            }),
+              ),
+            ],
+          ),
+        if (result.isNotEmpty)
+          ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: result.length,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  height: 130,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 108,
+                        width: 137,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Image.network(
+                            result[index].profilePic ?? '',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8, top: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${result[index].name}",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                "${result[index].addressLine1}",
+                                style: const TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                "${result[index].addressLine2}",
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                "${result[index].city}",
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              SizedBox(
+                                height: 30,
+                                width: 152,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                information_Screen(
+                                                    groundOfObject:
+                                                        result[index]),
+                                          ));
+                                    },
+                                    style: const ButtonStyle(
+                                        shape: MaterialStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(3)))),
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                          Color.fromARGB(255, 95, 251, 100),
+                                        )),
+                                    child: const Text(
+                                      'Check availability',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600),
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }),
       ],
     );
   }
