@@ -181,7 +181,7 @@ class _information_ScreenState extends State<information_Screen> {
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 const Text(
                   'Slots Availability',
@@ -191,8 +191,8 @@ class _information_ScreenState extends State<information_Screen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+                SizedBox(height: 5,),
                 Datepiker(),
-
                 GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -221,7 +221,7 @@ class _information_ScreenState extends State<information_Screen> {
                       );
                     }),
                 SizedBox(
-                  height: 30,
+                  height: 5,
                 ),
                 const Text(
                   'Pricing and Offers',
