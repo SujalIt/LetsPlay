@@ -106,69 +106,71 @@ class _apiIntigration extends State<apiIntigration> {
                               fit: BoxFit.fill,
                             ),),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8, top: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AutoSizeText("${result[index].name}",style: const TextStyle(fontWeight: FontWeight.bold,
-                                     fontSize: 0.10,color: Colors.black
-                                ),),
-                                AutoSizeText(
-                                  "${result[index].addressLine1}", style: const TextStyle(fontSize: 10,
-                                    ),
-                                ),
-                                AutoSizeText(
-                                  "${result[index].addressLine2}", style: const TextStyle(fontSize: 10,
-                                    ),
-                                ),
-                                AutoSizeText(
-                                  "${result[index].city}", style: const TextStyle(fontSize: 10,
-                                    ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                width: 152,
-                                child: ElevatedButton(onPressed: (){
-                                  Navigator.push(context,
-                                  MaterialPageRoute(
-                                            builder: (context) =>
-                                                information_Screen(
-                                                photos_slider: result[index].offerPics,
-                                              num: result[index].phone,
-                                              address1:
-                                                  result[index].addressLine1,
-                                              address2:
-                                                  result[index].addressLine2,
-                                              city: result[index].city,
-                                              name: result[index].name,
-                                              photo:
-                                                  result[index].profilePic,
-                                            ),
-                                          )
-                                  );
-                                },
-                                style: const ButtonStyle(
-                                    shape: MaterialStatePropertyAll(
-                                        RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(3)))),
-                                    backgroundColor:
-                                        MaterialStatePropertyAll(Colors.green)),
-                                child: const Text(
-                                  'Check availability',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("${result[index].name}",overflow: TextOverflow.ellipsis,style: const TextStyle(fontWeight: FontWeight.bold,
+                                       fontSize: 15,color: Colors.black,
+                                  ),),
+                                  Text(
+                                    "${result[index].addressLine1}", style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600
+                                      ),
                                   ),
-                                )),
+                                  Text(
+                                    "${result[index].addressLine2}", style: const TextStyle(fontSize: 13,fontWeight: FontWeight.w600,
+                                      ),
+                                  ),
+                                  Text(
+                                    "${result[index].city}", style: const TextStyle(fontSize: 13,fontWeight: FontWeight.w600,
+                                      ),
+                                  ),
+                                  const SizedBox(
+                                    height: 3,
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  width: 152,
+                                  child: ElevatedButton(onPressed: (){
+                                    Navigator.push(context,
+                                    MaterialPageRoute(
+                                              builder: (context) =>
+                                                  information_Screen(
+                                                  photos_slider: result[index].offerPics,
+                                                num: result[index].phone,
+                                                address1:
+                                                    result[index].addressLine1,
+                                                address2:
+                                                    result[index].addressLine2,
+                                                city: result[index].city,
+                                                name: result[index].name,
+                                                photo:
+                                                    result[index].profilePic,
+                                              ),
+                                            )
+                                    );
+                                  },
+                                  style: const ButtonStyle(
+                                      shape: MaterialStatePropertyAll(
+                                          RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(3)))),
+                                      backgroundColor:
+                                          MaterialStatePropertyAll(Colors.green)),
+                                  child: const Text(
+                                    'Check availability',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                    ),
+                                  )),
+                                                        )
+                                                      ],
+                                                    ),
+                                                ),
                           )
-                        ],
-                      ),
-                    )
                   ],
                 ),
               );
