@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letsplay/Login.dart';
 import 'package:letsplay/p1image.dart';
 import 'package:letsplay/redirecting_page.dart';
 import 'package:letsplay/searchBarWithApi.dart';
@@ -12,31 +13,58 @@ class Myfirstpage extends StatefulWidget {
 }
 
 class MyfirstpageState extends State<Myfirstpage> {
+  final session = Supabase.instance.client.auth.currentSession;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 95, 251, 100),
-        title: const Text('LetsPlay',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600,),),
+        title: const Text(
+          'LetsPlay',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         centerTitle: true,
         actions: [
-          GestureDetector(onTap: () {
-            Supabase.instance.client.auth
-                .signOut()
-                .then((value) => Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const RedirectingPage(),
-                )));
-          },
-            child: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.logout_rounded,
-                color: Colors.black,
+          if (session == null)
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Icon(
+                  Icons.account_circle_sharp,
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
+          if (session != null)
+            GestureDetector(
+              onTap: () {
+
+                setState(() async{
+                 await Supabase.instance.client.auth
+                      .signOut()
+                  //
+                      ;
+                });
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Icon(
+                  Icons.logout_rounded,
+                  color: Colors.black,
+                ),
+              ),
+            ),
         ],
       ),
       body: const Padding(
