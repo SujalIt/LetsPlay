@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letsplay/firstpage.dart';
 import 'package:letsplay/redirecting_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "f",
       routes: {
-        "f":(context) => const RedirectingPage(),
+        "f":(context) => const Myfirstpage(),
       },
       debugShowCheckedModeBanner: false,
     );

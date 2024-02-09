@@ -21,7 +21,7 @@ class _RedirectingPageState extends State<RedirectingPage> {
     final supabase=Supabase.instance.client;
     final session= supabase.auth.currentSession;
     if(!mounted)return;
-    if (session!=null){
+    if (session==null){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Myfirstpage(),));
     }else{
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const LoginPage(),));

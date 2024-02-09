@@ -25,6 +25,8 @@ class _information_ScreenState extends State<information_Screen> {
   List<Widget> images = [];
   var no = 0;
   List<String> timeList = [];
+  Map<String,String>slotBooking={};
+
 
   sloteBooking(DateTime now, DateTime end, int interwall) {
     DateTime currentTime = now;
@@ -38,8 +40,11 @@ class _information_ScreenState extends State<information_Screen> {
   @override
   void initState() {
     super.initState();
-    final DateTime startTime = DateTime(2024, 2, 7, 0, 0); // Example start time
-    final DateTime endTime = DateTime(2024, 2, 7, 24, 0); // Example end time
+    for(String items in timeList){
+      slotBooking[items]=items;
+    }
+    final DateTime startTime = DateTime(2024, 2, 9, 0, 0); // Example start time
+    final DateTime endTime = DateTime(2024, 2, 9, 24, 0); // Example end time
     final int intervalMinutes = widget.groundOfObject.slotInternval?.toInt() ?? 0; // Example interval in minutes
     sloteBooking(startTime, endTime, intervalMinutes);
     for (var i in widget.groundOfObject.offerPics!.photos!) {
