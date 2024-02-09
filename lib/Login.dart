@@ -89,12 +89,12 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed:(){ signin(Email.text.toString(),Password.text.toString());},
                               child:const Text('LogIn',style: TextStyle(color: Colors.white),),style: const ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
                         ),
-                        const SizedBox(width: 20,),
-                        SizedBox(height: 40,
-                          child: ElevatedButton(
-                              onPressed:(){ signup(Email.text.toString(),Password.text.toString());},
-                              child:const Text('SignUp',style: TextStyle(color: Colors.white),),style: const ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
-                        ),
+                        // const SizedBox(width: 20,),
+                        // SizedBox(height: 40,
+                        //   child: ElevatedButton(
+                        //       onPressed:(){ signup(Email.text.toString(),Password.text.toString());},
+                        //       child:const Text('SignUp',style: TextStyle(color: Colors.white),),style: const ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.green))),
+                        // ),
                       ],
                     ),
                   ],

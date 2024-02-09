@@ -14,6 +14,9 @@ class Myfirstpage extends StatefulWidget {
 
 class MyfirstpageState extends State<Myfirstpage> {
   final session = Supabase.instance.client.auth.currentSession;
+  Future<void> Logout()async{
+    await Supabase.instance.client.auth.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +33,9 @@ class MyfirstpageState extends State<Myfirstpage> {
         centerTitle: true,
         actions: [
           if (session == null)
-            GestureDetector(
+            InkWell(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const LoginPage(),
@@ -47,15 +50,9 @@ class MyfirstpageState extends State<Myfirstpage> {
               ),
             ),
           if (session != null)
-            GestureDetector(
-              onTap: () {
-
-                setState(() async{
-                 await Supabase.instance.client.auth
-                      .signOut()
-                  //
-                      ;
-                });
+            InkWell(
+              onTap: (){
+                Logout();
               },
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
