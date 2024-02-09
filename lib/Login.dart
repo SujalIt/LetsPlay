@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final supabase = Supabase.instance.client;
   Future<void> signin(String email,String password)async{
         await supabase.auth.signInWithPassword(password: password,email: email,).then(
-                (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Myfirstpage(),)));
+                (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyfirstPage(),)));
     }
   Future<void> signup(String email,String password)async{
     try{

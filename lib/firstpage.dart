@@ -5,17 +5,20 @@ import 'package:letsplay/redirecting_page.dart';
 import 'package:letsplay/searchBarWithApi.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class Myfirstpage extends StatefulWidget {
-  const Myfirstpage({super.key});
+class MyfirstPage extends StatefulWidget {
+  const MyfirstPage({super.key});
 
   @override
-  State<Myfirstpage> createState() => MyfirstpageState();
+  State<MyfirstPage> createState() => MyfirstPageState();
 }
 
-class MyfirstpageState extends State<Myfirstpage> {
+class MyfirstPageState extends State<MyfirstPage> {
   final session = Supabase.instance.client.auth.currentSession;
-  Future<void> Logout()async{
+  Future<void> logOut()async{
     await Supabase.instance.client.auth.signOut();
+    setState(() {
+
+    });
   }
 
   @override
@@ -52,7 +55,7 @@ class MyfirstpageState extends State<Myfirstpage> {
           if (session != null)
             InkWell(
               onTap: (){
-                Logout();
+                logOut();
               },
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
