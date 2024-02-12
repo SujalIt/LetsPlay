@@ -5,28 +5,25 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:share_plus/share_plus.dart';
-
 import 'datepiker.dart';
 
 
-class information_Screen extends StatefulWidget {
+class InformationScreen extends StatefulWidget {
   LetsPlay groundOfObject;
 
-  information_Screen({
+  InformationScreen({
     super.key,
     required this.groundOfObject,
   });
 
   @override
-  State<information_Screen> createState() => _information_ScreenState();
+  State<InformationScreen> createState() => _InformationScreenState();
 }
 
-class _information_ScreenState extends State<information_Screen> {
+class _InformationScreenState extends State<InformationScreen> {
   List<Widget> images = [];
   var no = 0;
   List<String> timeList = [];
-  Map<String,String>slotBooking={};
-
 
   sloteBooking(DateTime now, DateTime end, int interwall) {
     DateTime currentTime = now;
@@ -37,16 +34,22 @@ class _information_ScreenState extends State<information_Screen> {
     }
   }
 
+  Map<String, bool> slotBooked = {};
+
   @override
   void initState() {
     super.initState();
-    for(String items in timeList){
-      slotBooking[items]=items;
-    }
-    final DateTime startTime = DateTime(2024, 2, 9, 0, 0); // Example start time
-    final DateTime endTime = DateTime(2024, 2, 9, 24, 0); // Example end time
-    final int intervalMinutes = widget.groundOfObject.slotInternval?.toInt() ?? 0; // Example interval in minutes
+    final DateTime today = DateTime.now();
+    final DateTime startTime =
+        DateTime(today.year, today.month, today.day); // Example start time
+    final DateTime endTime =
+        startTime.add(const Duration(days: 1)); // Example end time
+    final int intervalMinutes = widget.groundOfObject.slotInternval?.toInt() ??
+        0; // Example interval in minutes
     sloteBooking(startTime, endTime, intervalMinutes);
+    slotBooked =
+        Map.fromIterable(timeList, key: (item) => item, value: (item) => true);
+    print(slotBooked);
     for (var i in widget.groundOfObject.offerPics!.photos!) {
       images.add(Image.network(
         i,
@@ -61,7 +64,7 @@ class _information_ScreenState extends State<information_Screen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 95, 251, 100),
+        backgroundColor: const Color.fromARGB(255, 95, 251, 100),
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
@@ -187,15 +190,17 @@ class _information_ScreenState extends State<information_Screen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(height: 5,),
-                Datepiker(),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Datepiker(),
                 GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3, childAspectRatio: 2.0),
-                    itemCount: timeList.length,
+                    itemCount: slotBooked.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(7.0),
@@ -216,7 +221,7 @@ class _information_ScreenState extends State<information_Screen> {
                             ))),
                       );
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 const Text(

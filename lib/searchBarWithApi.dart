@@ -180,7 +180,7 @@ class _apiIntigration extends State<apiIntigration> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                information_Screen(
+                                                InformationScreen(
                                                     groundOfObject:
                                                         result[index]),
                                           ));
