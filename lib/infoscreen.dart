@@ -8,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 import 'datepiker.dart';
 
 
+// ignore: must_be_immutable
 class InformationScreen extends StatefulWidget {
   LetsPlay groundOfObject;
 

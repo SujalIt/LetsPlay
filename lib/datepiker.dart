@@ -20,6 +20,7 @@ class _DatepikerState extends State<Datepiker> {
       receivedDate = value.toString();
       currentDate = value;
       setState(() {});
+      return null;
     });
     return datepikeker;
   }

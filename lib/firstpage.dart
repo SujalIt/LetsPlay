@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/Login.dart';
 import 'package:letsplay/p1image.dart';
-import 'package:letsplay/redirecting_page.dart';
 import 'package:letsplay/searchBarWithApi.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
