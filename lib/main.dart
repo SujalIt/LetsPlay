@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/firstpage.dart';
-import 'package:letsplay/redirecting_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 

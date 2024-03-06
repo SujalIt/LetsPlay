@@ -1,7 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:letsplay/Login.dart';
 import 'package:letsplay/p1image.dart';
-import 'package:letsplay/redirecting_page.dart';
 import 'package:letsplay/searchBarWithApi.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -13,12 +15,15 @@ class Myfirstpage extends StatefulWidget {
 }
 
 class MyfirstpageState extends State<Myfirstpage> {
+
+
   final session = Supabase.instance.client.auth.currentSession;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 95, 251, 100),
         title: const Text(
           'LetsPlay',
@@ -49,12 +54,9 @@ class MyfirstpageState extends State<Myfirstpage> {
           if (session != null)
             GestureDetector(
               onTap: () {
-
-                setState(() async{
-                 await Supabase.instance.client.auth
-                      .signOut()
-                  //
-                      ;
+                setState(() {
+                  Supabase.instance.client.auth.signOut();
+                  Navigator.popUntil(context, ModalRoute.withName('f'));
                 });
               },
               child: const Padding(

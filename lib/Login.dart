@@ -21,11 +21,13 @@ class _LoginPageState extends State<LoginPage>
           password: password,
           email: email,
         )
-        .then((value) => Navigator.pushReplacement(
+        .then((value) => 
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => const Myfirstpage(),
-            )));
+            ))
+            );
   }
 
   Future<void> signup(String email, String password) async {
@@ -42,6 +44,15 @@ class _LoginPageState extends State<LoginPage>
   }
 
   late AnimationController _controller;
+
+@override
+  void dispose() {
+    // ignore: unnecessary_null_comparison
+    if(_controller != null){
+      _controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -129,13 +140,13 @@ class _LoginPageState extends State<LoginPage>
                             signin(Email.text.toString(),
                                 Password.text.toString());
                           },
+                          style: const ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll(Colors.green)),
                           child: const Text(
                             'LogIn',
                             style: TextStyle(color: Colors.white),
-                          ),
-                          style: const ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Colors.green))),
+                          )),
                     ),
                     const SizedBox(
                       width: 20,
@@ -147,13 +158,13 @@ class _LoginPageState extends State<LoginPage>
                             signup(Email.text.toString(),
                                 Password.text.toString());
                           },
+                          style: const ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll(Colors.green)),
                           child: const Text(
                             'SignUp',
                             style: TextStyle(color: Colors.white),
-                          ),
-                          style: const ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Colors.green))),
+                          )),
                     ),
                   ],
                 ),
