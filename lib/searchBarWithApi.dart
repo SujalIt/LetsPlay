@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'infoscreen.dart';
 
 class apiIntigration extends StatefulWidget {
@@ -16,7 +17,7 @@ class apiIntigration extends StatefulWidget {
 class _apiIntigration extends State<apiIntigration> {
   List<LetsPlay> ApiList = [];
 
-  Future<List<LetsPlay>> ground() async {
+  Future<List<LetsPlay>> fetchGrounds() async {
     var data;
     final response = await http.get(
         Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor'),
@@ -36,8 +37,33 @@ class _apiIntigration extends State<apiIntigration> {
     }
   }
 
+  final user = Supabase.instance.client.auth.currentUser?.id;
+  
+  List<LetsPlay> manager_data = [];
+
+  Future<List<LetsPlay>> fetchMyGrounds() async {
+    var my_data;
+    final my_res = await http.get(
+      Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&created_by=eq.$user'),
+      headers: {
+        "apikey" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU"
+      },
+    );
+
+    if (my_res.statusCode == 200) {
+      my_data = jsonDecode(my_res.body.toString());
+      for (Map i in my_data) {
+         manager_data.add(LetsPlay.fromJson(i));
+    } return manager_data;
+    }else {
+      return manager_data;
+    }
+  }
+
   List<LetsPlay> result = [];
 
+  final session = Supabase.instance.client.auth.currentSession;
+  
   @override
   void initState() {
     loadgrounds();
@@ -45,7 +71,11 @@ class _apiIntigration extends State<apiIntigration> {
   }
 
   void loadgrounds() async {
-    result = await ground();
+    if (session != null){
+    result = await fetchMyGrounds();
+    } else {
+    result = await fetchGrounds();
+    }
     setState(() {});
   }
 

@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "f",
       routes: {
-        "f":(context) => const MyfirstPage(),
+        "f":(context) => const Myfirstpage(),
       },
       debugShowCheckedModeBanner: false,
     );

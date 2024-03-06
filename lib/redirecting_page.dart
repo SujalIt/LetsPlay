@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/Login.dart';
-import 'package:letsplay/firstpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:letsplay/firstpage.dart';
 
 class RedirectingPage extends StatefulWidget {
   const RedirectingPage({super.key});
@@ -22,7 +22,7 @@ class _RedirectingPageState extends State<RedirectingPage> {
     final session= supabase.auth.currentSession;
     if(!mounted)return;
     if (session==null){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyfirstPage(),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Myfirstpage(),));
     }else{
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const LoginPage(),));
     }

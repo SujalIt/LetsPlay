@@ -4,26 +4,23 @@ import 'package:letsplay/p1image.dart';
 import 'package:letsplay/searchBarWithApi.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class MyfirstPage extends StatefulWidget {
-  const MyfirstPage({super.key});
+class Myfirstpage extends StatefulWidget {
+  const Myfirstpage({super.key});
 
   @override
-  State<MyfirstPage> createState() => MyfirstPageState();
+  State<Myfirstpage> createState() => MyfirstpageState();
 }
 
-class MyfirstPageState extends State<MyfirstPage> {
-  final session = Supabase.instance.client.auth.currentSession;
-  Future<void> logOut()async{
-    await Supabase.instance.client.auth.signOut();
-    setState(() {
+class MyfirstpageState extends State<Myfirstpage> {
 
-    });
-  }
+
+  final session = Supabase.instance.client.auth.currentSession;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 95, 251, 100),
         title: const Text(
           'LetsPlay',
@@ -35,9 +32,9 @@ class MyfirstPageState extends State<MyfirstPage> {
         centerTitle: true,
         actions: [
           if (session == null)
-            InkWell(
+            GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const LoginPage(),
@@ -52,9 +49,12 @@ class MyfirstPageState extends State<MyfirstPage> {
               ),
             ),
           if (session != null)
-            InkWell(
-              onTap: (){
-                logOut();
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  Supabase.instance.client.auth.signOut();
+                  Navigator.popUntil(context, ModalRoute.withName('f'));
+                });
               },
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
