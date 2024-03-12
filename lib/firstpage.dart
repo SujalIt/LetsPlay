@@ -32,38 +32,34 @@ class MyfirstpageState extends State<Myfirstpage> {
         centerTitle: true,
         actions: [
           if (session == null)
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ));
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Icon(
-                  Icons.account_circle_sharp,
-                  color: Colors.black,
-                ),
-              ),
-            ),
+            IconButton(
+              onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage(),
+                )
+              );
+            }, icon: const Padding(
+              padding: EdgeInsets.all(10.0),
+              child:  Icon(
+                Icons.account_circle_sharp,
+                semanticLabel: 'Login',
+                color: Colors.black,),
+            )),
           if (session != null)
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  Supabase.instance.client.auth.signOut();
-                  Navigator.popUntil(context, ModalRoute.withName('f'));
-                });
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Icon(
-                  Icons.logout_rounded,
-                  color: Colors.black,
-                ),
+            IconButton(onPressed: (){
+              setState(() {
+                Supabase.instance.client.auth.signOut();
+                Navigator.popUntil(context, ModalRoute.withName('f'));
+              });
+            }, icon: const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Icon(
+                Icons.logout_rounded,
+                semanticLabel: 'Logout',
+                color: Colors.black,),
+            )
               ),
-            ),
         ],
       ),
       body: const Padding(
