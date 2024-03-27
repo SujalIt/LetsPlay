@@ -25,6 +25,7 @@ class _InformationScreenState extends State<InformationScreen> {
   List<Widget> images = [];
   var no = 0;
   List<String> timeList = [];
+  List<int>numbers=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
   sloteBooking(DateTime now, DateTime end, int interwall) {
     DateTime currentTime = now;
@@ -58,6 +59,8 @@ class _InformationScreenState extends State<InformationScreen> {
         fit: BoxFit.fitWidth,
       ));
     }
+
+
   }
 
   @override
@@ -203,6 +206,7 @@ class _InformationScreenState extends State<InformationScreen> {
                             crossAxisCount: 3, childAspectRatio: 2.0),
                     itemCount: slotBooked.length,
                     itemBuilder: (context, index) {
+
                       return Padding(
                         padding: const EdgeInsets.all(7.0),
                         child: Container(
@@ -214,12 +218,17 @@ class _InformationScreenState extends State<InformationScreen> {
                                 width: 2,
                               ),
                             ),
+
                             child: Center(
-                                child: Text(
-                              timeList[index],
+                                child: numbers[index]%2==0?Text(
+                              'booked',
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 15),
-                            ))),
+                            ):Text(
+                                  'Available',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500, fontSize: 15),
+                                ))),
                       );
                     }),
                 const SizedBox(
