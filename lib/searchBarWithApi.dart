@@ -15,7 +15,7 @@ class apiIntigration extends StatefulWidget {
 }
 
 class _apiIntigration extends State<apiIntigration> {
-  List<LetsPlay> ApiList = [];
+  List<LetsPlay> apiList = [];
 
   Future<List<LetsPlay>> fetchGrounds() async {
     var data;
@@ -29,11 +29,11 @@ class _apiIntigration extends State<apiIntigration> {
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
       for (Map i in data) {
-        ApiList.add(LetsPlay.fromJson(i));
+        apiList.add(LetsPlay.fromJson(i));
       }
-      return ApiList;
+      return apiList;
     } else {
-      return ApiList;
+      return apiList;
     }
   }
 
@@ -43,10 +43,11 @@ class _apiIntigration extends State<apiIntigration> {
 
   Future<List<LetsPlay>> fetchMyGrounds() async {
     var my_data;
+    var API_KEY= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU";
     final my_res = await http.get(
       Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&created_by=eq.$user'),
       headers: {
-        "apikey" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU"
+        "apikey" : API_KEY
       },
     );
 
@@ -81,9 +82,9 @@ class _apiIntigration extends State<apiIntigration> {
 
   updatedlist(String keyword) {
     if (keyword.isEmpty) {
-      result = ApiList;
+      result = apiList;
     } else {
-      result = ApiList.where((users) =>
+      result = apiList.where((users) =>
           users.name!.toLowerCase().contains(keyword.toLowerCase()) ||
           users.addressLine1!.toLowerCase().contains(keyword.toLowerCase()) ||
           users.addressLine2!.toLowerCase().contains(keyword.toLowerCase()) ||
@@ -153,7 +154,7 @@ class _apiIntigration extends State<apiIntigration> {
                   child: Row(
                     children: [
                       Container(
-                        height: 108,
+                        height: 115,
                         width: 137,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
@@ -180,11 +181,13 @@ class _apiIntigration extends State<apiIntigration> {
                               ),
                               Text(
                                 "${result[index].addressLine1}",
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w600),
                               ),
                               Text(
                                 "${result[index].addressLine2}",
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -201,7 +204,7 @@ class _apiIntigration extends State<apiIntigration> {
                                 height: 3,
                               ),
                               SizedBox(
-                                height: 30,
+                                height: 28,
                                 width: 152,
                                 child: ElevatedButton(
                                     onPressed: () {
@@ -225,6 +228,7 @@ class _apiIntigration extends State<apiIntigration> {
                                         )),
                                     child: const Text(
                                       'Check availability',
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 13,
