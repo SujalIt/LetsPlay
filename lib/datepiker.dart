@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Datepiker extends StatefulWidget {
-  const Datepiker({super.key});
+  Function(DateTime?)? dateCall;
+  Datepiker({super.key, this.dateCall});
 
   @override
   State<Datepiker> createState() => _DatepikerState();
@@ -19,6 +20,7 @@ class _DatepikerState extends State<Datepiker> {
         .then((value) {
       receivedDate = value.toString();
       currentDate = value;
+      widget.dateCall!(currentDate);
       setState(() {});
       return null;
     });
@@ -30,7 +32,7 @@ class _DatepikerState extends State<Datepiker> {
   @override
   void initState() {
     super.initState();
-    currentDate = DateTime.now();
+     currentDate = DateTime.now();
   }
   @override
   Widget build(BuildContext context) {
@@ -77,6 +79,7 @@ class _DatepikerState extends State<Datepiker> {
                           .format(days!.add(const Duration(days: 1)));
                   currentDate =
                       DateTime.parse(receivedDate.toString());
+                  widget.dateCall!(currentDate);
                   setState(() {});
                 },
                 style: const ButtonStyle(
