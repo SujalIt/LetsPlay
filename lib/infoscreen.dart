@@ -40,7 +40,6 @@ class _InformationScreenState extends State<InformationScreen> {
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
       for (Map<String ,dynamic> i in data) {
-        print('hello');
         bookings.add(Booking.fromJson(i));
       } return bookings;
     }else {
@@ -56,26 +55,32 @@ class _InformationScreenState extends State<InformationScreen> {
     }
   }
 
-  loadingBookedSlots(){
-    for( Booking slot in timeList){
-      for(Booking bookedSlot in bookings){
-        String? bookedSlotTrim=bookedSlot.startDateTime?.trim();
-        String? booked=bookedSlotTrim?.substring(0, bookedSlotTrim.length - 3);
-        String? time=slot.startDateTime;
-        if(time==booked){
-            Booking().isBooked==true;
-        }else {}
+  loadingBookedSlots() {
+    for (int i = 0; i < timeList.length; i++) {
+      for (int j =0; j < bookings.length; j++) {
+        String? bookedSlotTrim = bookings[j].startDateTime?.trim();
+        String? booked = bookedSlotTrim?.substring(
+            0, bookedSlotTrim.length - 3);
+        String? time = timeList[i].startDateTime;
+        if (time == booked) {
+          print("true");
+          timeList[i].isBooked = true;
+        }
       }
     }
+  }
+  gettingSlots()async{
+    await getBookedSlots();
+    loadingBookedSlots();
+
   }
 
   @override
   void initState() {
-    loadingBookedSlots();
-    getBookedSlots();
     super.initState();
 
-     final DateTime today = DateTime.now();
+    gettingSlots();
+    final DateTime today = DateTime.now();
     final DateTime startTime =
     DateTime(today.year, today.month, today.day); // Example start time
     final DateTime endTime =
@@ -83,6 +88,9 @@ class _InformationScreenState extends State<InformationScreen> {
     final int intervalMinutes = widget.groundOfObject.slotInternval?.toInt() ??
         0; // Example interval in minutes
     sloteBooking(startTime, endTime, intervalMinutes);
+    loadingBookedSlots();
+
+
     for (var i in widget.groundOfObject.offerPics!.photos!) {
       images.add(Image.network(
         i,
@@ -242,7 +250,7 @@ class _InformationScreenState extends State<InformationScreen> {
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             style: BorderStyle.solid,
-                            color:Booking().isBooked!?Colors.red:Colors.green,
+                            color:timeList[index].isBooked!?Colors.red:Colors.green,
                             width: 2,
                           ),
                         ),
