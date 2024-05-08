@@ -63,10 +63,10 @@ class _InformationScreenState extends State<InformationScreen> {
 
   loadingBookedSlots() {
     for (int i = 0; i < timeList.length; i++) {
-      for (int j =0; j < bookings.length; j++) {
+      for (int j = 0; j < bookings.length; j++) {
         String? bookedSlotTrim = bookings[j].startDateTime?.trim();
-        String? booked = bookedSlotTrim?.substring(
-            0, bookedSlotTrim.length - 3);
+        String? booked =
+            bookedSlotTrim?.substring(0, bookedSlotTrim.length - 3);
         String? time = timeList[i].startDateTime;
         if (time == booked) {
           timeList[i].isBooked = true;
@@ -250,86 +250,146 @@ class _InformationScreenState extends State<InformationScreen> {
                     gettingSlots();
                   },
                 ),
-                  GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3, childAspectRatio: 2.0),
-                      itemCount: timeList.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {if(widget.groundOfObject.createdBy!=null){
+                GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, childAspectRatio: 2.0),
+                    itemCount: timeList.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          if (widget.groundOfObject.createdBy != null) {
                             if (user == widget.groundOfObject.createdBy) {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Expanded(
-                                    child: AlertDialog(
-                                      title: timeList[index].isBooked! 
-                                      ? const Text(
-                                        "Please tap on UNBOOK to cancel slot!",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600),
-                                      ) 
-                                      : const Text("Please tap on BOOK to confirm slot!",
-                                      style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600),),
-                                      actions: [
-                                        Row(
-                                          children: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: timeList[index].isBooked! 
-                                              ? const Text("UNBOOK") 
-                                              : const Text("BOOK"),
+                                  return AlertDialog(
+                                    title: timeList[index].isBooked!
+                                        ? const Text(
+                                            "Please tap on UNBOOK to cancel slot!",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          )
+                                        : const Text(
+                                            "Please tap on BOOK to confirm slot!",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                    content: const Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text("Time : 06:45:12"),
+                                        Text("Date : 05-08-2024"),
+                                        TextField(
+                                          maxLines: 3,
+                                          decoration: InputDecoration(
+                                            hintText: "Write notes...",
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
                                             ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text('CANCEL'),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(width: 1),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ],
                                     ),
+                                    actions: [
+                                      Row(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () async {
+                                              String newDay =
+                                                  DateFormat("yyyy-MM-dd")
+                                                      .format(today!);
+                                              String stTime = DateFormat(
+                                                      "yyyy-MM-dd HH:mm:ss")
+                                                  .format(DateTime.parse(
+                                                      "$newDay ${timeList[index].startDateTime}:00"));
+                                              print(
+                                                  "Date time ST : ${stTime.toString()}");
+                                              DateTime afterAddSt = DateTime
+                                                      .parse(stTime)
+                                                  .add(Duration(
+                                                      minutes: widget
+                                                              .groundOfObject
+                                                              .slotinternval
+                                                              ?.toInt() ??
+                                                          0));
+                                              await Supabase.instance.client
+                                                  .from('bookings')
+                                                  .insert([
+                                                {
+                                                  "created_at":
+                                                      DateFormat("yyyy-MM-dd")
+                                                          .format(today!),
+                                                  "vendor_id":
+                                                      widget.groundOfObject.id,
+                                                  "start_date_time":
+                                                      timeList[index]
+                                                          .startDateTime,
+                                                  "end_date_time":
+                                                      DateFormat("HH:mm:ss")
+                                                          .format(afterAddSt),
+                                                  "notes": "hello",
+                                                  "booking_date":
+                                                      DateFormat("yyyy-MM-dd")
+                                                          .format(today!)
+                                                }
+                                              ]).select();
+                                            },
+                                            child: timeList[index].isBooked!
+                                                ? const Text("UNBOOK")
+                                                : const Text("BOOK"),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('CANCEL'),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   );
                                 },
                               );
                             }
                           }
-
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(7.0),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    style: BorderStyle.solid,
-                                    color: timeList[index].isBooked!
-                                        ? Colors.red
-                                        : Colors.green,
-                                    width: 2,
-                                  ),
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(7.0),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  style: BorderStyle.solid,
+                                  color: timeList[index].isBooked!
+                                      ? Colors.red
+                                      : Colors.green,
+                                  width: 2,
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    timeList[index].startDateTime.toString(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15),
-                                  ),
-                                )),
-                          ),
-                        );
-                      }),
-
+                              ),
+                              child: Center(
+                                child: Text(
+                                  timeList[index].startDateTime.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 15),
+                                ),
+                              )),
+                        ),
+                      );
+                    }),
                 const SizedBox(
                   height: 5,
                 ),
