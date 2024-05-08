@@ -1,19 +1,20 @@
 import 'dart:convert';
-/// id : 2
+/// id : 3
 /// game_id : 1
-/// name : "SK grounds"
-/// address_line1 : "Vandematram"
-/// address_line2 : "Opp. SBI bank"
-/// city : "ahmedabad"
-/// state : "gujarat"
-/// phone : 9988776655
-/// profile_pic : "https://5.imimg.com/data5/ANDROID/Default/2023/3/296174866/ET/MV/DT/25720420/product-jpeg.jpg"
-/// offer_pics : {"photos":["https://5.imimg.com/data5/ANDROID/Default/2023/3/296174866/ET/MV/DT/25720420/product-jpeg.jpg","https://5.imimg.com/data5/ANDROID/Default/2021/1/MJ/HS/RL/118190257/product-jpeg.jpg"]}
-/// ground_pics : {"photos":["https://5.imimg.com/data5/ANDROID/Default/2023/3/296174866/ET/MV/DT/25720420/product-jpeg.jpg","https://5.imimg.com/data5/ANDROID/Default/2021/1/MJ/HS/RL/118190257/product-jpeg.jpg"]}
-/// pricing : {"photos":["https://5.imimg.com/data5/ANDROID/Default/2023/3/296174866/ET/MV/DT/25720420/product-jpeg.jpg","https://5.imimg.com/data5/ANDROID/Default/2021/1/MJ/HS/RL/118190257/product-jpeg.jpg"]}
-/// slot_internval : 30
-/// created_at : "2024-01-11T15:10:13"
-/// updated_at : "2024-01-11T15:11:00"
+/// name : "Powerplay Box Cricket"
+/// address_line1 : "Shilaj Road,"
+/// address_line2 : "(Opposite Swagat Bagan Villa)"
+/// city : "Ahmedabad "
+/// state : "Gujarat"
+/// phone : 7041841692
+/// profile_pic : "https://lh3.googleusercontent.com/p/AF1QipOJEbVNY5XReVWweytpjIUYbbM9B1s2gOI-mUHG=s1360-w1360-h1020"
+/// offer_pics : {"photos":["https://lh3.googleusercontent.com/p/AF1QipNfPon2F4rJCvORfhSAxs72JFb7zSdp6kkshCI5=s1360-w1360-h1020","https://lh3.googleusercontent.com/p/AF1QipPV_luwXug_XR5RvQLFingS-7_PVXEH4vuqduoG=s1360-w1360-h1020"]}
+/// ground_pics : null
+/// pricing : null
+/// slotinternval : 120
+/// created_at : "2024-02-02T13:15:03"
+/// updated_at : "2024-02-02T13:14:55"
+/// created_by : "5c04ecda-a880-4cc6-9b96-08af8d029ca6"
 
 LetsPlay letsPlayFromJson(String str) => LetsPlay.fromJson(json.decode(str));
 String letsPlayToJson(LetsPlay data) => json.encode(data.toJson());
@@ -29,11 +30,12 @@ class LetsPlay {
       num? phone, 
       String? profilePic, 
       OfferPics? offerPics, 
-      GroundPics? groundPics, 
-      Pricing? pricing, 
-      num? slotInternval, 
+      dynamic groundPics, 
+      dynamic pricing, 
+      num? slotinternval, 
       String? createdAt, 
-      String? updatedAt,}){
+      String? updatedAt, 
+      String? createdBy,}){
     _id = id;
     _gameId = gameId;
     _name = name;
@@ -46,9 +48,10 @@ class LetsPlay {
     _offerPics = offerPics;
     _groundPics = groundPics;
     _pricing = pricing;
-    _slotInternval = slotInternval;
+    _slotinternval = slotinternval;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
+    _createdBy = createdBy;
 }
 
   LetsPlay.fromJson(dynamic json) {
@@ -62,11 +65,12 @@ class LetsPlay {
     _phone = json['phone'];
     _profilePic = json['profile_pic'];
     _offerPics = json['offer_pics'] != null ? OfferPics.fromJson(json['offer_pics']) : null;
-    _groundPics = json['ground_pics'] != null ? GroundPics.fromJson(json['ground_pics']) : null;
-    _pricing = json['pricing'] != null ? Pricing.fromJson(json['pricing']) : null;
-    _slotInternval = json['slotinternval'];
+    _groundPics = json['ground_pics'];
+    _pricing = json['pricing'];
+    _slotinternval = json['slotinternval'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
+    _createdBy = json['created_by'];
   }
   num? _id;
   num? _gameId;
@@ -78,11 +82,12 @@ class LetsPlay {
   num? _phone;
   String? _profilePic;
   OfferPics? _offerPics;
-  GroundPics? _groundPics;
-  Pricing? _pricing;
-  num? _slotInternval;
+  dynamic _groundPics;
+  dynamic _pricing;
+  num? _slotinternval;
   String? _createdAt;
   String? _updatedAt;
+  String? _createdBy;
 LetsPlay copyWith({  num? id,
   num? gameId,
   String? name,
@@ -93,11 +98,12 @@ LetsPlay copyWith({  num? id,
   num? phone,
   String? profilePic,
   OfferPics? offerPics,
-  GroundPics? groundPics,
-  Pricing? pricing,
-  num? slotInternval,
+  dynamic groundPics,
+  dynamic pricing,
+  num? slotinternval,
   String? createdAt,
   String? updatedAt,
+  String? createdBy,
 }) => LetsPlay(  id: id ?? _id,
   gameId: gameId ?? _gameId,
   name: name ?? _name,
@@ -110,9 +116,10 @@ LetsPlay copyWith({  num? id,
   offerPics: offerPics ?? _offerPics,
   groundPics: groundPics ?? _groundPics,
   pricing: pricing ?? _pricing,
-  slotInternval: slotInternval ?? _slotInternval,
+  slotinternval: slotinternval ?? _slotinternval,
   createdAt: createdAt ?? _createdAt,
   updatedAt: updatedAt ?? _updatedAt,
+  createdBy: createdBy ?? _createdBy,
 );
   num? get id => _id;
   num? get gameId => _gameId;
@@ -124,11 +131,12 @@ LetsPlay copyWith({  num? id,
   num? get phone => _phone;
   String? get profilePic => _profilePic;
   OfferPics? get offerPics => _offerPics;
-  GroundPics? get groundPics => _groundPics;
-  Pricing? get pricing => _pricing;
-  num? get slotInternval => _slotInternval;
+  dynamic get groundPics => _groundPics;
+  dynamic get pricing => _pricing;
+  num? get slotinternval => _slotinternval;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
+  String? get createdBy => _createdBy;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -144,75 +152,18 @@ LetsPlay copyWith({  num? id,
     if (_offerPics != null) {
       map['offer_pics'] = _offerPics?.toJson();
     }
-    if (_groundPics != null) {
-      map['ground_pics'] = _groundPics?.toJson();
-    }
-    if (_pricing != null) {
-      map['pricing'] = _pricing?.toJson();
-    }
-    map['slotinternval'] = _slotInternval;
+    map['ground_pics'] = _groundPics;
+    map['pricing'] = _pricing;
+    map['slotinternval'] = _slotinternval;
     map['created_at'] = _createdAt;
     map['updated_at'] = _updatedAt;
+    map['created_by'] = _createdBy;
     return map;
   }
 
 }
 
-/// photos : ["https://5.imimg.com/data5/ANDROID/Default/2023/3/296174866/ET/MV/DT/25720420/product-jpeg.jpg","https://5.imimg.com/data5/ANDROID/Default/2021/1/MJ/HS/RL/118190257/product-jpeg.jpg"]
-
-Pricing pricingFromJson(String str) => Pricing.fromJson(json.decode(str));
-String pricingToJson(Pricing data) => json.encode(data.toJson());
-class Pricing {
-  Pricing({
-      List<String>? photos,}){
-    _photos = photos;
-}
-
-  Pricing.fromJson(dynamic json) {
-    _photos = json['photos'] != null ? json['photos'].cast<String>() : [];
-  }
-  List<String>? _photos;
-Pricing copyWith({  List<String>? photos,
-}) => Pricing(  photos: photos ?? _photos,
-);
-  List<String>? get photos => _photos;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['photos'] = _photos;
-    return map;
-  }
-
-}
-
-/// photos : ["https://5.imimg.com/data5/ANDROID/Default/2023/3/296174866/ET/MV/DT/25720420/product-jpeg.jpg","https://5.imimg.com/data5/ANDROID/Default/2021/1/MJ/HS/RL/118190257/product-jpeg.jpg"]
-
-GroundPics groundPicsFromJson(String str) => GroundPics.fromJson(json.decode(str));
-String groundPicsToJson(GroundPics data) => json.encode(data.toJson());
-class GroundPics {
-  GroundPics({
-      List<String>? photos,}){
-    _photos = photos;
-}
-
-  GroundPics.fromJson(dynamic json) {
-    _photos = json['photos'] != null ? json['photos'].cast<String>() : [];
-  }
-  List<String>? _photos;
-GroundPics copyWith({  List<String>? photos,
-}) => GroundPics(  photos: photos ?? _photos,
-);
-  List<String>? get photos => _photos;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['photos'] = _photos;
-    return map;
-  }
-
-}
-
-/// photos : ["https://5.imimg.com/data5/ANDROID/Default/2023/3/296174866/ET/MV/DT/25720420/product-jpeg.jpg","https://5.imimg.com/data5/ANDROID/Default/2021/1/MJ/HS/RL/118190257/product-jpeg.jpg"]
+/// photos : ["https://lh3.googleusercontent.com/p/AF1QipNfPon2F4rJCvORfhSAxs72JFb7zSdp6kkshCI5=s1360-w1360-h1020","https://lh3.googleusercontent.com/p/AF1QipPV_luwXug_XR5RvQLFingS-7_PVXEH4vuqduoG=s1360-w1360-h1020"]
 
 OfferPics offerPicsFromJson(String str) => OfferPics.fromJson(json.decode(str));
 String offerPicsToJson(OfferPics data) => json.encode(data.toJson());
