@@ -70,6 +70,7 @@ class _InformationScreenState extends State<InformationScreen> {
             0, bookedSlotTrim.length - 3);
         String? time = timeList[i].startDateTime;
         if (time == booked) {
+          print("true");
           timeList[i].isBooked = true;
         }
       }
@@ -83,7 +84,10 @@ class _InformationScreenState extends State<InformationScreen> {
   }
 
   gettingSlots() async {
-    await getBookedSlots();
+    print("============gettingSlots===========");
+    var resultBooking = await getBookedSlots();
+    print("resultBooking");
+    print("$resultBooking");
     loadingBookedSlots();
   }
 
