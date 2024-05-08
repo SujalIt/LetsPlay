@@ -35,7 +35,7 @@ class _InformationScreenState extends State<InformationScreen> {
   Future<List<Booking>> getBookedSlots() async {
     var next = DateFormat("yyyy-MM-dd").format(today!);
 
-    final user = Supabase.instance.client.auth.currentUser?.id;
+    final id = Supabase.instance.client.auth.currentUser?.id;
 
     final response = await http.get(
       Uri.parse(
@@ -66,14 +66,12 @@ class _InformationScreenState extends State<InformationScreen> {
 
   loadingBookedSlots() {
     for (int i = 0; i < timeList.length; i++) {
-      timeList[i].isBooked = false;
-      for (int j = 0; j < bookings.length; j++) {
+      for (int j =0; j < bookings.length; j++) {
         String? bookedSlotTrim = bookings[j].startDateTime?.trim();
-        String? booked =
-            bookedSlotTrim?.substring(0, bookedSlotTrim.length - 3);
+        String? booked = bookedSlotTrim?.substring(
+            0, bookedSlotTrim.length - 3);
         String? time = timeList[i].startDateTime;
         if (time == booked) {
-          print("true");
           timeList[i].isBooked = true;
         }
       }
@@ -87,10 +85,7 @@ class _InformationScreenState extends State<InformationScreen> {
   }
 
   gettingSlots() async {
-    print("============gettingSlots===========");
-    var resultBooking = await getBookedSlots();
-    print("resultBooking");
-    print("$resultBooking");
+    await getBookedSlots();
     loadingBookedSlots();
   }
 
