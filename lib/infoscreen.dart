@@ -277,16 +277,24 @@ class _InformationScreenState extends State<InformationScreen> {
                                             "Please tap on BOOK to confirm slot!",
                                             style: TextStyle(
                                                 fontSize: 18,
-                                                fontWeight: FontWeight.w600),
+                                                fontWeight: FontWeight.bold,),
                                           ),
-                                    content: const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                    content:  Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text("Time : 06:45:12"),
-                                        Text("Date : 05-08-2024"),
-                                        TextField(
+                                         Text("Date : ${DateFormat("yyyy-MM-dd")
+                                                     .format(today!)}",
+                                         style: const TextStyle(
+                                           fontWeight: FontWeight.bold,
+                                           fontSize: 17),),
+                                        Text("Time : ${DateFormat("HH:mm:ss")
+                                                        .format(today!)}",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17),),
+                                        const SizedBox(height: 10,),
+                                        const TextField(
                                           maxLines: 3,
                                           decoration: InputDecoration(
                                             hintText: "Write notes...",
@@ -306,6 +314,12 @@ class _InformationScreenState extends State<InformationScreen> {
                                     actions: [
                                       Row(
                                         children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('CANCEL'),
+                                          ),
                                           TextButton(
                                             onPressed: () async {
                                               String newDay =
@@ -351,12 +365,6 @@ class _InformationScreenState extends State<InformationScreen> {
                                                 ? const Text("UNBOOK")
                                                 : const Text("BOOK"),
                                           ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('CANCEL'),
-                                          ),
                                         ],
                                       ),
                                     ],
@@ -393,12 +401,15 @@ class _InformationScreenState extends State<InformationScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  'Pricing and Offers',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
+                const SizedBox(
+                  height: 37,
+                  child: Text(
+                    'Pricing and Offers',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
                 Column(
