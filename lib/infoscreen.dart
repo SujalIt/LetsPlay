@@ -267,20 +267,79 @@ class _InformationScreenState extends State<InformationScreen> {
                                 builder: (BuildContext context) {
                                   return Expanded(
                                     child: AlertDialog(
-                                      title: const Text(
-                                        "Please tap Conformed to Book slot",
+                                      title: timeList[index].isBooked!
+                                          ? const Text(
+                                        "Please tap on UNBOOK to cancel slot!",
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600),
+                                      )
+                                          : const Text(
+                                        "Please tap on BOOK to confirm slot!",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,),
+                                      ),
+                                      content:  Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("Date : ${DateFormat("yyyy-MM-dd")
+                                              .format(today!)}",
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),),
+                                          Text("Time : ${DateFormat("HH:mm:ss")
+                                              .format(today!)}",
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),),
+                                          const SizedBox(height: 10,),
+                                          const TextField(
+                                            maxLines: 3,
+                                            decoration: InputDecoration(
+                                              hintText: "Write notes...",
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(width: 1),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       actions: [
                                         Row(
                                           children: [
                                             TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
+                                              onPressed: () async {
+                                                String newDay=DateFormat("yyyy-MM-dd").format(today ?? DateTime.now());
+                                                String stTime = DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.parse("$newDay ${timeList[index].startDateTime}:00"));
+                                                DateTime afterAddSt  = DateTime.parse(stTime).add( Duration(minutes: widget.groundOfObject.slotinternval?.toInt()?? 0));
+                                                await Supabase.instance.client
+                                                    .from('bookings')
+                                                    .insert([
+                                                  { "created_at": DateFormat("yyyy-MM-dd").format(today ?? DateTime.now()) ,
+                                                    "vendor_id": widget.groundOfObject.id,
+                                                    "start_date_time":timeList[index].startDateTime,
+                                                    "end_date_time":DateFormat("HH:mm:ss").format(afterAddSt),
+                                                    "notes":"hello",
+                                                    "booking_date":DateFormat("yyyy-MM-dd").format(today ?? DateTime.now())}
+                                                ])
+                                                    .select().then((value) {
+                                                      gettingSlots();
+                                                      Navigator.pop(context);} );
+
+
                                               },
-                                              child: const Text("BOOK"),
+                                    child: timeList[index].isBooked!
+                                        ? const Text("UNBOOK")
+                                        : const Text("BOOK"),
+                                  
                                             ),
                                             TextButton(
                                               onPressed: () {
