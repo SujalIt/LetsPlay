@@ -53,16 +53,16 @@ class MyfirstpageState extends State<Myfirstpage> {
                 return  AlertDialog(
                   title: const Text("Are you sure you want to logout?"),
                   actions: [
-                    ElevatedButton(onPressed: (){
-                      Navigator.popUntil(context, ModalRoute.withName('f'));
-                    }, 
-                      child: const Row(
-                        children: [
-                          Text("Cancel"),
-                          Text("Yes"),
-                        ],
-                      )
-                      )
+                    Row(
+                      children: [
+                        TextButton(onPressed: () {
+                          Navigator.pop(context);
+                        }, child: const Text("Cancel"),),
+                        TextButton(onPressed: () {
+                          Navigator.popUntil(context, ModalRoute.withName('f'));
+                        }, child: const Text("Yes")),
+                      ],
+                    )
                   ],
                 );
                });
