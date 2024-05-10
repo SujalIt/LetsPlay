@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class Datepiker extends StatefulWidget {
   Function(DateTime?)? dateCall;
   Datepiker({super.key, this.dateCall});
@@ -14,7 +15,7 @@ class _DatepikerState extends State<Datepiker> {
   date() async {
     DateTime? datepikeker = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate:currentDate,
         firstDate: DateTime(2000),
         lastDate: DateTime(2100))
         .then((value) {

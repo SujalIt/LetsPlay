@@ -12,6 +12,7 @@ import 'APIS/bookings.dart';
 import 'datepiker.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class InformationScreen extends StatefulWidget {
   LetsPlay groundOfObject;
 
@@ -25,6 +26,8 @@ class InformationScreen extends StatefulWidget {
 }
 
 class _InformationScreenState extends State<InformationScreen> {
+  TextEditingController notesControl = TextEditingController();
+
   List<Widget> images = [];
   var no = 0;
   List<Booking> timeList = [];
@@ -36,7 +39,7 @@ class _InformationScreenState extends State<InformationScreen> {
     var next = DateFormat("yyyy-MM-dd").format(today!);
     final response = await http.get(
       Uri.parse(
-          'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${widget.groundOfObject.id}&booking_date=eq.$next'),
+          'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${widget.groundOfObject.id}&booking_date=eq.${next}'),
     );
     var data;
     if (response.statusCode == 200) {
@@ -63,12 +66,14 @@ class _InformationScreenState extends State<InformationScreen> {
 
   loadingBookedSlots() {
     for (int i = 0; i < timeList.length; i++) {
+      timeList[i].isBooked = false;
       for (int j = 0; j < bookings.length; j++) {
         String? bookedSlotTrim = bookings[j].startDateTime?.trim();
         String? booked =
             bookedSlotTrim?.substring(0, bookedSlotTrim.length - 3);
         String? time = timeList[i].startDateTime;
         if (time == booked) {
+          timeList[i].id = bookings[j].id;
           timeList[i].isBooked = true;
         }
       }
@@ -265,109 +270,153 @@ class _InformationScreenState extends State<InformationScreen> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: timeList[index].isBooked!
-                                        ? const Text(
-                                            "Please tap on UNBOOK to cancel slot!",
-                                            style: TextStyle(
+                                  return Expanded(
+                                    child: AlertDialog(
+                                      title: timeList[index].isBooked!
+                                          ? const Text(
+                                              "Please tap on UNBOOK to cancel slot!",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600),
+                                            )
+                                          : const Text(
+                                              "Please tap on BOOK to confirm slot!",
+                                              style: TextStyle(
                                                 fontSize: 18,
-                                                fontWeight: FontWeight.w600),
-                                          )
-                                        : const Text(
-                                            "Please tap on BOOK to confirm slot!",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,),
-                                          ),
-                                    content:  Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                         Text("Date : ${DateFormat("yyyy-MM-dd")
-                                                     .format(today!)}",
-                                         style: const TextStyle(
-                                           fontWeight: FontWeight.bold,
-                                           fontSize: 17),),
-                                        Text("Time : ${DateFormat("HH:mm:ss")
-                                                        .format(today!)}",
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17),),
-                                        const SizedBox(height: 10,),
-                                        const TextField(
-                                          maxLines: 3,
-                                          decoration: InputDecoration(
-                                            hintText: "Write notes...",
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10)),
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(width: 1),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10)),
-                                            ),
+                                      content: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            "Date : ${DateFormat("yyyy-MM-dd").format(today!)}",
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),
                                           ),
+                                          Text(
+                                            "Time : ${DateFormat("HH:mm:ss").format(today!)}",
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          timeList[index].isBooked!
+                                              ? const SizedBox(height: 1)
+                                              : TextField(
+                                                  controller: notesControl,
+                                                  maxLines: 3,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    hintText: "Write notes...",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10)),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide(width: 1),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10)),
+                                                    ),
+                                                  ),
+                                                ),
+                                        ],
+                                      ),
+                                      actions: [
+                                        Row(
+                                          children: [
+                                            TextButton(
+                                              onPressed: () async {
+                                                if (timeList[index].isBooked!) {
+                                                  await Supabase.instance.client
+                                                      .from("bookings")
+                                                      .delete()
+                                                      .match({"id" : timeList[index].id})
+                                                      .then((value) {
+                                                        gettingSlots();
+                                                        Navigator.pop(context);
+                                                      });
+                                                      return ;
+                                                }
+
+                                                String newDay =
+                                                    DateFormat("yyyy-MM-dd")
+                                                        .format(today ??
+                                                            DateTime.now());
+                                                String stTime = DateFormat(
+                                                        "yyyy-MM-dd HH:mm:ss")
+                                                    .format(DateTime.parse(
+                                                        "$newDay ${timeList[index].startDateTime}:00"));
+                                                DateTime afterAddSt = DateTime
+                                                        .parse(stTime)
+                                                    .add(Duration(
+                                                        minutes: widget
+                                                                .groundOfObject
+                                                                .slotinternval
+                                                                ?.toInt() ??
+                                                            0));
+                                                await Supabase.instance.client
+                                                    .from('bookings')
+                                                    .insert([
+                                                      {
+                                                        "created_at": DateFormat(
+                                                                "yyyy-MM-dd")
+                                                            .format(today ??
+                                                                DateTime.now()),
+                                                        "vendor_id": widget
+                                                            .groundOfObject.id,
+                                                        "start_date_time":
+                                                            timeList[index]
+                                                                .startDateTime,
+                                                        "end_date_time":
+                                                            DateFormat(
+                                                                    "HH:mm:ss")
+                                                                .format(
+                                                                    afterAddSt),
+                                                        "notes": notesControl
+                                                            .text
+                                                            .toString(),
+                                                        "booking_date":
+                                                            DateFormat(
+                                                                    "yyyy-MM-dd")
+                                                                .format(today ??
+                                                                    DateTime
+                                                                        .now())
+                                                      }
+                                                    ])
+                                                    .select()
+                                                    .then((value) {
+                                                      gettingSlots();
+                                                      notesControl.clear();
+                                                      Navigator.pop(context);
+                                                    });
+                                              },
+                                              child: timeList[index].isBooked!
+                                                  ? const Text("UNBOOK")
+                                                  : const Text("BOOK"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text('CANCEL'),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                    actions: [
-                                      Row(
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('CANCEL'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              String newDay =
-                                                  DateFormat("yyyy-MM-dd")
-                                                      .format(today!);
-                                              String stTime = DateFormat(
-                                                      "yyyy-MM-dd HH:mm:ss")
-                                                  .format(DateTime.parse(
-                                                      "$newDay ${timeList[index].startDateTime}:00"));
-                                              print(
-                                                  "Date time ST : ${stTime.toString()}");
-                                              DateTime afterAddSt = DateTime
-                                                      .parse(stTime)
-                                                  .add(Duration(
-                                                      minutes: widget
-                                                              .groundOfObject
-                                                              .slotinternval
-                                                              ?.toInt() ??
-                                                          0));
-                                              await Supabase.instance.client
-                                                  .from('bookings')
-                                                  .insert([
-                                                {
-                                                  "created_at":
-                                                      DateFormat("yyyy-MM-dd")
-                                                          .format(today!),
-                                                  "vendor_id":
-                                                      widget.groundOfObject.id,
-                                                  "start_date_time":
-                                                      timeList[index]
-                                                          .startDateTime,
-                                                  "end_date_time":
-                                                      DateFormat("HH:mm:ss")
-                                                          .format(afterAddSt),
-                                                  "notes": "hello",
-                                                  "booking_date":
-                                                      DateFormat("yyyy-MM-dd")
-                                                          .format(today!)
-                                                }
-                                              ]).select();
-                                            },
-                                            child: timeList[index].isBooked!
-                                                ? const Text("UNBOOK")
-                                                : const Text("BOOK"),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
                                   );
                                 },
                               );
@@ -401,15 +450,12 @@ class _InformationScreenState extends State<InformationScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                const SizedBox(
-                  height: 37,
-                  child: Text(
-                    'Pricing and Offers',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
+                const Text(
+                  'Pricing and Offers',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 Column(
