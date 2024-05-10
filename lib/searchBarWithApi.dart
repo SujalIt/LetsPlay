@@ -146,24 +146,22 @@ class _apiIntigration extends State<apiIntigration> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: result.length,
               itemBuilder: (context, index) {
-                return SizedBox(
-                  height: 130,
+                return Padding(
+                  padding: const EdgeInsets.all(6.0),
                   child: Row(
                     children: [
-                      Container(
-                        height: 115,
-                        width: 137,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.network(
-                            result[index].profilePic ?? '',
-                            fit: BoxFit.fill,
-                          ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: Image.network(
+                          result[index].profilePic ?? '',
+                          height: 126,
+                          width: 137,
+                          fit: BoxFit.fill,
                         ),
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 8, top: 8),
+                          padding: const EdgeInsets.only(left: 8,),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -201,8 +199,8 @@ class _apiIntigration extends State<apiIntigration> {
                                 height: 3,
                               ),
                               SizedBox(
-                                height: 28,
-                                width: 152,
+                                height: 32,
+                                width: 170,
                                 child: ElevatedButton(
                                     onPressed: () {
                                       Navigator.push(

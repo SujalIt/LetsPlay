@@ -48,9 +48,26 @@ class MyfirstpageState extends State<Myfirstpage> {
             )),
           if (session != null)
             IconButton(onPressed: (){
+              showDialog(context: context,
+               builder: (BuildContext context) {
+                return  AlertDialog(
+                  title: const Text("Are you sure you want to logout?"),
+                  actions: [
+                    Row(
+                      children: [
+                        TextButton(onPressed: () {
+                          Navigator.pop(context);
+                        }, child: const Text("Cancel"),),
+                        TextButton(onPressed: () {
+                          Navigator.popUntil(context, ModalRoute.withName('f'));
+                        }, child: const Text("Yes")),
+                      ],
+                    )
+                  ],
+                );
+               });
               setState(() {
                 Supabase.instance.client.auth.signOut();
-                Navigator.popUntil(context, ModalRoute.withName('f'));
               });
             }, icon: const Padding(
               padding: EdgeInsets.all(10.0),
