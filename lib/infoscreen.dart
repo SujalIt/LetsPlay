@@ -195,7 +195,7 @@ class _InformationScreenState extends State<InformationScreen> {
                         IconButton(
                             onPressed: () {
                               Share.share(
-                                "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city}",
+                                "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city} , Contact No :${widget.groundOfObject.phone}",
                               );
                             },
                             icon: const Icon(Icons.share)),
@@ -298,7 +298,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                 fontSize: 17),
                                           ),
                                           Text(
-                                            "Time : ${DateFormat("HH:mm:ss").format(today!)}",
+                                            "Time : ${timeList[index].startDateTime}",
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 17),
@@ -337,6 +337,12 @@ class _InformationScreenState extends State<InformationScreen> {
                                       actions: [
                                         Row(
                                           children: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text('CANCEL'),
+                                            ),
                                             TextButton(
                                               onPressed: () async {
                                                 if (timeList[index].isBooked!) {
@@ -406,12 +412,6 @@ class _InformationScreenState extends State<InformationScreen> {
                                               child: timeList[index].isBooked!
                                                   ? const Text("UNBOOK")
                                                   : const Text("BOOK"),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text('CANCEL'),
                                             ),
                                           ],
                                         ),
