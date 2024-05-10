@@ -29,6 +29,7 @@ class _InformationScreenState extends State<InformationScreen> {
   TextEditingController notesControl = TextEditingController();
 
   List<Widget> images = [];
+  List originalList=[];
   var no = 0;
   List<Booking> timeList = [];
   List<Booking> bookings = [];
@@ -60,6 +61,8 @@ class _InformationScreenState extends State<InformationScreen> {
     while (currentTime.isBefore(end)) {
       String formattedTime = DateFormat('HH:mm').format(currentTime);
       timeList.add(Booking(startDateTime: formattedTime));
+      String originalFormate = DateFormat.jm().format(currentTime);
+      originalList.add(Booking(startDateTime: originalFormate));
       currentTime = currentTime.add(Duration(minutes: interwall));
     }
   }
@@ -349,12 +352,13 @@ class _InformationScreenState extends State<InformationScreen> {
                                                   await Supabase.instance.client
                                                       .from("bookings")
                                                       .delete()
-                                                      .match({"id" : timeList[index].id})
-                                                      .then((value) {
-                                                        gettingSlots();
-                                                        Navigator.pop(context);
-                                                      });
-                                                      return ;
+                                                      .match({
+                                                    "id": timeList[index].id
+                                                  }).then((value) {
+                                                    gettingSlots();
+                                                    Navigator.pop(context);
+                                                  });
+                                                  return;
                                                 }
 
                                                 String newDay =
@@ -438,7 +442,7 @@ class _InformationScreenState extends State<InformationScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  timeList[index].startDateTime.toString(),
+                                  originalList[index].startDateTime.toString(),
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 15),
