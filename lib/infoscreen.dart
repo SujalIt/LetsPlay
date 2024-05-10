@@ -135,7 +135,7 @@ class _InformationScreenState extends State<InformationScreen> {
         title: const Text(
           'LetsPlay',
           style: TextStyle(
-            fontSize: 28,
+            fontSize: 26,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -144,7 +144,7 @@ class _InformationScreenState extends State<InformationScreen> {
       body: Padding(
         padding: const EdgeInsets.only(
           right: 15,
-          left: 15,
+          left: 18,
         ),
         child: SingleChildScrollView(
           child: SizedBox(
@@ -156,10 +156,10 @@ class _InformationScreenState extends State<InformationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 7),
+                      padding: const EdgeInsets.only(top: 10),
                       child: Container(
-                        height: 100,
-                        width: 100,
+                        height: 120,
+                        width: 120,
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(10)),
@@ -479,6 +479,9 @@ class _InformationScreenState extends State<InformationScreen> {
                               }),
                           items: images),
                     ]),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     AnimatedSmoothIndicator(
                       activeIndex: no,
                       count: images.length,
