@@ -16,18 +16,21 @@ class _LoginPageState extends State<LoginPage>
   var Password = TextEditingController();
   final supabase = Supabase.instance.client;
   Future<void> signin(String email, String password) async {
-    await supabase.auth
-        .signInWithPassword(
-          password: password,
-          email: email,
-        )
-        .then((value) => 
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Myfirstpage(),
-            ))
-            );
+    if (email == email && password == password) {
+      await supabase.auth
+          .signInWithPassword(
+            password: password,
+            email: email,
+          )
+          .then((value) => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const Myfirstpage(),
+              )));
+    } on AuthException catch (error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.message)));
+    }
   }
 
   Future<void> signup(String email, String password) async {
@@ -45,14 +48,16 @@ class _LoginPageState extends State<LoginPage>
 
   late AnimationController _controller;
 
-@override
+  @override
   void dispose() {
     // ignore: unnecessary_null_comparison
-    if(_controller != null){
+    if (_controller != null) {
       _controller.dispose();
     }
     super.dispose();
   }
+
+  var _isObscured;
 
   @override
   void initState() {
@@ -61,6 +66,7 @@ class _LoginPageState extends State<LoginPage>
       vsync: this,
       duration: const Duration(seconds: 2),
     );
+    _isObscured = true;
   }
 
   @override
@@ -114,8 +120,27 @@ class _LoginPageState extends State<LoginPage>
                   width: 320,
                   child: TextField(
                     controller: Password,
-                    obscureText: true,
+                    obscureText: _isObscured,
                     decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.lock_rounded,
+                          color: Colors.green,
+                          size: 28,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: _isObscured
+                              ? Semantics(
+                                  identifier: 'Show',
+                                  child: const Icon(Icons.visibility_off))
+                              : Semantics(
+                                  identifier: 'Hide',
+                                  child: const Icon(Icons.visibility)),
+                          onPressed: () {
+                            setState(() {
+                              _isObscured = !_isObscured;
+                            });
+                          },
+                        ),
                         hintText: 'Enter Password',
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),

@@ -187,9 +187,12 @@ class _InformationScreenState extends State<InformationScreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-            size: 28,
+          child: Semantics(
+            identifier: 'Back',
+            child: const Icon(
+              Icons.arrow_back_ios_new,
+              size: 28,
+            ),
           ),
         ),
         title: const Text(
@@ -255,26 +258,32 @@ class _InformationScreenState extends State<InformationScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconButton(
-                            onPressed: () {
-                              Share.share(
-                                "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city} , Contact No :${widget.groundOfObject.phone}",
-                              );
-                            },
-                            icon: const Icon(Icons.share)),
-                        IconButton(
-                          onPressed: () async {
-                            canLaunchUrl(Uri.parse(
-                                'tel:+91${widget.groundOfObject.phone}'));
-                            if (await canLaunchUrl(Uri.parse(
-                                'tel:+91${widget.groundOfObject.phone}'))) {
-                              await launchUrl(Uri.parse(
+                        Semantics(
+                          identifier: 'Share',
+                          child: IconButton(
+                              onPressed: () {
+                                Share.share(
+                                  "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city} , Contact No :${widget.groundOfObject.phone}",
+                                );
+                              },
+                              icon: const Icon(Icons.share)),
+                        ),
+                        Semantics(
+                          identifier: 'Call',
+                          child: IconButton(
+                            onPressed: () async {
+                              canLaunchUrl(Uri.parse(
                                   'tel:+91${widget.groundOfObject.phone}'));
-                            } else {}
-                          },
-                          icon: const Icon(
-                            Icons.call,
-                            color: Colors.blue,
+                              if (await canLaunchUrl(Uri.parse(
+                                  'tel:+91${widget.groundOfObject.phone}'))) {
+                                await launchUrl(Uri.parse(
+                                    'tel:+91${widget.groundOfObject.phone}'));
+                              } else {}
+                            },
+                            icon: const Icon(
+                              Icons.call,
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -288,9 +297,12 @@ class _InformationScreenState extends State<InformationScreen> {
                           child: SizedBox(
                               width: 22,
                               height: 22,
-                              child: Image.asset(
-                                'assets/whatsapp.png',
-                                fit: BoxFit.cover,
+                              child: Semantics(
+                                identifier: 'Whatsapp',
+                                child: Image.asset(
+                                  'assets/whatsapp.png',
+                                  fit: BoxFit.cover,
+                                ),
                               )),
                         ),
                       ],
