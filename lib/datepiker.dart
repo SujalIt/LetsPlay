@@ -53,7 +53,7 @@ class _DatepikerState extends State<Datepiker> {
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: date,
-                      icon: const Icon(Icons.calendar_today)),
+                      icon: Semantics(identifier: 'Date',  child: const Icon(Icons.calendar_today))),
                   hintText: DateFormat("dd-MM-yyyy")
                       .format(currentDate ?? DateTime.now()),
                   enabledBorder: OutlineInputBorder(
@@ -73,7 +73,6 @@ class _DatepikerState extends State<Datepiker> {
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
                 onPressed: () {
-                  //2024-01-12 14:45:20.265410
                   DateTime? days = currentDate;
                   receivedDate =
                       DateFormat("yyyy-MM-dd HH:mm:ss.SSSS")

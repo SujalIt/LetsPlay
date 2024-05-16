@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:lottie/lottie.dart';
@@ -16,18 +17,24 @@ class _LoginPageState extends State<LoginPage>
   var Password = TextEditingController();
   final supabase = Supabase.instance.client;
   Future<void> signin(String email, String password) async {
-    await supabase.auth
-        .signInWithPassword(
-          password: password,
-          email: email,
-        )
-        .then((value) => 
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Myfirstpage(),
-            ))
-            );
+    try {
+      await supabase.auth
+          .signInWithPassword(
+            password: password,
+            email: email,
+          )
+          .then((value) => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const Myfirstpage(),
+              )));
+          }on AuthException catch (error) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(
+                 backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+                content: Text(error.message,
+              style:  const TextStyle(fontSize: 20, color: Colors.black),)));
+    }
   }
 
   Future<void> signup(String email, String password) async {
@@ -35,24 +42,32 @@ class _LoginPageState extends State<LoginPage>
       await supabase.auth.signUp(password: password, email: email);
       if (mounted) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('open your email')));
+            .showSnackBar(const SnackBar(
+              backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+              content: Text('open your email',
+            style:  const TextStyle(fontSize: 20, color: Colors.black))));
       }
     } on AuthException catch (error) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.message)));
+          .showSnackBar(SnackBar(
+            backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+            content: Text(error.message,
+          style:  const TextStyle(fontSize: 20, color: Colors.black))));
     }
   }
 
   late AnimationController _controller;
 
-@override
+  @override
   void dispose() {
     // ignore: unnecessary_null_comparison
-    if(_controller != null){
+    if (_controller != null) {
       _controller.dispose();
     }
     super.dispose();
   }
+
+  var _isObscured;
 
   @override
   void initState() {
@@ -61,6 +76,7 @@ class _LoginPageState extends State<LoginPage>
       vsync: this,
       duration: const Duration(seconds: 2),
     );
+    _isObscured = true;
   }
 
   @override
@@ -114,8 +130,27 @@ class _LoginPageState extends State<LoginPage>
                   width: 320,
                   child: TextField(
                     controller: Password,
-                    obscureText: true,
+                    obscureText: _isObscured,
                     decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.lock_rounded,
+                          color: Colors.green,
+                          size: 28,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: _isObscured
+                              ? Semantics(
+                                  identifier: 'Show',
+                                  child: const Icon(Icons.visibility_off))
+                              : Semantics(
+                                  identifier: 'Hide',
+                                  child: const Icon(Icons.visibility)),
+                          onPressed: () {
+                            setState(() {
+                              _isObscured = !_isObscured;
+                            });
+                          },
+                        ),
                         hintText: 'Enter Password',
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
