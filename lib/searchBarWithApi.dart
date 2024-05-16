@@ -181,7 +181,7 @@ class _apiIntigration extends State<apiIntigration> {
                                     fontSize: 13, fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                "${result[index].addressLine2}",
+                                "${result[index].city}",
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 13,
@@ -189,7 +189,7 @@ class _apiIntigration extends State<apiIntigration> {
                                 ),
                               ),
                               Text(
-                                "${result[index].city}",
+                                "Price : ₹ ${result[index].pricing}",
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
