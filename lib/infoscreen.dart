@@ -71,11 +71,13 @@ class _InformationScreenState extends State<InformationScreen> {
     for (int i = 0; i < timeList.length; i++) {
       timeList[i].isBooked = false;
       for (int j = 0; j < bookings.length; j++) {
-        String? bookedSlotTrim = bookings[j].startDateTime?.trim();
+        String? bookedSlotTrim = bookings[j].startDateTime;
+        String stTime = DateFormat("HH:mm")
+            .format(DateTime.parse(bookedSlotTrim!));
         String? booked =
             bookedSlotTrim?.substring(0, bookedSlotTrim.length - 3);
         String? time = timeList[i].startDateTime;
-        if (time == booked) {
+        if (time == stTime) {
           timeList[i].id = bookings[j].id;
           timeList[i].isBooked = true;
         }
@@ -137,10 +139,10 @@ class _InformationScreenState extends State<InformationScreen> {
         .insert([
           {
             "created_at":
-                DateFormat("yyyy-MM-dd").format(today ?? DateTime.now()),
+                DateFormat("yyyy-MM-dd HH:mm:ss").format(today ?? DateTime.now()),
             "vendor_id": widget.groundOfObject.id,
-            "start_date_time": timeList[index].startDateTime,
-            "end_date_time": DateFormat("HH:mm:ss").format(afterAddSt),
+            "start_date_time": stTime,
+            "end_date_time": DateFormat("yyyy-MM-dd HH:mm:ss").format(afterAddSt),
             "notes": notesControl.text.toString(),
             "booking_date":
                 DateFormat("yyyy-MM-dd").format(today ?? DateTime.now())
