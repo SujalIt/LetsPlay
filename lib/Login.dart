@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:lottie/lottie.dart';
@@ -16,7 +17,7 @@ class _LoginPageState extends State<LoginPage>
   var Password = TextEditingController();
   final supabase = Supabase.instance.client;
   Future<void> signin(String email, String password) async {
-    if (email == email && password == password) {
+    try {
       await supabase.auth
           .signInWithPassword(
             password: password,
@@ -27,9 +28,12 @@ class _LoginPageState extends State<LoginPage>
               MaterialPageRoute(
                 builder: (context) => const Myfirstpage(),
               )));
-    } on AuthException catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.message)));
+          }on AuthException catch (error) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(
+                 backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+                content: Text(error.message,
+              style:  const TextStyle(fontSize: 20, color: Colors.black),)));
     }
   }
 
@@ -38,11 +42,17 @@ class _LoginPageState extends State<LoginPage>
       await supabase.auth.signUp(password: password, email: email);
       if (mounted) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('open your email')));
+            .showSnackBar(const SnackBar(
+              backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+              content: Text('open your email',
+            style:  const TextStyle(fontSize: 20, color: Colors.black))));
       }
     } on AuthException catch (error) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.message)));
+          .showSnackBar(SnackBar(
+            backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+            content: Text(error.message,
+          style:  const TextStyle(fontSize: 20, color: Colors.black))));
     }
   }
 
