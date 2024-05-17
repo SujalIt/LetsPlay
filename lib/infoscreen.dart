@@ -113,7 +113,7 @@ class _InformationScreenState extends State<InformationScreen> {
                         await Supabase.instance.client
                             .from("bookings")
                             .delete()
-                            .match({"id": timeList[index].id}).then((value) {
+                            .match({"id": timeList[index].id!}).then((value) {
                           gettingSlots();
                           Navigator.pop(context);
                         });

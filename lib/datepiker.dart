@@ -16,8 +16,8 @@ class _DatepikerState extends State<Datepiker> {
     DateTime? datepikeker = await showDatePicker(
         context: context,
         initialDate:currentDate,
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2100))
+        firstDate: currentDate!,
+        lastDate: DateTime(2025))
         .then((value) {
       receivedDate = value.toString();
       currentDate = value;
