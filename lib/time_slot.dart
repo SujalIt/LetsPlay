@@ -16,13 +16,41 @@ class _TimeSlotState extends State<TimeSlot> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(
-                height: 55,
+    return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+              height: 50,
+              width: 160,
+              child: Flexible(
+                child: DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, 
+                      width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green,
+                      width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    )
+                  ),
+                    value: selectedTime,
+                    items: times
+                          .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item, style: const TextStyle(fontSize: 14),)
+                            )
+                          ).toList(), 
+                          onChanged: (item) => setState(() => selectedTime = item),
+                            ),
+              ),
+            ),
+            const Text('To'),
+            Flexible(
+              child: SizedBox(
+                height: 50,
                 width: 160,
                 child: DropdownButtonFormField<String>(
                   decoration: const InputDecoration(
@@ -41,42 +69,14 @@ class _TimeSlotState extends State<TimeSlot> {
                     items: times
                           .map((item) => DropdownMenuItem<String>(
                             value: item,
-                            child: Text(item, style: const TextStyle(fontSize: 15),)
+                            child: Text(item, style: const TextStyle(fontSize: 14),)
                             )
                           ).toList(), 
                           onChanged: (item) => setState(() => selectedTime = item),
                             ),
               ),
-              const Text('To'),
-              SizedBox(
-                height: 55,
-                width: 160,
-                child: DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, 
-                      width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green,
-                      width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                    )
-                  ),
-                    value: selectedTime,
-                    items: times
-                          .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(item, style: const TextStyle(fontSize: 15),)
-                            )
-                          ).toList(), 
-                          onChanged: (item) => setState(() => selectedTime = item),
-                            ),
-              ),
-            ],
-          ),
-      ),
-    );
+            ),
+          ],
+        );
   }
 }

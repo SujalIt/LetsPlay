@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:letsplay/firstpage.dart';
-import 'package:letsplay/time_slot.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:letsplay/search_with_date_time.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,10 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "f",
       routes: {
-        "f":(context) =>  
-        TimeSlot()
-        // const SearchDatewithTime()
-        // const Myfirstpage(),
+        "f":(context) => const Myfirstpage(),
       },
       debugShowCheckedModeBanner: false,
     );

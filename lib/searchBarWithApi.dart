@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
 import 'package:letsplay/search_with_date_time.dart';
-import 'package:letsplay/time_slot.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'infoscreen.dart';
 
@@ -123,9 +122,8 @@ class _apiIntigration extends State<apiIntigration> {
             ),
           ),
         ),
-        TimeSlot(),
-        // SearchDatewithTime(),
-
+        const SearchDatewithTime(),
+        const SizedBox(height: 5,),
         if (result.isEmpty)
           Column(
             children: [

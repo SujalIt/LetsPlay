@@ -35,39 +35,50 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              width: 99,
+              width: 100,
               height: 50,
               child: ElevatedButton(onPressed: () {},
               style: const ButtonStyle(
                 shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.green,
+                  width: 2),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 )),
               ),
-               child: Text("Today\n${DateFormat("dd-MMM").format(today!)}",
+               child: Text(style: const TextStyle(fontSize: 11, color: Colors.black),
+                "Today\n${DateFormat("dd-MMM").format(today!)}",
                textAlign: TextAlign.center,)),
             ),
             SizedBox(
-                width: 113,
+                width: 105,
                 height: 50,
                 child: ElevatedButton(onPressed: () {},
                 style: const ButtonStyle(
                   shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.green,
+                    width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   )),
                 ),
-                 child: Text("Tomorrow\n${DateFormat("dd-MMM").format(today!.add(const Duration(days: 1)))}",
+                 child: Text(style: const TextStyle(fontSize: 11,color: Colors.black),
+                  "Tomorrow\n${DateFormat("dd-MMM").format(today!.add(const Duration(days: 1)))}",
                  textAlign: TextAlign.center,)),
               ),
               SizedBox(
-                width: 144,
+                width: 136,
                 height: 50,
                 child: ElevatedButton(onPressed: () {},
                 style: const ButtonStyle(
                   shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.green,
+                    width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   )),
                 ),
@@ -75,18 +86,23 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
                   mainAxisAlignment: MainAxisAlignment.start,
                    children: [
                      IconButton(onPressed: date,
-                      icon: const Icon(Icons.calendar_month_outlined),
+                      icon: const Icon(Icons.calendar_month_outlined, color: Colors.black,),
                       ), 
-                      selectedDate ? Text("Other\n${DateFormat("dd-MMM").format(currentDate!).toString()}") : const Text("Other\nDates")
+                      selectedDate ? Text(style: const TextStyle(fontSize: 11,color: Colors.black),
+                      "Other\n${DateFormat("dd-MMM").format(currentDate!).toString()}") : const Text(
+                        style: TextStyle(fontSize: 11, color: Colors.black),
+                      "Other\nDates")
                    ],
                  ),
                  )
               ),
           ],
         ),
-        // TimeSlot(),
+        const SizedBox(height: 6,),
+        const TimeSlot(),
+        const SizedBox(height: 6,),
         SizedBox(
-          width: 365,
+          width: 350,
           height: 50,
           child: ElevatedButton(
             onPressed: () {}, 
@@ -98,7 +114,7 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
             ),
             child: const Text("Search Box",
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 19,
               color: Colors.black
             ),)))
       ],
