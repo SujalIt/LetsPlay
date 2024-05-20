@@ -16,12 +16,14 @@ class apiIntigration extends StatefulWidget {
 }
 
 class _apiIntigration extends State<apiIntigration> {
+
+  DateTime? today = DateTime.now();
   List<LetsPlay> apiList = [];
 
   Future<List<LetsPlay>> fetchGrounds() async {
     var data;
     final response = await http.get(
-        Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor'),
+        Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?select=*,bookings(*)&bookings.start_date_time=is.null'),
         headers: {
           "apikey":
               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU"

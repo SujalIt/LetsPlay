@@ -21,12 +21,13 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
         initialDate:today,
         firstDate: today!,
         lastDate: DateTime(2025)
-        ).then((Value) {
+        ).then((value) {
           selectedDate = true;
-          currentDate = Value;
+          currentDate = value!;
           setState(() {
             
           });
+          return null;
         });
     return datepikeker;
   }
@@ -74,7 +75,7 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
               SizedBox(
                 width: 136,
                 height: 50,
-                child: ElevatedButton(onPressed: () {},
+                child: ElevatedButton(onPressed: () {date();},
                 style: const ButtonStyle(
                   shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                     side: BorderSide(color: Colors.green,
@@ -102,7 +103,7 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
         const TimeSlot(),
         const SizedBox(height: 6,),
         SizedBox(
-          width: 350,
+          width: double.infinity,
           height: 50,
           child: ElevatedButton(
             onPressed: () {}, 
