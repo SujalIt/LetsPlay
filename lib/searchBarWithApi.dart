@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
+import 'package:letsplay/search_with_date_time.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'infoscreen.dart';
 
@@ -121,6 +122,8 @@ class _apiIntigration extends State<apiIntigration> {
             ),
           ),
         ),
+        const SearchDatewithTime(),
+        const SizedBox(height: 5,),
         if (result.isEmpty)
           Column(
             children: [
@@ -181,7 +184,7 @@ class _apiIntigration extends State<apiIntigration> {
                                     fontSize: 13, fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                "${result[index].addressLine2}",
+                                "${result[index].city}",
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 13,
@@ -189,7 +192,7 @@ class _apiIntigration extends State<apiIntigration> {
                                 ),
                               ),
                               Text(
-                                "${result[index].city}",
+                                "Price : ₹ ${result[index].pricing}",
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
