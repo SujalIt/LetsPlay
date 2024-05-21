@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
 import 'package:letsplay/search_with_date_time.dart';
@@ -16,6 +17,11 @@ class apiIntigration extends StatefulWidget {
 }
 
 class _apiIntigration extends State<apiIntigration> {
+
+
+  String? searchDate;
+  String? searchStart;
+  String? searchEnd;
 
   DateTime? today = DateTime.now();
   List<LetsPlay> apiList = [];
@@ -93,6 +99,16 @@ class _apiIntigration extends State<apiIntigration> {
     setState(() {});
   }
 
+  Future getList() async{
+    // final response = await Supabase.instance.client.rpc(); 
+
+      String newDay = DateFormat("yyyy-MM-dd").format(DateTime.parse(searchDate ?? DateTime.now().toString()));
+        DateTime parsedTime = DateFormat('hh:mm a').parse(searchStart ?? "");
+        String nn=DateFormat('HH:mm:ss').format(parsedTime);
+        String finalStartTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse('$newDay $nn'));
+        print(finalStartTime);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -100,7 +116,7 @@ class _apiIntigration extends State<apiIntigration> {
         SizedBox(
           height: 50,
           child: TextField(
-            onChanged: (value) => updatedlist(value),
+            onChanged: (value) => updatedlist(value ?? ""),
             textAlignVertical: TextAlignVertical.center,
             textAlign: TextAlign.start,
             cursorColor: Colors.black45,
@@ -124,7 +140,18 @@ class _apiIntigration extends State<apiIntigration> {
             ),
           ),
         ),
-        const SearchDatewithTime(),
+        SearchDatewithTime(
+          valueDate : (date){
+            searchDate = date;
+          },
+          valueStart: (start){
+            searchStart = start;
+          },
+          valueEnd: (end){
+            searchEnd = end;
+            getList();
+          },
+        ),
         const SizedBox(height: 5,),
         if (result.isEmpty)
           Column(

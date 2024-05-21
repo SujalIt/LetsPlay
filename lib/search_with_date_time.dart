@@ -3,7 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:letsplay/time_slot.dart';
 
 class SearchDatewithTime extends StatefulWidget {
-  const SearchDatewithTime({super.key});
+
+  Function(String?)? valueDate;
+  Function(String?)? valueStart;
+  Function(String?)? valueEnd;
+
+  SearchDatewithTime({super.key, this.valueDate,this.valueStart,this.valueEnd});
 
   @override
   State<SearchDatewithTime> createState() => _SearchDatewithTimeState();
@@ -15,6 +20,12 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
   bool selectedDate = false;
   DateTime? currentDate ;
 
+  DateTime? storeDate = DateTime.now();
+  String? tomorrow;
+
+  String? startTime;
+  String? endTime;
+
   date() async {
     DateTime? datepikeker = await showDatePicker(
         context: context,
@@ -24,14 +35,15 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
         ).then((value) {
           selectedDate = true;
           currentDate = value!;
+          storeDate = value;
           setState(() {
-            
+            widget.valueDate!(storeDate.toString());
           });
           return null;
         });
     return datepikeker;
   }
-
+    
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,7 +57,12 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
             SizedBox(
               width: 100,
               height: 50,
-              child: ElevatedButton(onPressed: () {},
+              child: ElevatedButton(onPressed: () {
+                storeDate = DateTime.parse( DateFormat('yyyy-MM-dd').format(storeDate!) );
+                setState(() {
+                  widget.valueDate!(storeDate.toString());
+                });
+              },
               style: const ButtonStyle(
                 shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                   side: BorderSide(color: Colors.green,
@@ -60,7 +77,13 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
             SizedBox(
                 width: 105,
                 height: 50,
-                child: ElevatedButton(onPressed: () {},
+                child: ElevatedButton(onPressed: () {
+                  tomorrow = DateFormat('yyyy-MM-dd').format(today!.add(const Duration(days: 1)));
+                  storeDate = DateTime.parse(tomorrow!);
+                  setState(() {
+                    widget.valueDate!(storeDate.toString());
+                  });
+                },
                 style: const ButtonStyle(
                   shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                     side: BorderSide(color: Colors.green,
@@ -100,7 +123,20 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
           ],
         ),
         const SizedBox(height: 6,),
-        const TimeSlot(),
+        TimeSlot(
+          callBackValue1: (start) {
+            startTime = start; 
+            setState(() {
+              widget.valueStart!(startTime);
+            }); 
+          },
+          callBackValue2: (end){
+            endTime = end;
+            setState(() {
+              widget.valueEnd!(endTime);
+            });
+          },
+        ),
         const SizedBox(height: 6,),
         SizedBox(
           width: double.infinity,
