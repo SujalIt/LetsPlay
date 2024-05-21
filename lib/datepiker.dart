@@ -20,10 +20,10 @@ class _DatepikerState extends State<Datepiker> {
         lastDate: DateTime(2025))
         .then((value) {
       receivedDate = value.toString();
-      currentDate = value;
+      currentDate = value!;
       widget.dateCall!(currentDate);
       setState(() {});
-      return null;
+      return ;
     });
     return datepikeker;
   }

@@ -74,8 +74,6 @@ class _InformationScreenState extends State<InformationScreen> {
         String? bookedSlotTrim = bookings[j].startDateTime;
         String stTime = DateFormat("HH:mm")
             .format(DateTime.parse(bookedSlotTrim!));
-        String? booked =
-            bookedSlotTrim?.substring(0, bookedSlotTrim.length - 3);
         String? time = timeList[i].startDateTime;
         if (time == stTime) {
           timeList[i].id = bookings[j].id;
