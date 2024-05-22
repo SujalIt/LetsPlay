@@ -116,7 +116,7 @@ class _apiIntigration extends State<apiIntigration> {
         SizedBox(
           height: 50,
           child: TextField(
-            onChanged: (value) => updatedlist(value ?? ""),
+            onChanged: (value) => updatedlist(value ?? ''),
             textAlignVertical: TextAlignVertical.center,
             textAlign: TextAlign.start,
             cursorColor: Colors.black45,
