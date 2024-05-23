@@ -99,14 +99,26 @@ class _apiIntigration extends State<apiIntigration> {
     setState(() {});
   }
 
+  List<PostgrestFilterBuilder<dynamic>> vendorList = [];
+
   Future getList() async{
-    // final response = await Supabase.instance.client.rpc(); 
 
       String newDay = DateFormat("yyyy-MM-dd").format(DateTime.parse(searchDate ?? DateTime.now().toString()));
-        DateTime parsedTime = DateFormat('hh:mm a').parse(searchStart ?? "");
-        String nn=DateFormat('HH:mm:ss').format(parsedTime);
-        String finalStartTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse('$newDay $nn'));
-        print(finalStartTime);
+      DateTime parsedTime = DateFormat('hh:mm a').parse(searchStart ?? "");
+      String nn=DateFormat('HH:mm:ss').format(parsedTime);
+      String finalStartTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse('$newDay $nn'));
+
+      DateTime parsedEndtime = DateFormat('hh:mm a').parse(searchEnd ?? "");
+      String aa = DateFormat('HH:mm:ss').format(parsedEndtime);
+      String finalEndTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse('$newDay $aa'));
+      print(finalEndTime);
+
+
+      final test = Supabase.instance.client.rpc('get_available_vendors_v1', params: {'start_date_time': finalStartTime,'end_date_time': finalEndTime});
+      print("DonEguys");
+      
+      vendorList.addAll(test);
+      // print(test);
   }
 
   @override
