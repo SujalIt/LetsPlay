@@ -99,8 +99,6 @@ class _apiIntigration extends State<apiIntigration> {
     setState(() {});
   }
 
-  List<PostgrestFilterBuilder<dynamic>> vendorList = [];
-
   Future getList() async{
 
       String newDay = DateFormat("yyyy-MM-dd").format(DateTime.parse(searchDate ?? DateTime.now().toString()));
@@ -115,10 +113,28 @@ class _apiIntigration extends State<apiIntigration> {
 
 
       final test = Supabase.instance.client.rpc('get_available_vendors_v1', params: {'start_date_time': finalStartTime,'end_date_time': finalEndTime});
-      print("DonEguys");
-      
-      vendorList.addAll(test);
-      // print(test);
+    
+      // vendorList.addAll(test);
+  }
+
+  static Future<List<LetsPlay>> fetchExerciseData() async {
+    try {
+      final response = await Supabase.instance.client.rpc('get_available_vendors_v1');
+      final exerciseList = response.map((e) => LetsPlay.fromJson(e)).toList();
+      // final exerciseList = await _client
+      //     .from(SB.exercises)
+      //     .select<List<Map<String, dynamic>>>('*')
+      //     .order('name', ascending: true)
+      //     .then(
+      //       (value) => value.map((e) => Exercise.fromJson(e)).toList(),
+      //     );
+
+      print("check");
+      return exerciseList;
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 
   @override
@@ -161,6 +177,7 @@ class _apiIntigration extends State<apiIntigration> {
           },
           valueEnd: (end){
             searchEnd = end;
+            fetchExerciseData();
             getList();
           },
         ),
