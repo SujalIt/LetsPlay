@@ -99,7 +99,7 @@ class _apiIntigration extends State<apiIntigration> {
     setState(() {});
   }
 
-  Future getList() async{
+  Future<List<Map<String,dynamic>>> getList() async{
 
       String newDay = DateFormat("yyyy-MM-dd").format(DateTime.parse(searchDate ?? DateTime.now().toString()));
       DateTime parsedTime = DateFormat('hh:mm a').parse(searchStart ?? "");
@@ -111,30 +111,32 @@ class _apiIntigration extends State<apiIntigration> {
       String finalEndTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse('$newDay $aa'));
       print(finalEndTime);
 
-
-      final test = Supabase.instance.client.rpc('get_available_vendors_v1', params: {'start_date_time': finalStartTime,'end_date_time': finalEndTime});
-    
-      // vendorList.addAll(test);
-  }
-
-  static Future<List<LetsPlay>> fetchExerciseData() async {
     try {
-      final response = await Supabase.instance.client.rpc('get_available_vendors_v1');
-      final exerciseList = response.map((e) => LetsPlay.fromJson(e)).toList();
-      // final exerciseList = await _client
-      //     .from(SB.exercises)
-      //     .select<List<Map<String, dynamic>>>('*')
-      //     .order('name', ascending: true)
-      //     .then(
-      //       (value) => value.map((e) => Exercise.fromJson(e)).toList(),
-      //     );
+    final response = await Supabase.instance.client.rpc('get_available_vendors_v1', params: {'start_date_time': finalStartTime,'end_date_time': finalEndTime});
+    print(response);
 
-      print("check");
-      return exerciseList;
-    } catch (e) {
-      print(e);
-      return [];
-    }
+
+    final exerciseList = response.map((e) => LetsPlay.fromJson(e)).toList();
+    print(exerciseList);
+    // print(exerciseList[0].toJson());
+
+    result.clear();
+    result.addAll(exerciseList);
+
+    print("apiList[0].toJson()");
+    setState(() {
+      
+    });
+    // Map<String,dynamic> testMap = response[6];
+    // print(testMap['id']);
+
+    print("hello test");
+
+    return [];
+  } catch (e) {
+    print(e);
+    return [];
+  }
   }
 
   @override
@@ -177,7 +179,6 @@ class _apiIntigration extends State<apiIntigration> {
           },
           valueEnd: (end){
             searchEnd = end;
-            fetchExerciseData();
             getList();
           },
         ),

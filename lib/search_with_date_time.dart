@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:letsplay/time_slot.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SearchDatewithTime extends StatefulWidget {
 
@@ -43,30 +42,6 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
           return null;
         });
     return datepikeker;
-  }
-
-  searchBox() {
-    Supabase.instance.client
-    .from('vendor')
-    .select('profile_pic'
-    'id'
-    'name'
-    'addressLine1'
-    'city'
-    'pricing')
-    .not(
-      'id',
-      'in',
-      Supabase.instance.client
-      .from('bookings')
-      .select('vendor_id')
-      .eq('booking_date', '2024-06-10')
-      .eq('start_date_time', '2024-06-10 06:00:00')
-      .eq('end_date_time', '2024-06-10 07:00:00')
-      );
-      setState(() {
-        
-      });
   }
     
   @override
@@ -167,23 +142,8 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
           width: double.infinity,
           height: 50,
           child: ElevatedButton(
-            onPressed: () async {
+            onPressed: () {
 
-                searchBox();
-
-              // await Supabase.instance.client
-              // .from("vendor")
-              // .select('*')
-              // .not(
-              //   'id',
-              //   'in',
-              //   Supabase.instance.client
-              //   .from('bookings')
-              //   .select('vendor_id')
-              //   .eq('booking_date', '2024-06-10')
-              //   .eq('start_date_time', '2024-06-10 06:00:00')
-              //   .eq('end_date_time', '2024-06-10 07:00:00')
-              // );
             }, 
             style: const ButtonStyle(
               shape: MaterialStatePropertyAll(RoundedRectangleBorder(
