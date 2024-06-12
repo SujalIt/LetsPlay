@@ -109,29 +109,17 @@ class _apiIntigration extends State<apiIntigration> {
       DateTime parsedEndtime = DateFormat('hh:mm a').parse(searchEnd ?? "");
       String aa = DateFormat('HH:mm:ss').format(parsedEndtime);
       String finalEndTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse('$newDay $aa'));
-      print(finalEndTime);
 
     try {
-    final response = await Supabase.instance.client.rpc('get_available_vendors_v1', params: {'start_date_time': finalStartTime,'end_date_time': finalEndTime});
-    print(response);
-
+    final response = await Supabase.instance.client.rpc('get_available_vendors_v1', params: {'_start_date_time': finalStartTime,'_end_date_time': finalEndTime});
 
     final exerciseList = response.map((e) => LetsPlay.fromJson(e)).toList();
-    print(exerciseList);
-    // print(exerciseList[0].toJson());
-
     result.clear();
-    result.addAll(exerciseList);
+    result = exerciseList.cast<LetsPlay>();
 
-    print("apiList[0].toJson()");
     setState(() {
-      
+
     });
-    // Map<String,dynamic> testMap = response[6];
-    // print(testMap['id']);
-
-    print("hello test");
-
     return [];
   } catch (e) {
     print(e);
@@ -179,9 +167,27 @@ class _apiIntigration extends State<apiIntigration> {
           },
           valueEnd: (end){
             searchEnd = end;
-            getList();
           },
         ),
+        const SizedBox(height: 5,),
+        SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            onPressed: () {
+              getList();
+            }, 
+            style: const ButtonStyle(
+              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              )),
+              backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 95, 251, 100))
+            ),
+            child: const Text("Search Box",
+            style: TextStyle(
+              fontSize: 19,
+              color: Colors.black
+            ),))),
         const SizedBox(height: 5,),
         if (result.isEmpty)
           Column(
@@ -275,12 +281,12 @@ class _apiIntigration extends State<apiIntigration> {
                                           ));
                                     },
                                     style: const ButtonStyle(
-                                        shape: MaterialStatePropertyAll(
+                                        shape: WidgetStatePropertyAll(
                                             RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(3)))),
                                         backgroundColor:
-                                            MaterialStatePropertyAll(
+                                            WidgetStatePropertyAll(
                                           Color.fromARGB(255, 95, 251, 100),
                                         )),
                                     child: const Text(

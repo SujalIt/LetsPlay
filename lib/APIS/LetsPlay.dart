@@ -1,23 +1,3 @@
-import 'dart:convert';
-/// id : 3
-/// game_id : 1
-/// name : "Powerplay Box Cricket"
-/// address_line1 : "Shilaj Road,"
-/// address_line2 : "(Opposite Swagat Bagan Villa)"
-/// city : "Ahmedabad "
-/// state : "Gujarat"
-/// phone : 7041841692
-/// profile_pic : "https://lh3.googleusercontent.com/p/AF1QipOJEbVNY5XReVWweytpjIUYbbM9B1s2gOI-mUHG=s1360-w1360-h1020"
-/// offer_pics : {"photos":["https://lh3.googleusercontent.com/p/AF1QipNfPon2F4rJCvORfhSAxs72JFb7zSdp6kkshCI5=s1360-w1360-h1020","https://lh3.googleusercontent.com/p/AF1QipPV_luwXug_XR5RvQLFingS-7_PVXEH4vuqduoG=s1360-w1360-h1020"]}
-/// ground_pics : null
-/// pricing : null
-/// slotinternval : 120
-/// created_at : "2024-02-02T13:15:03"
-/// updated_at : "2024-02-02T13:14:55"
-/// created_by : "5c04ecda-a880-4cc6-9b96-08af8d029ca6"
-
-LetsPlay letsPlayFromJson(String str) => LetsPlay.fromJson(json.decode(str));
-String letsPlayToJson(LetsPlay data) => json.encode(data.toJson());
 class LetsPlay {
   LetsPlay({
       num? id, 
@@ -31,11 +11,12 @@ class LetsPlay {
       String? profilePic, 
       OfferPics? offerPics, 
       dynamic groundPics, 
-      dynamic pricing, 
+      num? pricing, 
       num? slotinternval, 
       String? createdAt, 
       String? updatedAt, 
-      String? createdBy,}){
+      String? createdBy, 
+      String? groundLocation,}){
     _id = id;
     _gameId = gameId;
     _name = name;
@@ -52,6 +33,7 @@ class LetsPlay {
     _createdAt = createdAt;
     _updatedAt = updatedAt;
     _createdBy = createdBy;
+    _groundLocation = groundLocation;
 }
 
   LetsPlay.fromJson(dynamic json) {
@@ -71,6 +53,7 @@ class LetsPlay {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _createdBy = json['created_by'];
+    _groundLocation = json['ground_location'];
   }
   num? _id;
   num? _gameId;
@@ -83,11 +66,12 @@ class LetsPlay {
   String? _profilePic;
   OfferPics? _offerPics;
   dynamic _groundPics;
-  dynamic _pricing;
+  num? _pricing;
   num? _slotinternval;
   String? _createdAt;
   String? _updatedAt;
   String? _createdBy;
+  String? _groundLocation;
 LetsPlay copyWith({  num? id,
   num? gameId,
   String? name,
@@ -99,11 +83,12 @@ LetsPlay copyWith({  num? id,
   String? profilePic,
   OfferPics? offerPics,
   dynamic groundPics,
-  dynamic pricing,
+  num? pricing,
   num? slotinternval,
   String? createdAt,
   String? updatedAt,
   String? createdBy,
+  String? groundLocation,
 }) => LetsPlay(  id: id ?? _id,
   gameId: gameId ?? _gameId,
   name: name ?? _name,
@@ -120,6 +105,7 @@ LetsPlay copyWith({  num? id,
   createdAt: createdAt ?? _createdAt,
   updatedAt: updatedAt ?? _updatedAt,
   createdBy: createdBy ?? _createdBy,
+  groundLocation: groundLocation ?? _groundLocation,
 );
   num? get id => _id;
   num? get gameId => _gameId;
@@ -132,11 +118,12 @@ LetsPlay copyWith({  num? id,
   String? get profilePic => _profilePic;
   OfferPics? get offerPics => _offerPics;
   dynamic get groundPics => _groundPics;
-  dynamic get pricing => _pricing;
+  num? get pricing => _pricing;
   num? get slotinternval => _slotinternval;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
   String? get createdBy => _createdBy;
+  String? get groundLocation => _groundLocation;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -158,15 +145,12 @@ LetsPlay copyWith({  num? id,
     map['created_at'] = _createdAt;
     map['updated_at'] = _updatedAt;
     map['created_by'] = _createdBy;
+    map['ground_location'] = _groundLocation;
     return map;
   }
 
 }
 
-/// photos : ["https://lh3.googleusercontent.com/p/AF1QipNfPon2F4rJCvORfhSAxs72JFb7zSdp6kkshCI5=s1360-w1360-h1020","https://lh3.googleusercontent.com/p/AF1QipPV_luwXug_XR5RvQLFingS-7_PVXEH4vuqduoG=s1360-w1360-h1020"]
-
-OfferPics offerPicsFromJson(String str) => OfferPics.fromJson(json.decode(str));
-String offerPicsToJson(OfferPics data) => json.encode(data.toJson());
 class OfferPics {
   OfferPics({
       List<String>? photos,}){

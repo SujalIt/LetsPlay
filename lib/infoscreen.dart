@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -27,6 +28,8 @@ class InformationScreen extends StatefulWidget {
 
 class _InformationScreenState extends State<InformationScreen> {
   TextEditingController notesControl = TextEditingController();
+
+  var notesStore = "Hello";
 
   List<Widget> images = [];
   List originalList = [];
@@ -102,23 +105,48 @@ class _InformationScreenState extends State<InformationScreen> {
             title: const Text("Are you sure you want to unbook this slot?"),
             actions: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("CANCEL")),
-                  TextButton(
-                      onPressed: () async {
-                        await Supabase.instance.client
-                            .from("bookings")
-                            .delete()
-                            .match({"id": timeList[index].id!}).then((value) {
-                          gettingSlots();
+                  SizedBox(
+                    height: 40,
+                    width: 110,
+                    child: ElevatedButton(
+                        onPressed: () {
                           Navigator.pop(context);
-                        });
-                      },
-                      child: const Text("YES")),
+                        },
+                        style: const ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            Color.fromARGB(255, 90, 252, 95)
+                          )
+                        ),
+                        child: const Text("CANCEL",
+                        style: TextStyle(
+                          color: Colors.black
+                        ),)),
+                  ),
+                  SizedBox(
+                    height: 40,
+                    width: 110,
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          await Supabase.instance.client
+                              .from("bookings")
+                              .delete()
+                              .match({"id": timeList[index].id!}).then((value) {
+                            gettingSlots();
+                            Navigator.pop(context);
+                          });
+                        },
+                        style: const ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            Color.fromARGB(255, 90, 252, 95)
+                          )
+                        ),
+                        child: const Text("YES",
+                        style: TextStyle(
+                          color: Colors.black
+                        ),)),
+                  ),
                 ],
               )
             ],
@@ -203,6 +231,18 @@ class _InformationScreenState extends State<InformationScreen> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          Semantics(
+              identifier: 'Share',
+              child: IconButton(
+              onPressed: () {
+              Share.share(
+              "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city}  \nContact No :${widget.groundOfObject.phone} \n${widget.groundOfObject.groundLocation}",
+              );
+            },
+              icon: const Icon(Icons.share)),
+            ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(
@@ -247,7 +287,7 @@ class _InformationScreenState extends State<InformationScreen> {
                               ),
                             ),
                             Text(
-                              "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city}",
+                              "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city}\nPrice : ₹ ${widget.groundOfObject.pricing}",
                               style: const TextStyle(
                                   fontSize: 11, fontWeight: FontWeight.w500),
                             ),
@@ -259,14 +299,17 @@ class _InformationScreenState extends State<InformationScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Semantics(
-                          identifier: 'Share',
+                          identifier: 'GoogleMap',
                           child: IconButton(
-                              onPressed: () {
-                                Share.share(
-                                  "${widget.groundOfObject.name} ${widget.groundOfObject.addressLine1} ${widget.groundOfObject.addressLine2} ${widget.groundOfObject.city} , Contact No :${widget.groundOfObject.phone}",
-                                );
+                              onPressed: () async {
+                                var url = widget.groundOfObject.groundLocation.toString();
+                                if (await canLaunch(url)) {
+                                   await launch(url);
+                                } else {
+                                   throw 'Could not launch $url';
+                                }
                               },
-                              icon: const Icon(Icons.share)),
+                              icon: const Icon(Icons.location_on)),
                         ),
                         Semantics(
                           identifier: 'Call',
@@ -381,7 +424,8 @@ class _InformationScreenState extends State<InformationScreen> {
                                           height: 10,
                                         ),
                                         timeList[index].isBooked!
-                                            ? const SizedBox(height: 1)
+                                        // vaqveq
+                                            ? Text(timeList[index].notes.toString())
                                             : TextField(
                                                 controller: notesControl,
                                                 maxLines: 3,
@@ -410,25 +454,49 @@ class _InformationScreenState extends State<InformationScreen> {
                                     ),
                                     actions: [
                                       Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('CANCEL'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              if (timeList[index].isBooked!) {
+                                          SizedBox(
+                                            height: 40,
+                                            width: 110,
+                                            child: ElevatedButton(
+                                              onPressed: () {
                                                 Navigator.pop(context);
-                                                unbookSlot(index);
-                                              } else {
-                                                bookSlot(index);
-                                              }
-                                            },
-                                            child: timeList[index].isBooked!
-                                                ? const Text("UNBOOK")
-                                                : const Text("BOOK"),
+                                              },
+                                              style: const ButtonStyle(
+                                                backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 90, 252, 95)),
+                                              ),
+                                              child:  const Text('CANCEL',
+                                              style: TextStyle(
+                                                color: Colors.black
+                                              ),),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 40,
+                                            width: 110,
+                                            child: ElevatedButton(
+                                              onPressed: () async {
+                                                if (timeList[index].isBooked!) {
+                                                  Navigator.pop(context);
+                                                  unbookSlot(index);
+                                                } else {
+                                                  bookSlot(index);
+                                                }
+                                              },
+                                              style: const ButtonStyle(
+                                                backgroundColor: WidgetStatePropertyAll(
+                                                  Color.fromARGB(255, 90, 252, 95)
+                                                )
+                                              ),
+                                              child: timeList[index].isBooked!
+                                                  ? const Text("UNBOOK", 
+                                                  style: TextStyle(color: Colors.black),)
+                                                  : const Text("BOOK",
+                                                  style: TextStyle(
+                                                    color: Colors.black
+                                                  ),),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -443,11 +511,14 @@ class _InformationScreenState extends State<InformationScreen> {
                           padding: const EdgeInsets.all(7.0),
                           child: Container(
                               decoration: BoxDecoration(
+                                color: timeList[index].isBooked!
+                                ? const Color.fromARGB(255, 231, 85, 85)
+                                : Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                   style: BorderStyle.solid,
                                   color: timeList[index].isBooked!
-                                      ? Colors.red
+                                      ? const Color.fromARGB(255, 231, 85, 85)
                                       : Colors.green,
                                   width: 2,
                                 ),

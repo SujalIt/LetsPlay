@@ -46,6 +46,14 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- <meta-data android:name="flutter-deeplink" android:value="true"/>
+            <intent-filter android:autoVerify="true">
+            <action android:name="android.intent.action.View"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:schemas="http" android:host="letsplay7676.com"/>
+            <data android:schemas="https"/> -->
+            <!-- </intent-filter> -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>

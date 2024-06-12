@@ -44,6 +44,10 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
     return datepikeker;
   }
     
+  bool todayColor = false;
+  bool tomorrowColor = false;
+  bool otherColor = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,16 +62,21 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
               width: 100,
               height: 50,
               child: ElevatedButton(onPressed: () {
+                todayColor = true; 
+                tomorrowColor = false;
+                otherColor = false;
                 storeDate = DateTime.parse( DateFormat('yyyy-MM-dd').format(storeDate!) );
                 setState(() {
                   widget.valueDate!(storeDate.toString());
                 });
               },
-              style: const ButtonStyle(
-                shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(todayColor ? const Color.fromARGB(255, 95, 251, 100) : Colors.white,
+),
+                shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
                   side: BorderSide(color: Colors.green,
                   width: 2),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                 )),
               ),
                child: Text(style: const TextStyle(fontSize: 11, color: Colors.black),
@@ -78,14 +87,19 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
                 width: 105,
                 height: 50,
                 child: ElevatedButton(onPressed: () {
+                  todayColor = false; 
+                  tomorrowColor = true;
+                  otherColor = false;
                   tomorrow = DateFormat('yyyy-MM-dd').format(today!.add(const Duration(days: 1)));
                   storeDate = DateTime.parse(tomorrow!);
                   setState(() {
                     widget.valueDate!(storeDate.toString());
                   });
                 },
-                style: const ButtonStyle(
-                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(tomorrowColor ? const Color.fromARGB(255, 95, 251, 100) : Colors.white,
+),
+                  shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
                     side: BorderSide(color: Colors.green,
                     width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -98,9 +112,14 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
               SizedBox(
                 width: 136,
                 height: 50,
-                child: ElevatedButton(onPressed: () {date();},
-                style: const ButtonStyle(
-                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                child: ElevatedButton(onPressed: () {date();
+                todayColor = false; 
+                tomorrowColor = false;
+                otherColor = true;},
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(otherColor ? const Color.fromARGB(255, 95, 251, 100) : Colors.white,
+),
+                  shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
                     side: BorderSide(color: Colors.green,
                     width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -138,24 +157,24 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
           },
         ),
         const SizedBox(height: 6,),
-        SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: ElevatedButton(
-            onPressed: () {
-
-            }, 
-            style: const ButtonStyle(
-              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              )),
-              backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 95, 251, 100))
-            ),
-            child: const Text("Search Box",
-            style: TextStyle(
-              fontSize: 19,
-              color: Colors.black
-            ),)))
+        // SizedBox(
+        //   width: double.infinity,
+        //   height: 50,
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       // getList();
+        //     }, 
+        //     style: const ButtonStyle(
+        //       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.all(Radius.circular(10)),
+        //       )),
+        //       backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 95, 251, 100))
+        //     ),
+        //     child: const Text("Search Box",
+        //     style: TextStyle(
+        //       fontSize: 19,
+        //       color: Colors.black
+        //     ),)))
       ],
     );
   }

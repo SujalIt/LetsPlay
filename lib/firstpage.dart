@@ -21,7 +21,7 @@ class MyfirstpageState extends State<Myfirstpage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 95, 251, 100),
+        backgroundColor: const Color.fromARGB(255, 95, 251, 100),
         title: const Text(
           'LetsPlay',
           style: TextStyle(
@@ -54,13 +54,40 @@ class MyfirstpageState extends State<Myfirstpage> {
                   title: const Text("Are you sure you want to logout?"),
                   actions: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        TextButton(onPressed: () {
-                          Navigator.pop(context);
-                        }, child: const Text("Cancel"),),
-                        TextButton(onPressed: () {
-                          Navigator.popUntil(context, ModalRoute.withName('f'));
-                        }, child: const Text("Yes")),
+                        SizedBox(
+                          height: 40,
+                          width: 110,
+                          child: ElevatedButton(onPressed: () {
+                            Navigator.pop(context);
+                          }, 
+                          style: const ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              Color.fromARGB(255, 90, 252, 95)
+                              )
+                          ),
+                          child: const Text("Cancel",
+                          style: TextStyle(
+                            color: Colors.black
+                          ),),),
+                        ),
+                        SizedBox(
+                          width: 110,
+                          height: 40,
+                          child: ElevatedButton(onPressed: () {
+                            Navigator.popUntil(context, ModalRoute.withName('f'));
+                          }, 
+                          style: const ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              Color.fromARGB(255, 90, 252, 95)
+                            )
+                          ),
+                          child: const Text("Yes",
+                          style: TextStyle(
+                            color: Colors.black
+                          ),)),
+                        ),
                       ],
                     )
                   ],
