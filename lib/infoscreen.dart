@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:core';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -182,6 +180,18 @@ class _InformationScreenState extends State<InformationScreen> {
         });
   }
 
+  Future<String> matchNotes(int index) async{
+    String date = DateFormat("yyyy-MM-dd").format(today ?? DateTime.now());
+    String matchStartTime = DateFormat("yyyy-MM-dd HH:mm:ss")
+        .format(DateTime.parse("$date ${timeList[index].startDateTime}:00"));
+    final matchNotes = await Supabase.instance.client
+    .from("bookings")
+    .select('notes')
+    .match({"start_date_time" : matchStartTime});
+    String notes = matchNotes[0]['notes'];
+    return notes;
+    }
+    
   @override
   void initState() {
     super.initState();
@@ -369,7 +379,6 @@ class _InformationScreenState extends State<InformationScreen> {
                 Datepiker(
                   dateCall: (date) {
                     today = date;
-
                     gettingSlots();
                   },
                 ),
@@ -424,8 +433,16 @@ class _InformationScreenState extends State<InformationScreen> {
                                           height: 10,
                                         ),
                                         timeList[index].isBooked!
-                                        // vaqveq
-                                            ? Text(timeList[index].notes.toString())
+                                            ? SizedBox(child: FutureBuilder<String>(
+                                                future : matchNotes(index),
+                                                builder : (context, AsyncSnapshot<String> snapshot){
+                                                  if(snapshot.hasData){
+                                                    return Text(snapshot.data.toString());
+                                                  } else {
+                                                    return const CircularProgressIndicator();
+                                                  }
+                                                }
+                                              ))
                                             : TextField(
                                                 controller: notesControl,
                                                 maxLines: 3,

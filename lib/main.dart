@@ -3,7 +3,7 @@ import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:letsplay/infoscreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:go_router/go_router.dart';
+// import 'package:go_router/go_router.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

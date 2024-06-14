@@ -127,6 +127,8 @@ class _apiIntigration extends State<apiIntigration> {
   }
   }
 
+  final ifSession = Supabase.instance.client.auth.currentSession;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -158,6 +160,7 @@ class _apiIntigration extends State<apiIntigration> {
             ),
           ),
         ),
+        if(ifSession == null)
         SearchDatewithTime(
           valueDate : (date){
             searchDate = date;
@@ -170,6 +173,7 @@ class _apiIntigration extends State<apiIntigration> {
           },
         ),
         const SizedBox(height: 5,),
+        if(ifSession == null)
         SizedBox(
           width: double.infinity,
           height: 50,
