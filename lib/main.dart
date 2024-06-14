@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
+import 'package:letsplay/router.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:letsplay/infoscreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,21 +15,26 @@ void main() async{
   runApp(const MyApp());
 }
 
-//   final GoRouter _router = GoRouter(
+//   final GoRouter router = GoRouter(
 //   routes: <RouteBase>[
 //     GoRoute(
 //       path: '/',
 //       builder: (BuildContext context, GoRouterState state) {
 //         return const Myfirstpage();
 //       },
-//       // routes: <RouteBase>[
-//       //   GoRoute(
-//       //     path: 'details',
-//       //     builder: (BuildContext context, GoRouterState state) {
-//       //       return InformationScreen();
-//       //     },
-//       //   ),
-//       // ],
+//       routes: <RouteBase>[
+//         GoRoute(
+//           path: 'informationScreen',
+//           builder: (BuildContext context, GoRouterState state) {
+//             return InformationScreen(groundOfObject : LetsPlay());
+//           },
+//         ),
+//         // GoRoute(
+//         //   path: 'newScreen',
+//         //   builder: (BuildContext context, GoRouterState state){
+//         //     return const newScreenRoute();
+//         //   })
+//       ],
 //     ),
 //   ],
 // );
@@ -38,7 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // return MaterialApp.router(
-    //   routerConfig: _router,
+    //   routerConfig: router,
     // );
     return 
     MaterialApp(

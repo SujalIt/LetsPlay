@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
@@ -133,6 +134,8 @@ class _apiIntigration extends State<apiIntigration> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        ElevatedButton(onPressed: () {context.go('/informationScreen');},
+         child: const Text("infoScreen route", style: TextStyle(fontSize: 17),)),
         SizedBox(
           height: 50,
           child: TextField(
@@ -279,6 +282,7 @@ class _apiIntigration extends State<apiIntigration> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
+                                            // InformationScreen(vendId: result[index].id)
                                                 InformationScreen(
                                                     groundOfObject:
                                                         result[index]),

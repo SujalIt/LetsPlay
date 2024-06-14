@@ -13,10 +13,14 @@ import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class InformationScreen extends StatefulWidget {
-  LetsPlay groundOfObject;
+
+  num? vendId;
+
+  LetsPlay groundOfObject ;
 
   InformationScreen({
     super.key,
+    // required this.vendId,
     required this.groundOfObject,
   });
 
@@ -26,8 +30,6 @@ class InformationScreen extends StatefulWidget {
 
 class _InformationScreenState extends State<InformationScreen> {
   TextEditingController notesControl = TextEditingController();
-
-  var notesStore = "Hello";
 
   List<Widget> images = [];
   List originalList = [];
@@ -41,7 +43,7 @@ class _InformationScreenState extends State<InformationScreen> {
     var next = DateFormat("yyyy-MM-dd").format(today!);
     final response = await http.get(
       Uri.parse(
-          'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${widget.groundOfObject.id}&booking_date=eq.${next}'),
+          'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${widget.groundOfObject.id}&booking_date=eq.$next'),
     );
     var data;
     if (response.statusCode == 200) {
@@ -53,6 +55,26 @@ class _InformationScreenState extends State<InformationScreen> {
       return bookings;
     } else {
       return bookings;
+    }
+  }
+  List<LetsPlay> vendorDataList = [];
+
+  Future<List<LetsPlay>> vendorData() async{
+    final vendorResponse = await http.get(
+      Uri.parse(
+          'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&id=eq.4')
+    );
+    var vendorData ;
+    if(vendorResponse.statusCode == 200){
+      vendorData = jsonDecode(vendorResponse.body.toString());
+      for (Map<String ,dynamic> j in vendorData){
+        vendorDataList.add(LetsPlay.fromJson(j));
+        print("response");
+        print(vendorDataList[0].addressLine1);
+      }
+      return vendorDataList;
+    }else {
+      return vendorDataList;
     }
   }
 
@@ -91,6 +113,7 @@ class _InformationScreenState extends State<InformationScreen> {
   }
 
   gettingSlots() async {
+    await vendorData();
     await getBookedSlots();
     loadingBookedSlots();
   }
