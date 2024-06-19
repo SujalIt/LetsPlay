@@ -139,7 +139,7 @@ class _apiIntigration extends State<apiIntigration> {
         SizedBox(
           height: 50,
           child: TextField(
-            onChanged: (value) => updatedlist(value ?? ''),
+            onChanged: (value) => updatedlist(value),
             textAlignVertical: TextAlignVertical.center,
             textAlign: TextAlign.start,
             cursorColor: Colors.black45,
@@ -282,10 +282,7 @@ class _apiIntigration extends State<apiIntigration> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                            // InformationScreen(vendId: result[index].id)
-                                                InformationScreen(
-                                                    groundOfObject:
-                                                        result[index]),
+                                            InformationScreen(vendId: result[index].id)
                                           ));
                                     },
                                     style: const ButtonStyle(
