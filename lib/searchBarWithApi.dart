@@ -123,7 +123,6 @@ class _apiIntigration extends State<apiIntigration> {
     });
     return [];
   } catch (e) {
-    print(e);
     return [];
   }
   }
@@ -134,8 +133,6 @@ class _apiIntigration extends State<apiIntigration> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ElevatedButton(onPressed: () {context.go('/informationScreen');},
-         child: const Text("infoScreen route", style: TextStyle(fontSize: 17),)),
         SizedBox(
           height: 50,
           child: TextField(
@@ -278,6 +275,7 @@ class _apiIntigration extends State<apiIntigration> {
                                 width: 170,
                                 child: ElevatedButton(
                                     onPressed: () {
+                                      context.go('/informationScreen/id=${result[index].id}');
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(

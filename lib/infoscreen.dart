@@ -283,8 +283,10 @@ class _InformationScreenState extends State<InformationScreen> {
           child: SizedBox(
             child: groundOfObject == null
                 ? const Center(
-                  heightFactor: 20,
-                  child: CircularProgressIndicator(color: Color.fromARGB(255, 95, 251, 100),))
+                    heightFactor: 20,
+                    child: CircularProgressIndicator(
+                      color: Color.fromARGB(255, 95, 251, 100),
+                    ))
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[

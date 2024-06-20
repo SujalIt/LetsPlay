@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class TimeSlot extends StatefulWidget {
 
   Function(String?)? callBackValue1;

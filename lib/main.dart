@@ -1,59 +1,48 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:letsplay/APIS/LetsPlay.dart';
-import 'package:letsplay/router.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:letsplay/infoscreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
       url: 'https://gmoflxgrysuxaygnjemp.supabase.co',
-      anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU");
+      anonKey:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU");
   runApp(const MyApp());
 }
 
-//   final GoRouter router = GoRouter(
-//   routes: <RouteBase>[
-//     GoRoute(
-//       path: '/',
-//       builder: (BuildContext context, GoRouterState state) {
-//         return const Myfirstpage();
-//       },
-//       routes: <RouteBase>[
-//         GoRoute(
-//           path: 'informationScreen',
-//           builder: (BuildContext context, GoRouterState state) {
-//             return InformationScreen(groundOfObject : LetsPlay());
-//           },
-//         ),
-//         // GoRoute(
-//         //   path: 'newScreen',
-//         //   builder: (BuildContext context, GoRouterState state){
-//         //     return const newScreenRoute();
-//         //   })
-//       ],
-//     ),
-//   ],
-// );
+final GoRouter router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const Myfirstpage();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'informationScreen/id=:vid',
+          builder: (BuildContext context, GoRouterState state) {
+            final userInput = state.pathParameters;
+            var strVid = userInput['vid'];
+            var finalId  = num.tryParse(strVid!);
+            return InformationScreen(vendId: finalId);
+          },
+        ),
+      ],
+    ),
+  ],
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp.router(
-    //   routerConfig: router,
-    // );
-    return 
-    MaterialApp(
-      initialRoute: "f",
-      routes: {
-        "f":(context) => const Myfirstpage(),
-      },
-      debugShowCheckedModeBanner: false,
+    return MaterialApp.router(
+      // debugShowCheckedModeBanner: false,
+      routerConfig: router,
     );
   }
 }
