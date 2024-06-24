@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -252,16 +253,14 @@ class _InformationScreenState extends State<InformationScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromARGB(255, 95, 251, 100),
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Semantics(
-            identifier: 'Back',
-            child: const Icon(
-              Icons.arrow_back_ios_new,
-              size: 28,
-            ),
+        leading: Semantics(
+          identifier: 'Back',
+          child: IconButton(
+            onPressed: () {
+              context.go('/');
+            },
+            icon: const Icon(Icons.arrow_back_rounded),
+            // size: 28,
           ),
         ),
         title: const Text(
@@ -278,8 +277,10 @@ class _InformationScreenState extends State<InformationScreen> {
             child: IconButton(
                 onPressed: () {
                   Share.share(
-                    "${groundOfObject!.name} ${groundOfObject!.addressLine1} ${groundOfObject!.addressLine2} ${groundOfObject!.city}  \nContact No :${groundOfObject!.phone} \n${groundOfObject!.groundLocation}",
-                  );
+                      "https://letsplaycricket-a007a.web.app/#/informationScreen/id=${widget.vendId}"
+
+                      // "${groundOfObject!.name} ${groundOfObject!.addressLine1} ${groundOfObject!.addressLine2} ${groundOfObject!.city}  \nContact No :${groundOfObject!.phone} \nLocation:${groundOfObject!.groundLocation} \nLink : https://letsplaycricket-a007a.web.app/#/informationScreen/id=${widget.vendId}",
+                      );
                 },
                 icon: const Icon(Icons.share)),
           ),
@@ -302,8 +303,11 @@ class _InformationScreenState extends State<InformationScreen> {
                     ))
                 : groundOfObject == null
                     ? const Center(
-                      heightFactor: 20,
-                      child: Text("Data Not Found!", style: TextStyle(fontSize: 25),))
+                        heightFactor: 20,
+                        child: Text(
+                          "Data Not Found!",
+                          style: TextStyle(fontSize: 25),
+                        ))
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[

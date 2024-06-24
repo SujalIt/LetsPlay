@@ -158,24 +158,6 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
           },
         ),
         const SizedBox(height: 6,),
-        // SizedBox(
-        //   width: double.infinity,
-        //   height: 50,
-        //   child: ElevatedButton(
-        //     onPressed: () {
-        //       // getList();
-        //     }, 
-        //     style: const ButtonStyle(
-        //       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.all(Radius.circular(10)),
-        //       )),
-        //       backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 95, 251, 100))
-        //     ),
-        //     child: const Text("Search Box",
-        //     style: TextStyle(
-        //       fontSize: 19,
-        //       color: Colors.black
-        //     ),)))
       ],
     );
   }

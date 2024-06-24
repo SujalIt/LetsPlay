@@ -17,7 +17,6 @@ class _TimeSlotState extends State<TimeSlot> {
   '11:00 PM','12:00 AM',];
 
   String? startTime = '06:00 AM';
-  // DateFormat('hh:mm a').format(DateTime.now());
   String? endTime;
   late int  newTimeIndex;
 

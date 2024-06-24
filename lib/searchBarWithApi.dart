@@ -6,7 +6,6 @@ import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
 import 'package:letsplay/search_with_date_time.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'infoscreen.dart';
 
 class apiIntigration extends StatefulWidget {
   const apiIntigration({
@@ -276,12 +275,6 @@ class _apiIntigration extends State<apiIntigration> {
                                 child: ElevatedButton(
                                     onPressed: () {
                                       context.go('/informationScreen/id=${result[index].id}');
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                            InformationScreen(vendId: result[index].id)
-                                          ));
                                     },
                                     style: const ButtonStyle(
                                         shape: WidgetStatePropertyAll(
