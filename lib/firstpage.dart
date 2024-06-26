@@ -12,8 +12,6 @@ class Myfirstpage extends StatefulWidget {
 }
 
 class MyfirstpageState extends State<Myfirstpage> {
-
-
   final session = Supabase.instance.client.auth.currentSession;
 
   @override
@@ -33,77 +31,83 @@ class MyfirstpageState extends State<Myfirstpage> {
         actions: [
           if (session == null)
             IconButton(
-              onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage(),
-                )
-              );
-            }, icon: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child:  Icon(
-                Icons.account_circle_sharp,
-                semanticLabel: 'Login',
-                color: Colors.black,),
-            )),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ));
+                },
+                icon: const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(
+                    Icons.account_circle_sharp,
+                    semanticLabel: 'Login',
+                    color: Colors.black,
+                  ),
+                )),
           if (session != null)
-            IconButton(onPressed: (){
-              showDialog(context: context,
-               builder: (BuildContext context) {
-                return  AlertDialog(
-                  title: const Text("Are you sure you want to logout?"),
-                  actions: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        SizedBox(
-                          height: 40,
-                          width: 110,
-                          child: ElevatedButton(onPressed: () {
-                            Navigator.pop(context);
-                          }, 
-                          style: const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              Color.fromARGB(255, 90, 252, 95)
-                              )
-                          ),
-                          child: const Text("Cancel",
-                          style: TextStyle(
-                            color: Colors.black
-                          ),),),
-                        ),
-                        SizedBox(
-                          width: 110,
-                          height: 40,
-                          child: ElevatedButton(onPressed: () {
-                            Navigator.popUntil(context, ModalRoute.withName('f'));
-                          }, 
-                          style: const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              Color.fromARGB(255, 90, 252, 95)
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Are you sure you want to logout?"),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(
+                                  height: 40,
+                                  width: 110,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    style: const ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                            Color.fromARGB(255, 90, 252, 95))),
+                                    child: const Text(
+                                      "Cancel",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 110,
+                                  height: 40,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          Supabase.instance.client.auth.signOut();
+                                          });
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Myfirstpage()));
+                                      },
+                                      style: const ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStatePropertyAll(
+                                                  Color.fromARGB(
+                                                      255, 90, 252, 95))),
+                                      child: const Text(
+                                        "Yes",
+                                        style: TextStyle(color: Colors.black),
+                                      )),
+                                ),
+                              ],
                             )
-                          ),
-                          child: const Text("Yes",
-                          style: TextStyle(
-                            color: Colors.black
-                          ),)),
-                        ),
-                      ],
-                    )
-                  ],
-                );
-               });
-              setState(() {
-                Supabase.instance.client.auth.signOut();
-              });
-            }, icon: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.logout_rounded,
-                semanticLabel: 'Logout',
-                color: Colors.black,),
-            )
-              ),
+                          ],
+                        );
+                      });
+                },
+                icon: const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(
+                    Icons.logout_rounded,
+                    semanticLabel: 'Logout',
+                    color: Colors.black,
+                  ),
+                )),
         ],
       ),
       body: const Padding(

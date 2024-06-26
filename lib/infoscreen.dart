@@ -1,16 +1,13 @@
-import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:letsplay/APIS/LetsPlay.dart';
+import 'package:letsplay/infoModel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:share_plus/share_plus.dart';
-import 'APIS/bookings.dart';
 import 'datepiker.dart';
-import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class InformationScreen extends StatefulWidget {
@@ -26,213 +23,39 @@ class InformationScreen extends StatefulWidget {
 }
 
 class _InformationScreenState extends State<InformationScreen> {
-  TextEditingController notesControl = TextEditingController();
 
+  Slots object = Slots();
+  
+  TextEditingController notesControl = TextEditingController();
   List<Widget> images = [];
-  List originalList = [];
   var no = 0;
-  List<Booking> timeList = [];
-  List<Booking> bookings = [];
   DateTime? today = DateTime.now();
   final user = Supabase.instance.client.auth.currentUser?.id;
-
-  LetsPlay? groundOfObject;
-
-  List<LetsPlay> vendorDataList = [];
-
   bool isLoading = false;
 
-  Future<List<LetsPlay>> vendorData() async {
+  gettingSlots() async {
     setState(() {
       isLoading = true;
     });
-    final vendorResponse = await http.get(Uri.parse(
-        'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&id=eq.${widget.vendId}'));
-    var vendorData;
-    if (vendorResponse.statusCode == 200) {
+    await object.vendorData(widget.vendId);
+    setState(() {
+      isLoading = false;
+    });
+    await object.getBookedSlots();
+    object.loadingBookedSlots();
+    if(mounted){
       setState(() {
-        isLoading = false;
-      });
-      vendorData = jsonDecode(vendorResponse.body.toString());
-      for (Map<String, dynamic> j in vendorData) {
-        vendorDataList.add(LetsPlay.fromJson(j));
-      }
-      groundOfObject = vendorDataList[0];
-      return vendorDataList;
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-      return vendorDataList;
-    }
-  }
-
-  Future<List<Booking>> getBookedSlots() async {
-    var next = DateFormat("yyyy-MM-dd").format(today!);
-    final response = await http.get(
-      Uri.parse(
-          'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${groundOfObject?.id}&booking_date=eq.$next'),
-    );
-    var data;
-    if (response.statusCode == 200) {
-      data = jsonDecode(response.body.toString());
-      bookings.clear();
-      for (Map<String, dynamic> i in data) {
-        bookings.add(Booking.fromJson(i));
-      }
-      return bookings;
-    } else {
-      return bookings;
-    }
-  }
-
-  sloteBooking(DateTime now, DateTime end, int interwall) {
-    DateTime currentTime = now;
-    timeList.clear();
-    while (currentTime.isBefore(end)) {
-      String formattedTime = DateFormat('HH:mm').format(currentTime);
-      timeList.add(Booking(startDateTime: formattedTime));
-      String originalFormate = DateFormat.jm().format(currentTime);
-      originalList.add(Booking(startDateTime: originalFormate));
-      currentTime = currentTime.add(Duration(minutes: interwall));
-    }
-  }
-
-  loadingBookedSlots() {
-    for (int i = 0; i < timeList.length; i++) {
-      timeList[i].isBooked = false;
-      for (int j = 0; j < bookings.length; j++) {
-        String? bookedSlotTrim = bookings[j].startDateTime;
-        String stTime =
-            DateFormat("HH:mm").format(DateTime.parse(bookedSlotTrim!));
-        String? time = timeList[i].startDateTime;
-        if (time == stTime) {
-          timeList[i].id = bookings[j].id;
-          timeList[i].isBooked = true;
-        }
-      }
-    }
-    if (mounted) {
-      setState(() {
-        timeList;
-        bookings;
+        object.time24List;
+        object.bookings;
       });
     }
   }
-
-  gettingSlots() async {
-    await vendorData();
-    await getBookedSlots();
-    loadingBookedSlots();
-  }
-
-  unbookSlot(int index) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Are you sure you want to unbook this slot?"),
-            actions: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    height: 40,
-                    width: 110,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                                Color.fromARGB(255, 90, 252, 95))),
-                        child: const Text(
-                          "CANCEL",
-                          style: TextStyle(color: Colors.black),
-                        )),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 110,
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          await Supabase.instance.client
-                              .from("bookings")
-                              .delete()
-                              .match({"id": timeList[index].id!}).then((value) {
-                            gettingSlots();
-                            Navigator.pop(context);
-                          });
-                        },
-                        style: const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                                Color.fromARGB(255, 90, 252, 95))),
-                        child: const Text(
-                          "YES",
-                          style: TextStyle(color: Colors.black),
-                        )),
-                  ),
-                ],
-              )
-            ],
-          );
-        });
-  }
-
-  bookSlot(int index) async {
-    String newDay = DateFormat("yyyy-MM-dd").format(today ?? DateTime.now());
-    String stTime = DateFormat("yyyy-MM-dd HH:mm:ss")
-        .format(DateTime.parse("$newDay ${timeList[index].startDateTime}:00"));
-    DateTime afterAddSt = DateTime.parse(stTime)
-        .add(Duration(minutes: groundOfObject!.slotinternval?.toInt() ?? 0));
-    await Supabase.instance.client
-        .from('bookings')
-        .insert([
-          {
-            "created_at": DateFormat("yyyy-MM-dd HH:mm:ss")
-                .format(today ?? DateTime.now()),
-            "vendor_id": groundOfObject!.id,
-            "start_date_time": stTime,
-            "end_date_time":
-                DateFormat("yyyy-MM-dd HH:mm:ss").format(afterAddSt),
-            "notes": notesControl.text.toString(),
-            "booking_date":
-                DateFormat("yyyy-MM-dd").format(today ?? DateTime.now())
-          }
-        ])
-        .select()
-        .then((value) {
-          gettingSlots();
-          notesControl.clear();
-          Navigator.pop(context);
-        });
-  }
-
-  Future<String> matchNotes(int index) async {
-    String date = DateFormat("yyyy-MM-dd").format(today ?? DateTime.now());
-    String matchStartTime = DateFormat("yyyy-MM-dd HH:mm:ss")
-        .format(DateTime.parse("$date ${timeList[index].startDateTime}:00"));
-    final matchNotes = await Supabase.instance.client
-        .from("bookings")
-        .select('notes')
-        .match({"start_date_time": matchStartTime});
-    String notes = matchNotes[0]['notes'];
-    return notes;
-  }
-
   finalData() async {
     await gettingSlots();
-    final DateTime today = DateTime.now();
-    final DateTime startTime =
-        DateTime(today.year, today.month, today.day); // Example start time
-    final DateTime endTime =
-        startTime.add(const Duration(days: 1)); // Example end time
-    final int intervalMinutes = groundOfObject!.slotinternval?.toInt() ??
-        0; // Example interval in minutes
-    sloteBooking(startTime, endTime, intervalMinutes);
-    loadingBookedSlots();
+    object.slots();
+    object.loadingBookedSlots();
 
-    for (var i in groundOfObject!.offerPics!.photos!) {
+    for (var i in object.groundOfObject!.offerPics!.photos!) {
       images.add(Image.network(
         i,
         width: double.infinity,
@@ -246,7 +69,6 @@ class _InformationScreenState extends State<InformationScreen> {
     super.initState();
     finalData();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -255,12 +77,17 @@ class _InformationScreenState extends State<InformationScreen> {
         backgroundColor: const Color.fromARGB(255, 95, 251, 100),
         leading: Semantics(
           identifier: 'Back',
-          child: IconButton(
-            onPressed: () {
-              context.go('/');
-            },
-            icon: const Icon(Icons.arrow_back_rounded),
-            // size: 28,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: IconButton(
+              onPressed: () {
+                context.go('/');
+              },
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+                size: 28,
+              ),
+            ),
           ),
         ),
         title: const Text(
@@ -277,10 +104,7 @@ class _InformationScreenState extends State<InformationScreen> {
             child: IconButton(
                 onPressed: () {
                   Share.share(
-                      "https://letsplaycricket-a007a.web.app/#/informationScreen/id=${widget.vendId}"
-
-                      // "${groundOfObject!.name} ${groundOfObject!.addressLine1} ${groundOfObject!.addressLine2} ${groundOfObject!.city}  \nContact No :${groundOfObject!.phone} \nLocation:${groundOfObject!.groundLocation} \nLink : https://letsplaycricket-a007a.web.app/#/informationScreen/id=${widget.vendId}",
-                      );
+                      "https://letsplaycricket-a007a.web.app/#/informationScreen/id=${widget.vendId}");
                 },
                 icon: const Icon(Icons.share)),
           ),
@@ -301,7 +125,7 @@ class _InformationScreenState extends State<InformationScreen> {
                         color: Color.fromARGB(255, 95, 251, 100),
                       ),
                     ))
-                : groundOfObject == null
+                : object.groundOfObject == null
                     ? const Center(
                         heightFactor: 20,
                         child: Text(
@@ -324,7 +148,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
                                     child: Image.network(
-                                      groundOfObject
+                                      object.groundOfObject
                                               ?.offerPics?.photos?.first ??
                                           '',
                                       fit: BoxFit.cover,
@@ -339,14 +163,14 @@ class _InformationScreenState extends State<InformationScreen> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        groundOfObject!.name.toString(),
+                                        object.groundOfObject!.name.toString(),
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       Text(
-                                        "${groundOfObject!.name} ${groundOfObject!.addressLine1} ${groundOfObject!.addressLine2} ${groundOfObject!.city}\nPrice : ₹ ${groundOfObject!.pricing}",
+                                        "${object.groundOfObject!.name} ${object.groundOfObject!.addressLine1} ${object.groundOfObject!.addressLine2} ${object.groundOfObject!.city}\nPrice : ₹ ${object.groundOfObject!.pricing}",
                                         style: const TextStyle(
                                             fontSize: 11,
                                             fontWeight: FontWeight.w500),
@@ -363,7 +187,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                     identifier: 'GoogleMap',
                                     child: IconButton(
                                         onPressed: () async {
-                                          var url = groundOfObject!
+                                          var url = object.groundOfObject!
                                               .groundLocation
                                               .toString();
                                           if (await canLaunch(url)) {
@@ -378,13 +202,10 @@ class _InformationScreenState extends State<InformationScreen> {
                                     identifier: 'Call',
                                     child: IconButton(
                                       onPressed: () async {
-                                        canLaunchUrl(Uri.parse(
-                                            'tel:+91${groundOfObject!.phone}'));
-                                        if (await canLaunchUrl(Uri.parse(
-                                            'tel:+91${groundOfObject!.phone}'))) {
-                                          await launchUrl(Uri.parse(
-                                              'tel:+91${groundOfObject!.phone}'));
-                                        } else {}
+                                        canLaunchUrl(Uri.parse('tel:+91${object.groundOfObject!.phone}'));
+                                        if (await canLaunchUrl(Uri.parse('tel:+91${object.groundOfObject!.phone}'))) {
+                                          await launchUrl(Uri.parse('tel:+91${object.groundOfObject!.phone}'));
+                                        }
                                       },
                                       icon: const Icon(
                                         Icons.call,
@@ -397,16 +218,14 @@ class _InformationScreenState extends State<InformationScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      launchUrl(Uri.parse(
-                                          "https://wa.me/91${groundOfObject!.phone}"));
+                                      launchUrl(Uri.parse("https://wa.me/91${object.groundOfObject!.phone}"));
                                     },
                                     child: SizedBox(
                                         width: 22,
                                         height: 22,
                                         child: Semantics(
                                           identifier: 'Whatsapp',
-                                          child: Image.asset(
-                                            'assets/whatsapp.png',
+                                          child: Image.asset('assets/whatsapp.png',
                                             fit: BoxFit.cover,
                                           ),
                                         )),
@@ -441,17 +260,17 @@ class _InformationScreenState extends State<InformationScreen> {
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 3, childAspectRatio: 2.0),
-                              itemCount: timeList.length,
+                              itemCount: object.time24List.length,
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    if (groundOfObject!.createdBy != null) {
-                                      if (user == groundOfObject!.createdBy) {
+                                    if (object.groundOfObject!.createdBy != null) {
+                                      if (user == object.groundOfObject!.createdBy) {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: timeList[index].isBooked!
+                                              title: object.time24List[index].isBooked!
                                                   ? const Text(
                                                       "Please tap on UNBOOK to cancel slot!",
                                                       style: TextStyle(
@@ -475,65 +294,46 @@ class _InformationScreenState extends State<InformationScreen> {
                                                   Text(
                                                     "Date : ${DateFormat("yyyy-MM-dd").format(today!)}",
                                                     style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight:FontWeight.bold,
                                                         fontSize: 17),
                                                   ),
                                                   Text(
-                                                    "Time : ${timeList[index].startDateTime}",
+                                                    "Time : ${object.time24List[index].startDateTime}",
                                                     style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight:FontWeight.bold,
                                                         fontSize: 17),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
                                                   ),
-                                                  timeList[index].isBooked!
+                                                  object.time24List[index].isBooked!
                                                       ? SizedBox(
-                                                          child: FutureBuilder<
-                                                                  String>(
-                                                              future:
-                                                                  matchNotes(
-                                                                      index),
+                                                          child: FutureBuilder<String>(
+                                                              future:object.matchNotes(index),
                                                               builder: (context,
-                                                                  AsyncSnapshot<
-                                                                          String>
-                                                                      snapshot) {
-                                                                if (snapshot
-                                                                    .hasData) {
-                                                                  return Text(
-                                                                      snapshot
-                                                                          .data
-                                                                          .toString());
-                                                                } else {
-                                                                  return const CircularProgressIndicator();
+                                                                  AsyncSnapshot<String>snapshot) {
+                                                                if (snapshot.hasData) {
+                                                                  return Text(snapshot.data.toString());
+                                                                }else{
+                                                                return const Text("Notesnotfound");
                                                                 }
+                                                                // else {
+                                                                //   return
+                                                                //       // const Text("Notes not found!");
+                                                                //       const CircularProgressIndicator();
+                                                                // }
                                                               }))
                                                       : TextField(
-                                                          controller:
-                                                              notesControl,
+                                                          controller:notesControl,
                                                           maxLines: 3,
-                                                          decoration:
-                                                              const InputDecoration(
-                                                            hintText:
-                                                                "Write notes...",
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          10)),
+                                                          decoration:const InputDecoration(
+                                                            hintText:"Write notes...",
+                                                            enabledBorder:OutlineInputBorder(
+                                                              borderRadius: BorderRadius.all(Radius.circular(10)),
                                                             ),
-                                                            focusedBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                      width: 1),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          10)),
+                                                            focusedBorder:OutlineInputBorder(
+                                                              borderSide:BorderSide(width: 1),
+                                                              borderRadius: BorderRadius.all(Radius.circular(10)),
                                                             ),
                                                           ),
                                                         ),
@@ -541,15 +341,14 @@ class _InformationScreenState extends State<InformationScreen> {
                                               ),
                                               actions: [
                                                 Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
+                                                  mainAxisAlignment:MainAxisAlignment.spaceAround,
                                                   children: [
                                                     SizedBox(
                                                       height: 40,
                                                       width: 110,
                                                       child: ElevatedButton(
                                                         onPressed: () {
+                                                          // print(timeList[index].toJson());
                                                           Navigator.pop(
                                                               context);
                                                         },
@@ -574,16 +373,63 @@ class _InformationScreenState extends State<InformationScreen> {
                                                     ),
                                                     SizedBox(
                                                       height: 40,
-                                                      width: 110,
+                                                      width: 111,
                                                       child: ElevatedButton(
                                                         onPressed: () async {
-                                                          if (timeList[index]
-                                                              .isBooked!) {
-                                                            Navigator.pop(
-                                                                context);
-                                                            unbookSlot(index);
+                                                          if (object.time24List[index].isBooked!) {
+                                                            Navigator.pop(context);
+                                                            // ...
+                                                            showDialog(
+                                                                context:context,
+                                                                builder:(BuildContext context) {
+                                                                  return AlertDialog(
+                                                                      title:const Text(
+                                                                        "Are you sure you want to unbook this slot",
+                                                                        style: TextStyle(
+                                                                            fontSize:18,
+                                                                            fontWeight:FontWeight.bold),
+                                                                      ),
+                                                                      actions: [
+                                                                        Row(
+                                                                          mainAxisAlignment:MainAxisAlignment.spaceAround,
+                                                                            children: [
+                                                                              SizedBox(
+                                                                                height: 40,
+                                                                                width: 110,
+                                                                                child: ElevatedButton(
+                                                                                    onPressed: () {
+                                                                                      Navigator.pop(context);
+                                                                                    },
+                                                                                    style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 90, 252, 95))),
+                                                                                    child: const Text(
+                                                                                      "CANCEL",
+                                                                                      style: TextStyle(color: Colors.black),
+                                                                                    )),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 40,
+                                                                                width: 110,
+                                                                                child: ElevatedButton(
+                                                                                  onPressed: () {
+                                                                                    object.unbookSlot(index);
+                                                                                    gettingSlots();
+                                                                                    Navigator.pop(context);// new class
+                                                                                  },
+                                                                                  style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 90, 252, 95))),
+                                                                                  child: const Text(
+                                                                                      "YES",
+                                                                                      style: TextStyle(color: Colors.black),
+                                                                                  )),
+                                                                              ),
+                                                                            ])
+                                                                      ]);
+                                                                });
+                                                            // unbookSlot(index);
                                                           } else {
-                                                            bookSlot(index);
+                                                            object.bookSlot(index,notesControl.text.toString());
+                                                            gettingSlots();
+                                                            notesControl.clear();
+                                                            Navigator.pop(context);
                                                           }
                                                         },
                                                         style: const ButtonStyle(
@@ -594,7 +440,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                                         90,
                                                                         252,
                                                                         95))),
-                                                        child: timeList[index]
+                                                        child: object.time24List[index]
                                                                 .isBooked!
                                                             ? const Text(
                                                                 "UNBOOK",
@@ -623,7 +469,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                     padding: const EdgeInsets.all(7.0),
                                     child: Container(
                                         decoration: BoxDecoration(
-                                          color: timeList[index].isBooked!
+                                          color: object.time24List[index].isBooked!
                                               ? const Color.fromARGB(
                                                   255, 231, 85, 85)
                                               : Colors.white,
@@ -631,7 +477,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                               BorderRadius.circular(10),
                                           border: Border.all(
                                             style: BorderStyle.solid,
-                                            color: timeList[index].isBooked!
+                                            color: object.time24List[index].isBooked!
                                                 ? const Color.fromARGB(
                                                     255, 231, 85, 85)
                                                 : Colors.green,
@@ -640,7 +486,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                            originalList[index]
+                                            object.viewList[index]
                                                 .startDateTime
                                                 .toString(),
                                             style: const TextStyle(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:letsplay/firstpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:lottie/lottie.dart';
