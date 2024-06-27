@@ -24,7 +24,7 @@ class InformationScreen extends StatefulWidget {
 
 class _InformationScreenState extends State<InformationScreen> {
 
-  Slots object = Slots();
+  Slots infoObject = Slots();
   
   TextEditingController notesControl = TextEditingController();
   List<Widget> images = [];
@@ -37,27 +37,23 @@ class _InformationScreenState extends State<InformationScreen> {
     setState(() {
       isLoading = true;
     });
-    await object.vendorData(widget.vendId);
+    await infoObject.vendorData(widget.vendId);
     setState(() {
       isLoading = false;
     });
-    await object.getBookedSlots();
-    object.loadingBookedSlots();
+    await infoObject.getBookedSlots();
     if(mounted){
       setState(() {
-        object.time24List;
-        object.bookings;
+  
       });
     }
+    infoObject.slotsAndLoadBookedSlots();
   }
   finalData() async {
     await gettingSlots();
-    object.slots();
-    object.loadingBookedSlots();
 
-    for (var i in object.groundOfObject!.offerPics!.photos!) {
-      images.add(Image.network(
-        i,
+    for (var i in infoObject.groundOfObject!.offerPics!.photos!) {
+      images.add(Image.network(i,
         width: double.infinity,
         fit: BoxFit.fitWidth,
       ));
@@ -125,7 +121,7 @@ class _InformationScreenState extends State<InformationScreen> {
                         color: Color.fromARGB(255, 95, 251, 100),
                       ),
                     ))
-                : object.groundOfObject == null
+                : infoObject.groundOfObject == null
                     ? const Center(
                         heightFactor: 20,
                         child: Text(
@@ -148,7 +144,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
                                     child: Image.network(
-                                      object.groundOfObject
+                                      infoObject.groundOfObject
                                               ?.offerPics?.photos?.first ??
                                           '',
                                       fit: BoxFit.cover,
@@ -163,14 +159,14 @@ class _InformationScreenState extends State<InformationScreen> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        object.groundOfObject!.name.toString(),
+                                        infoObject.groundOfObject!.name.toString(),
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       Text(
-                                        "${object.groundOfObject!.name} ${object.groundOfObject!.addressLine1} ${object.groundOfObject!.addressLine2} ${object.groundOfObject!.city}\nPrice : ₹ ${object.groundOfObject!.pricing}",
+                                        "${infoObject.groundOfObject!.name} ${infoObject.groundOfObject!.addressLine1} ${infoObject.groundOfObject!.addressLine2} ${infoObject.groundOfObject!.city}\nPrice : ₹ ${infoObject.groundOfObject!.pricing}",
                                         style: const TextStyle(
                                             fontSize: 11,
                                             fontWeight: FontWeight.w500),
@@ -187,7 +183,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                     identifier: 'GoogleMap',
                                     child: IconButton(
                                         onPressed: () async {
-                                          var url = object.groundOfObject!
+                                          var url = infoObject.groundOfObject!
                                               .groundLocation
                                               .toString();
                                           if (await canLaunch(url)) {
@@ -202,9 +198,9 @@ class _InformationScreenState extends State<InformationScreen> {
                                     identifier: 'Call',
                                     child: IconButton(
                                       onPressed: () async {
-                                        canLaunchUrl(Uri.parse('tel:+91${object.groundOfObject!.phone}'));
-                                        if (await canLaunchUrl(Uri.parse('tel:+91${object.groundOfObject!.phone}'))) {
-                                          await launchUrl(Uri.parse('tel:+91${object.groundOfObject!.phone}'));
+                                        canLaunchUrl(Uri.parse('tel:+91${infoObject.groundOfObject!.phone}'));
+                                        if (await canLaunchUrl(Uri.parse('tel:+91${infoObject.groundOfObject!.phone}'))) {
+                                          await launchUrl(Uri.parse('tel:+91${infoObject.groundOfObject!.phone}'));
                                         }
                                       },
                                       icon: const Icon(
@@ -218,7 +214,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      launchUrl(Uri.parse("https://wa.me/91${object.groundOfObject!.phone}"));
+                                      launchUrl(Uri.parse("https://wa.me/91${infoObject.groundOfObject!.phone}"));
                                     },
                                     child: SizedBox(
                                         width: 22,
@@ -260,23 +256,22 @@ class _InformationScreenState extends State<InformationScreen> {
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 3, childAspectRatio: 2.0),
-                              itemCount: object.time24List.length,
+                              itemCount: infoObject.time24List.length,
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    if (object.groundOfObject!.createdBy != null) {
-                                      if (user == object.groundOfObject!.createdBy) {
+                                    if (infoObject.groundOfObject!.createdBy != null) {
+                                      if (user == infoObject.groundOfObject!.createdBy) {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: object.time24List[index].isBooked!
+                                              title: infoObject.time24List[index].isBooked!
                                                   ? const Text(
                                                       "Please tap on UNBOOK to cancel slot!",
                                                       style: TextStyle(
                                                           fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w600),
+                                                          fontWeight: FontWeight.bold),
                                                     )
                                                   : const Text(
                                                       "Please tap on BOOK to confirm slot!",
@@ -291,14 +286,12 @@ class _InformationScreenState extends State<InformationScreen> {
                                                     CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Text(
-                                                    "Date : ${DateFormat("yyyy-MM-dd").format(today!)}",
+                                                  Text("Date : ${DateFormat("yyyy-MM-dd").format(today!)}",
                                                     style: const TextStyle(
                                                         fontWeight:FontWeight.bold,
                                                         fontSize: 17),
                                                   ),
-                                                  Text(
-                                                    "Time : ${object.time24List[index].startDateTime}",
+                                                  Text("Time : ${infoObject.time24List[index].startDateTime}",
                                                     style: const TextStyle(
                                                         fontWeight:FontWeight.bold,
                                                         fontSize: 17),
@@ -306,23 +299,16 @@ class _InformationScreenState extends State<InformationScreen> {
                                                   const SizedBox(
                                                     height: 10,
                                                   ),
-                                                  object.time24List[index].isBooked!
-                                                      ? SizedBox(
-                                                          child: FutureBuilder<String>(
-                                                              future:object.matchNotes(index),
-                                                              builder: (context,
-                                                                  AsyncSnapshot<String>snapshot) {
-                                                                if (snapshot.hasData) {
-                                                                  return Text(snapshot.data.toString());
-                                                                }else{
-                                                                return const Text("Notesnotfound");
-                                                                }
-                                                                // else {
-                                                                //   return
-                                                                //       // const Text("Notes not found!");
-                                                                //       const CircularProgressIndicator();
-                                                                // }
-                                                              }))
+                                                  infoObject.time24List[index].isBooked!
+                                                      ? infoObject.time24List[index].notes == "" 
+                                                        ? const Text("Notes not found!",
+                                                          style: TextStyle(fontSize: 15,
+                                                          color: Colors.red,
+                                                            fontWeight: FontWeight.w500),) 
+                                                        : Text(infoObject.time24List[index].notes.toString(),
+                                                        style: const TextStyle(fontSize: 15,
+                                                        color: Colors.blueGrey,
+                                                        fontWeight: FontWeight.w500),)
                                                       : TextField(
                                                           controller:notesControl,
                                                           maxLines: 3,
@@ -348,12 +334,9 @@ class _InformationScreenState extends State<InformationScreen> {
                                                       width: 110,
                                                       child: ElevatedButton(
                                                         onPressed: () {
-                                                          // print(timeList[index].toJson());
-                                                          Navigator.pop(
-                                                              context);
+                                                          Navigator.pop(context);
                                                         },
-                                                        style:
-                                                            const ButtonStyle(
+                                                        style:const ButtonStyle(
                                                           backgroundColor:
                                                               WidgetStatePropertyAll(
                                                                   Color
@@ -376,7 +359,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                       width: 111,
                                                       child: ElevatedButton(
                                                         onPressed: () async {
-                                                          if (object.time24List[index].isBooked!) {
+                                                          if (infoObject.time24List[index].isBooked!) {
                                                             Navigator.pop(context);
                                                             // ...
                                                             showDialog(
@@ -411,7 +394,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                                                 width: 110,
                                                                                 child: ElevatedButton(
                                                                                   onPressed: () {
-                                                                                    object.unbookSlot(index);
+                                                                                    infoObject.unbookSlot(index);
                                                                                     gettingSlots();
                                                                                     Navigator.pop(context);// new class
                                                                                   },
@@ -426,7 +409,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                                 });
                                                             // unbookSlot(index);
                                                           } else {
-                                                            object.bookSlot(index,notesControl.text.toString());
+                                                            infoObject.bookSlot(index,notesControl.text.toString());
                                                             gettingSlots();
                                                             notesControl.clear();
                                                             Navigator.pop(context);
@@ -440,7 +423,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                                         90,
                                                                         252,
                                                                         95))),
-                                                        child: object.time24List[index]
+                                                        child: infoObject.time24List[index]
                                                                 .isBooked!
                                                             ? const Text(
                                                                 "UNBOOK",
@@ -469,26 +452,21 @@ class _InformationScreenState extends State<InformationScreen> {
                                     padding: const EdgeInsets.all(7.0),
                                     child: Container(
                                         decoration: BoxDecoration(
-                                          color: object.time24List[index].isBooked!
-                                              ? const Color.fromARGB(
-                                                  255, 231, 85, 85)
+                                          color: infoObject.time24List[index].isBooked!
+                                              ? const Color.fromARGB(255, 231, 85, 85)
                                               : Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                           border: Border.all(
                                             style: BorderStyle.solid,
-                                            color: object.time24List[index].isBooked!
-                                                ? const Color.fromARGB(
-                                                    255, 231, 85, 85)
+                                            color: infoObject.time24List[index].isBooked!
+                                                ? const Color.fromARGB(255, 231, 85, 85)
                                                 : Colors.green,
                                             width: 2,
                                           ),
                                         ),
                                         child: Center(
                                           child: Text(
-                                            object.viewList[index]
-                                                .startDateTime
-                                                .toString(),
+                                            infoObject.viewList[index],
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 15),
