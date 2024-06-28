@@ -28,13 +28,12 @@ class _apiIntigration extends State<apiIntigration> {
   Future<List<LetsPlay>> fetchGrounds() async {
     var data;
     final response = await http.get(
-        Uri.parse(
-            'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?select=*,bookings(*)&bookings.start_date_time=is.null'),
+        Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?'),
+        // select=*,bookings(*)&bookings.start_date_time=is.null'),
         headers: {
           "apikey":
               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU"
         });
-
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
       for (Map i in data) {
@@ -111,15 +110,14 @@ class _apiIntigration extends State<apiIntigration> {
 
   Future<List<Map<String, dynamic>>> getList() async {
     if (searchDate == null || searchStart == null || searchEnd == null) {
-      Fluttertoast.showToast(
-        msg: 'Please enter details!',
-        backgroundColor: const Color.fromARGB(255, 231, 82, 82),
-        textColor: Colors.black,
-        toastLength: Toast.LENGTH_LONG,
-      );
+      // Fluttertoast.showToast(
+      //   msg: 'Please enter details!',
+      //   backgroundColor: const Color.fromARGB(255, 231, 82, 82),
+      //   textColor: Colors.black,
+      //   toastLength: Toast.LENGTH_LONG,
+      // );
+      // Error
     } else {
-      print("object");
-      print(searchDate); // error
       setState(() {
         isLoading = true;
       });

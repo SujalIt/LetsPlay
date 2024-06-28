@@ -60,6 +60,8 @@ class _InformationScreenState extends State<InformationScreen> {
     }
   }
 
+  DateTime? hello ;
+
   @override
   void initState() {
     super.initState();
@@ -291,7 +293,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                         fontWeight:FontWeight.bold,
                                                         fontSize: 17),
                                                   ),
-                                                  Text("Time : ${infoObject.time24List[index].startDateTime}",
+                                                  Text("Time : ${DateFormat('hh:mm a').format(DateTime.parse(infoObject.time24List[index].startDateTime ?? ""))}",
                                                     style: const TextStyle(
                                                         fontWeight:FontWeight.bold,
                                                         fontSize: 17),
@@ -407,7 +409,6 @@ class _InformationScreenState extends State<InformationScreen> {
                                                                             ])
                                                                       ]);
                                                                 });
-                                                            // unbookSlot(index);
                                                           } else {
                                                             infoObject.bookSlot(index,notesControl.text.toString());
                                                             gettingSlots();
@@ -466,7 +467,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                            infoObject.viewList[index],
+                                            DateFormat('hh:mm a').format(DateTime.parse(infoObject.time24List[index].startDateTime ?? "")),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 15),
