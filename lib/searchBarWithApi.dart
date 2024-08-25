@@ -7,6 +7,7 @@ import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
 import 'package:letsplay/search_with_date_time.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class apiIntigration extends StatefulWidget {
   const apiIntigration({
@@ -28,11 +29,13 @@ class _apiIntigration extends State<apiIntigration> {
   Future<List<LetsPlay>> fetchGrounds() async {
     var data;
     final response = await http.get(
-        Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?'),
+        Uri.parse('https://gdttugfvfxuisjkroszc.supabase.co/rest/v1/vendor?'),
+        // Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?'),
         // select=*,bookings(*)&bookings.start_date_time=is.null'),
         headers: {
-          "apikey":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU"
+        "apikey":
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI",
+        // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU"
         });
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
@@ -50,11 +53,13 @@ class _apiIntigration extends State<apiIntigration> {
   List<LetsPlay> manager_data = [];
 
   Future<List<LetsPlay>> fetchMyGrounds() async {
+
     var my_data;
 
     final my_res = await http.get(
       Uri.parse(
-          'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&created_by=eq.$user'),
+        'https://gdttugfvfxuisjkroszc.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI&created_by=eq.$user'),
+        // 'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&created_by=eq.$user'),
     );
 
     if (my_res.statusCode == 200) {
@@ -225,7 +230,7 @@ class _apiIntigration extends State<apiIntigration> {
           height: 5,
         ),
         isLoading
-            ? CircularProgressIndicator()
+            ? const CircularProgressIndicator()
             : result.isEmpty
                 ? Column(
                     children: [
@@ -256,12 +261,23 @@ class _apiIntigration extends State<apiIntigration> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(4),
-                              child: Image.network(
-                                result[index].profilePic ?? '',
+                              child: CachedNetworkImage(
+                                imageUrl: result[index].profilePic ?? "",
+                                placeholder: (context, url) => const Center(
+                                  heightFactor: 0.5,
+                                  widthFactor: 0.5,
+                                  child: CircularProgressIndicator(),
+                                  ),
+                                errorWidget: (context, url, error) => const Icon(Icons.error),
                                 height: 126,
                                 width: 137,
-                                fit: BoxFit.fill,
-                              ),
+                                fit: BoxFit.fill,),
+                              // Image.network(
+                              //   result[index].profilePic ?? '',
+                              //   height: 126,
+                              //   width: 137,
+                              //   fit: BoxFit.fill,
+                              // ),
                             ),
                             Expanded(
                               child: Padding(

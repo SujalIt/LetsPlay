@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:letsplay/infoModel.dart';
@@ -52,11 +53,24 @@ class _InformationScreenState extends State<InformationScreen> {
   finalData() async {
     await gettingSlots();
 
-    for (var i in infoObject.groundOfObject!.offerPics!.photos!) {
-      images.add(Image.network(i,
+    // for (var i in infoObject.groundOfObject!.offerPics!.photos!) {
+    for (var i in infoObject.groundOfObject?.offerPics?.photos ?? [""]) {
+      images.add(
+        // Image.network(i,
+        // width: double.infinity,
+        // fit: BoxFit.fitWidth,
+        // )
+        CachedNetworkImage(
+        imageUrl: i,
+        placeholder: (context, url) => const Center(
+          heightFactor: 0.5,
+          widthFactor: 0.5,
+          child: CircularProgressIndicator()
+          ),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
         width: double.infinity,
-        fit: BoxFit.fitWidth,
-      ));
+        fit: BoxFit.fitWidth,)
+      );
     }
   }
 
@@ -139,18 +153,26 @@ class _InformationScreenState extends State<InformationScreen> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child: Container(
+                                child: SizedBox(
                                   height: 120,
                                   width: 120,
                                   child: ClipRRect(
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10)),
-                                    child: Image.network(
-                                      infoObject.groundOfObject
-                                              ?.offerPics?.photos?.first ??
-                                          '',
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: 
+                                    // Image.network(
+                                    //   infoObject.groundOfObject?.offerPics?.photos?.first ?? '',
+                                    //   fit: BoxFit.cover,
+                                    // ),
+                                    CachedNetworkImage(
+                                      imageUrl: infoObject.groundOfObject?.offerPics?.photos?.first ?? '',
+                                      placeholder: (context, url) => const Center(
+                                        heightFactor: 0.5,
+                                        widthFactor: 0.5,
+                                        child: CircularProgressIndicator()
+                                        ),
+                                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                                      fit: BoxFit.cover,)
                                   ),
                                 ),
                               ),
@@ -426,11 +448,9 @@ class _InformationScreenState extends State<InformationScreen> {
                                                                         95))),
                                                         child: infoObject.time24List[index]
                                                                 .isBooked!
-                                                            ? const Text(
-                                                                "UNBOOK",
+                                                            ? const Text("UNBOOK",
                                                                 style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
+                                                                    color: Colors.black),
                                                               )
                                                             : const Text(
                                                                 "BOOK",

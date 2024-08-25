@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:letsplay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
@@ -10,8 +11,10 @@ class Slots {
 
   Future<List<LetsPlay>> vendorData(num? vendorid) async {
     List<LetsPlay> vendorDataList = [];
-    final vendorResponse = await http.get(Uri.parse(
-        'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&id=eq.$vendorid'));
+    final vendorResponse = await http.get(
+      Uri.parse('https://gdttugfvfxuisjkroszc.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI&id=eq.$vendorid'),
+      // Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&id=eq.$vendorid'),
+    );
     var vendorData;
     if (vendorResponse.statusCode == 200) {
       vendorData = jsonDecode(vendorResponse.body.toString());
@@ -31,9 +34,9 @@ class Slots {
   Future<List<Booking>> getBookedSlots() async {
     var next = DateFormat("yyyy-MM-dd").format(today);
     final response = await http.get(
-      Uri.parse(
-          'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${groundOfObject?.id}&booking_date=eq.$next'),
-    );
+      Uri.parse('https://gdttugfvfxuisjkroszc.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI&vendor_id=eq.${groundOfObject?.id}&booking_date=eq.$next'),
+      // Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${groundOfObject?.id}&booking_date=eq.$next'),
+      );
     var data;
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
@@ -118,27 +121,3 @@ class Slots {
     });
   }
 }
-
-// class GetBookedAndLoadBooked {
-//   List<Booking> bookings = [];
-//   DateTime today = DateTime.now();
-
-//   Future<List<Booking>> getBookedSlots() async {
-//     var next = DateFormat("yyyy-MM-dd").format(today);
-//     final response = await http.get(
-//       Uri.parse(
-//           'https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${groundOfObject?.id}&booking_date=eq.$next'),
-//     );
-//     var data;
-//     if (response.statusCode == 200) {
-//       data = jsonDecode(response.body.toString());
-//       bookings.clear();
-//       for (Map<String, dynamic> i in data) {
-//         bookings.add(Booking.fromJson(i));
-//       }
-//       return [];
-//     } else {
-//       return [];
-//     }
-//   }
-// }
