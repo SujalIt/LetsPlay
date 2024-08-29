@@ -40,6 +40,7 @@ class Slots {
     var data;
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
+      bookings.clear();
       for (Map<String, dynamic> i in data) {
         bookings.add(Booking.fromJson(i));
       }
@@ -86,6 +87,13 @@ class Slots {
     }
   }
 
+  // gettingSlots() async {
+  //   // await vendorData();
+  //   await getBookedSlots();
+  //   slotsGenerate();
+  //   loadingBookedSlots();
+  // }
+
   bookSlot(int index, String notesControl) async {
     String stTime = time24List[index].startDateTime ?? "";
     DateTime afterAddSt = DateTime.parse(stTime)
@@ -101,7 +109,7 @@ class Slots {
                 DateFormat("yyyy-MM-dd HH:mm:ss").format(afterAddSt),
             "notes": notesControl,
             "booking_date": DateFormat("yyyy-MM-dd").format(today)
-          }
+          },
         ])
         .select()
         .then((value) {

@@ -526,18 +526,23 @@ class _InformationScreenState extends State<InformationScreen> {
                                     items: images),
                               ]),
                               const SizedBox(
-                                height: 5,
+                                height: 20,
                               ),
-                              AnimatedSmoothIndicator(
-                                activeIndex: no,
-                                count: images.length,
-                                effect: WormEffect(
-                                    dotHeight: 10,
-                                    dotWidth: 10,
-                                    dotColor: Colors.green.shade300,
-                                    activeDotColor: Colors.green.shade800,
-                                    paintStyle: PaintingStyle.fill),
+                              Container(
+                                width: 10,
+                                child: AnimatedSmoothIndicator(
+                                  activeIndex: no,
+                                  count: images.length,
+                                  effect: WormEffect(
+                                      dotHeight: 9,
+                                      dotWidth: 9,
+                                      dotColor: Colors.green.shade300,
+                                      activeDotColor: Colors.green.shade800,
+                                      paintStyle: PaintingStyle.fill,
+                                  )
+                                ),
                               ),
+                              const SizedBox(height: 20,)
                             ],
                           ),
                         ],
