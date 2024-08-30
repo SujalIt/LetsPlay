@@ -24,9 +24,8 @@ class InformationScreen extends StatefulWidget {
 }
 
 class _InformationScreenState extends State<InformationScreen> {
-
   Slots infoObject = Slots();
-  
+
   TextEditingController notesControl = TextEditingController();
   List<Widget> images = [];
   var no = 0;
@@ -43,44 +42,43 @@ class _InformationScreenState extends State<InformationScreen> {
       isLoading = false;
     });
     await infoObject.getBookedSlots();
-    if(mounted){
-      setState(() {
-  
-      });
+    if (mounted) {
+      setState(() {});
     }
     infoObject.slotsAndLoadBookedSlots();
   }
+
   finalData() async {
     await gettingSlots();
 
     // for (var i in infoObject.groundOfObject!.offerPics!.photos!) {
     for (var i in infoObject.groundOfObject?.offerPics?.photos ?? [""]) {
       images.add(
-        // Image.network(i,
-        // width: double.infinity,
-        // fit: BoxFit.fitWidth,
-        // )
-        CachedNetworkImage(
+          // Image.network(i,
+          // width: double.infinity,
+          // fit: BoxFit.fitWidth,
+          // )
+          CachedNetworkImage(
         imageUrl: i,
         placeholder: (context, url) => const Center(
-          heightFactor: 0.5,
-          widthFactor: 0.5,
-          child: CircularProgressIndicator()
-          ),
+            heightFactor: 0.5,
+            widthFactor: 0.5,
+            child: CircularProgressIndicator()),
         errorWidget: (context, url, error) => const Icon(Icons.error),
         width: double.infinity,
-        fit: BoxFit.fitWidth,)
-      );
+        fit: BoxFit.fitWidth,
+      ));
     }
   }
 
-  DateTime? hello ;
+  DateTime? hello;
 
   @override
   void initState() {
     super.initState();
     finalData();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,23 +155,27 @@ class _InformationScreenState extends State<InformationScreen> {
                                   height: 120,
                                   width: 120,
                                   child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    child: 
-                                    // Image.network(
-                                    //   infoObject.groundOfObject?.offerPics?.photos?.first ?? '',
-                                    //   fit: BoxFit.cover,
-                                    // ),
-                                    CachedNetworkImage(
-                                      imageUrl: infoObject.groundOfObject?.offerPics?.photos?.first ?? '',
-                                      placeholder: (context, url) => const Center(
-                                        heightFactor: 0.5,
-                                        widthFactor: 0.5,
-                                        child: CircularProgressIndicator()
-                                        ),
-                                      errorWidget: (context, url, error) => const Icon(Icons.error),
-                                      fit: BoxFit.cover,)
-                                  ),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      child:
+                                          // Image.network(
+                                          //   infoObject.groundOfObject?.offerPics?.photos?.first ?? '',
+                                          //   fit: BoxFit.cover,
+                                          // ),
+                                          CachedNetworkImage(
+                                        imageUrl: infoObject.groundOfObject
+                                                ?.offerPics?.photos?.first ??
+                                            '',
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                                heightFactor: 0.5,
+                                                widthFactor: 0.5,
+                                                child:
+                                                    CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                        fit: BoxFit.cover,
+                                      )),
                                 ),
                               ),
                               Expanded(
@@ -183,7 +185,8 @@ class _InformationScreenState extends State<InformationScreen> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        infoObject.groundOfObject!.name.toString(),
+                                        infoObject.groundOfObject!.name
+                                            .toString(),
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w500,
@@ -207,8 +210,8 @@ class _InformationScreenState extends State<InformationScreen> {
                                     identifier: 'GoogleMap',
                                     child: IconButton(
                                         onPressed: () async {
-                                          var url = infoObject.groundOfObject!
-                                              .groundLocation
+                                          var url = infoObject
+                                              .groundOfObject!.groundLocation
                                               .toString();
                                           if (await canLaunch(url)) {
                                             await launch(url);
@@ -222,9 +225,12 @@ class _InformationScreenState extends State<InformationScreen> {
                                     identifier: 'Call',
                                     child: IconButton(
                                       onPressed: () async {
-                                        canLaunchUrl(Uri.parse('tel:+91${infoObject.groundOfObject!.phone}'));
-                                        if (await canLaunchUrl(Uri.parse('tel:+91${infoObject.groundOfObject!.phone}'))) {
-                                          await launchUrl(Uri.parse('tel:+91${infoObject.groundOfObject!.phone}'));
+                                        canLaunchUrl(Uri.parse(
+                                            'tel:+91${infoObject.groundOfObject!.phone}'));
+                                        if (await canLaunchUrl(Uri.parse(
+                                            'tel:+91${infoObject.groundOfObject!.phone}'))) {
+                                          await launchUrl(Uri.parse(
+                                              'tel:+91${infoObject.groundOfObject!.phone}'));
                                         }
                                       },
                                       icon: const Icon(
@@ -238,14 +244,16 @@ class _InformationScreenState extends State<InformationScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      launchUrl(Uri.parse("https://wa.me/91${infoObject.groundOfObject!.phone}"));
+                                      launchUrl(Uri.parse(
+                                          "https://wa.me/91${infoObject.groundOfObject!.phone}"));
                                     },
                                     child: SizedBox(
                                         width: 22,
                                         height: 22,
                                         child: Semantics(
                                           identifier: 'Whatsapp',
-                                          child: Image.asset('assets/whatsapp.png',
+                                          child: Image.asset(
+                                            'assets/whatsapp.png',
                                             fit: BoxFit.cover,
                                           ),
                                         )),
@@ -284,18 +292,24 @@ class _InformationScreenState extends State<InformationScreen> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    if (infoObject.groundOfObject!.createdBy != null) {
-                                      if (user == infoObject.groundOfObject!.createdBy) {
+                                    if (infoObject.groundOfObject!.createdBy !=
+                                        null) {
+                                      if (user ==
+                                          infoObject
+                                              .groundOfObject!.createdBy) {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: infoObject.time24List[index].isBooked!
+                                              title: infoObject
+                                                      .time24List[index]
+                                                      .isBooked!
                                                   ? const Text(
                                                       "Please tap on UNBOOK to cancel slot!",
                                                       style: TextStyle(
                                                           fontSize: 18,
-                                                          fontWeight: FontWeight.bold),
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     )
                                                   : const Text(
                                                       "Please tap on BOOK to confirm slot!",
@@ -310,40 +324,78 @@ class _InformationScreenState extends State<InformationScreen> {
                                                     CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Text("Date : ${DateFormat("yyyy-MM-dd").format(today!)}",
+                                                  Text(
+                                                    "Date : ${DateFormat("yyyy-MM-dd").format(today!)}",
                                                     style: const TextStyle(
-                                                        fontWeight:FontWeight.bold,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                         fontSize: 17),
                                                   ),
-                                                  Text("Time : ${DateFormat('hh:mm a').format(DateTime.parse(infoObject.time24List[index].startDateTime ?? ""))}",
+                                                  Text(
+                                                    "Time : ${DateFormat('hh:mm a').format(DateTime.parse(infoObject.time24List[index].startDateTime ?? ""))}",
                                                     style: const TextStyle(
-                                                        fontWeight:FontWeight.bold,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                         fontSize: 17),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
                                                   ),
-                                                  infoObject.time24List[index].isBooked!
-                                                      ? infoObject.time24List[index].notes == "" 
-                                                        ? const Text("Notes not found!",
-                                                          style: TextStyle(fontSize: 15,
-                                                          color: Colors.red,
-                                                            fontWeight: FontWeight.w500),) 
-                                                        : Text(infoObject.time24List[index].notes.toString(),
-                                                        style: const TextStyle(fontSize: 15,
-                                                        color: Colors.blueGrey,
-                                                        fontWeight: FontWeight.w500),)
+                                                  infoObject.time24List[index]
+                                                          .isBooked!
+                                                      ? infoObject
+                                                                  .time24List[
+                                                                      index]
+                                                                  .notes ==
+                                                              ""
+                                                          ? const Text(
+                                                              "Notes not found!",
+                                                              style: TextStyle(
+                                                                  fontSize: 15,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            )
+                                                          : Text(
+                                                              infoObject
+                                                                  .time24List[
+                                                                      index]
+                                                                  .notes
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                  fontSize: 15,
+                                                                  color: Colors
+                                                                      .blueGrey,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            )
                                                       : TextField(
-                                                          controller:notesControl,
+                                                          controller:
+                                                              notesControl,
                                                           maxLines: 3,
-                                                          decoration:const InputDecoration(
-                                                            hintText:"Write notes...",
-                                                            enabledBorder:OutlineInputBorder(
-                                                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            hintText:
+                                                                "Write notes...",
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10)),
                                                             ),
-                                                            focusedBorder:OutlineInputBorder(
-                                                              borderSide:BorderSide(width: 1),
-                                                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      width: 1),
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10)),
                                                             ),
                                                           ),
                                                         ),
@@ -351,16 +403,20 @@ class _InformationScreenState extends State<InformationScreen> {
                                               ),
                                               actions: [
                                                 Row(
-                                                  mainAxisAlignment:MainAxisAlignment.spaceAround,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
                                                   children: [
                                                     SizedBox(
                                                       height: 40,
                                                       width: 110,
                                                       child: ElevatedButton(
                                                         onPressed: () {
-                                                          Navigator.pop(context);
+                                                          Navigator.pop(
+                                                              context);
                                                         },
-                                                        style:const ButtonStyle(
+                                                        style:
+                                                            const ButtonStyle(
                                                           backgroundColor:
                                                               WidgetStatePropertyAll(
                                                                   Color
@@ -383,22 +439,32 @@ class _InformationScreenState extends State<InformationScreen> {
                                                       width: 111,
                                                       child: ElevatedButton(
                                                         onPressed: () async {
-                                                          if (infoObject.time24List[index].isBooked!) {
-                                                            Navigator.pop(context);
+                                                          if (infoObject
+                                                              .time24List[index]
+                                                              .isBooked!) {
+                                                            Navigator.pop(
+                                                                context);
                                                             // ...
                                                             showDialog(
-                                                                context:context,
-                                                                builder:(BuildContext context) {
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
                                                                   return AlertDialog(
-                                                                      title:const Text(
+                                                                      title:
+                                                                          const Text(
                                                                         "Are you sure you want to unbook this slot",
                                                                         style: TextStyle(
-                                                                            fontSize:18,
-                                                                            fontWeight:FontWeight.bold),
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
                                                                       ),
                                                                       actions: [
                                                                         Row(
-                                                                          mainAxisAlignment:MainAxisAlignment.spaceAround,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceAround,
                                                                             children: [
                                                                               SizedBox(
                                                                                 height: 40,
@@ -417,25 +483,31 @@ class _InformationScreenState extends State<InformationScreen> {
                                                                                 height: 40,
                                                                                 width: 110,
                                                                                 child: ElevatedButton(
-                                                                                  onPressed: () {
-                                                                                    infoObject.unbookSlot(index);
-                                                                                    gettingSlots();
-                                                                                    Navigator.pop(context);// new class
-                                                                                  },
-                                                                                  style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 90, 252, 95))),
-                                                                                  child: const Text(
+                                                                                    onPressed: () {
+                                                                                      infoObject.unbookSlot(index);
+                                                                                      gettingSlots();
+                                                                                      Navigator.pop(context);
+                                                                                    },
+                                                                                    style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 90, 252, 95))),
+                                                                                    child: const Text(
                                                                                       "YES",
                                                                                       style: TextStyle(color: Colors.black),
-                                                                                  )),
+                                                                                    )),
                                                                               ),
                                                                             ])
                                                                       ]);
                                                                 });
                                                           } else {
-                                                            infoObject.bookSlot(index,notesControl.text.toString());
+                                                            infoObject.bookSlot(
+                                                                index,
+                                                                notesControl
+                                                                    .text
+                                                                    .toString());
                                                             gettingSlots();
-                                                            notesControl.clear();
-                                                            Navigator.pop(context);
+                                                            notesControl
+                                                                .clear();
+                                                            Navigator.pop(
+                                                                context);
                                                           }
                                                         },
                                                         style: const ButtonStyle(
@@ -446,11 +518,15 @@ class _InformationScreenState extends State<InformationScreen> {
                                                                         90,
                                                                         252,
                                                                         95))),
-                                                        child: infoObject.time24List[index]
+                                                        child: infoObject
+                                                                .time24List[
+                                                                    index]
                                                                 .isBooked!
-                                                            ? const Text("UNBOOK",
+                                                            ? const Text(
+                                                                "UNBOOK",
                                                                 style: TextStyle(
-                                                                    color: Colors.black),
+                                                                    color: Colors
+                                                                        .black),
                                                               )
                                                             : const Text(
                                                                 "BOOK",
@@ -473,21 +549,30 @@ class _InformationScreenState extends State<InformationScreen> {
                                     padding: const EdgeInsets.all(7.0),
                                     child: Container(
                                         decoration: BoxDecoration(
-                                          color: infoObject.time24List[index].isBooked!
-                                              ? const Color.fromARGB(255, 231, 85, 85)
+                                          color: infoObject
+                                                  .time24List[index].isBooked!
+                                              ? const Color.fromARGB(
+                                                  255, 231, 85, 85)
                                               : Colors.white,
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           border: Border.all(
                                             style: BorderStyle.solid,
-                                            color: infoObject.time24List[index].isBooked!
-                                                ? const Color.fromARGB(255, 231, 85, 85)
+                                            color: infoObject
+                                                    .time24List[index].isBooked!
+                                                ? const Color.fromARGB(
+                                                    255, 231, 85, 85)
                                                 : Colors.green,
                                             width: 2,
                                           ),
                                         ),
                                         child: Center(
                                           child: Text(
-                                            DateFormat('hh:mm a').format(DateTime.parse(infoObject.time24List[index].startDateTime ?? "")),
+                                            DateFormat('hh:mm a').format(
+                                                DateTime.parse(infoObject
+                                                        .time24List[index]
+                                                        .startDateTime ??
+                                                    "")),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 15),
@@ -531,18 +616,19 @@ class _InformationScreenState extends State<InformationScreen> {
                               Container(
                                 width: 10,
                                 child: AnimatedSmoothIndicator(
-                                  activeIndex: no,
-                                  count: images.length,
-                                  effect: WormEffect(
+                                    activeIndex: no,
+                                    count: images.length,
+                                    effect: WormEffect(
                                       dotHeight: 9,
                                       dotWidth: 9,
                                       dotColor: Colors.green.shade300,
                                       activeDotColor: Colors.green.shade800,
                                       paintStyle: PaintingStyle.fill,
-                                  )
-                                ),
+                                    )),
                               ),
-                              const SizedBox(height: 20,)
+                              const SizedBox(
+                                height: 20,
+                              )
                             ],
                           ),
                         ],

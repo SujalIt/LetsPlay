@@ -80,9 +80,14 @@ class MyfirstpageState extends State<Myfirstpage> {
                                   child: ElevatedButton(
                                       onPressed: () {
                                         setState(() {
-                                          Supabase.instance.client.auth.signOut();
-                                          });
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Myfirstpage()));
+                                          Supabase.instance.client.auth
+                                              .signOut();
+                                        });
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Myfirstpage()));
                                       },
                                       style: const ButtonStyle(
                                           backgroundColor:

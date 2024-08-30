@@ -7,12 +7,9 @@ import 'package:go_router/go_router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-    url: 'https://gdttugfvfxuisjkroszc.supabase.co',
-      // url: 'https://gmoflxgrysuxaygnjemp.supabase.co',
+      url: 'https://gdttugfvfxuisjkroszc.supabase.co',
       anonKey:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI");
-      // anonKey:
-      //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU");
   runApp(const MyApp());
 }
 
@@ -29,7 +26,7 @@ final GoRouter router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             final userInput = state.pathParameters;
             var strVid = userInput['vid'];
-            var finalId  = num.tryParse(strVid!);
+            var finalId = num.tryParse(strVid!);
             return InformationScreen(vendId: finalId);
           },
         ),

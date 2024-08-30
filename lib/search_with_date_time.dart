@@ -20,7 +20,7 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
   bool selectedDate = false;
   DateTime? currentDate;
 
-  DateTime? storeDate = DateTime.now();
+  String? storeDate;
   String? tomorrow;
 
   String? startTime;
@@ -35,10 +35,9 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
         .then((value) {
       selectedDate = true;
       currentDate = value;
-      storeDate = value;
+      storeDate = value.toString();
       setState(() {
-        widget.valueDate!(storeDate?.toString() );
-        // widget.valueDate!(storeDate.toString());
+        widget.valueDate!(storeDate?.toString());
       });
       return null;
     });
@@ -67,8 +66,7 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
                     todayColor = true;
                     tomorrowColor = false;
                     otherColor = false;
-                    storeDate = DateTime.parse(
-                        DateFormat('yyyy-MM-dd').format(today));
+                    storeDate = DateFormat('yyyy-MM-dd').format(today);
                     setState(() {
                       widget.valueDate!(storeDate.toString());
                     });
@@ -100,7 +98,7 @@ class _SearchDatewithTimeState extends State<SearchDatewithTime> {
                     otherColor = false;
                     tomorrow = DateFormat('yyyy-MM-dd')
                         .format(today.add(const Duration(days: 1)));
-                    storeDate = DateTime.parse(tomorrow!);
+                    storeDate = tomorrow;
                     setState(() {
                       widget.valueDate!(storeDate.toString());
                     });

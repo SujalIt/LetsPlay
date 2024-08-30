@@ -12,8 +12,8 @@ class Slots {
   Future<List<LetsPlay>> vendorData(num? vendorid) async {
     List<LetsPlay> vendorDataList = [];
     final vendorResponse = await http.get(
-      Uri.parse('https://gdttugfvfxuisjkroszc.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI&id=eq.$vendorid'),
-      // Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&id=eq.$vendorid'),
+      Uri.parse(
+          'https://gdttugfvfxuisjkroszc.supabase.co/rest/v1/vendor?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI&id=eq.$vendorid'),
     );
     var vendorData;
     if (vendorResponse.statusCode == 200) {
@@ -34,9 +34,9 @@ class Slots {
   Future<List<Booking>> getBookedSlots() async {
     var next = DateFormat("yyyy-MM-dd").format(today);
     final response = await http.get(
-      Uri.parse('https://gdttugfvfxuisjkroszc.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI&vendor_id=eq.${groundOfObject?.id}&booking_date=eq.$next'),
-      // Uri.parse('https://gmoflxgrysuxaygnjemp.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdtb2ZseGdyeXN1eGF5Z25qZW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ4Njk3MDIsImV4cCI6MjAyMDQ0NTcwMn0.nN5gPTVz-vgCP4ywqfF7Nc_g8OgLCq6lR7kG5wCvhSU&vendor_id=eq.${groundOfObject?.id}&booking_date=eq.$next'),
-      );
+      Uri.parse(
+          'https://gdttugfvfxuisjkroszc.supabase.co/rest/v1/bookings?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkdHR1Z2Z2Znh1aXNqa3Jvc3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NzgwMTMsImV4cCI6MjAzODQ1NDAxM30.YJEMSFQ-i2Z06wlEnT0AE9j4-X2lniWWXzojMwur2xI&vendor_id=eq.${groundOfObject?.id}&booking_date=eq.$next'),
+    );
     var data;
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
@@ -63,12 +63,12 @@ class Slots {
     int intervalMinutes = groundOfObject!.slotinternval?.toInt() ?? 0;
     time24List.clear();
     while (startTime.isBefore(endTime)) {
-      String formattedDateTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(startTime);
+      String formattedDateTime =
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(startTime);
       time24List.add(Booking(startDateTime: formattedDateTime));
       startTime = startTime.add(Duration(minutes: intervalMinutes));
     }
   }
-
 
   loadingBookedSlots() {
     for (int i = 0; i < time24List.length; i++) {
@@ -86,13 +86,6 @@ class Slots {
       }
     }
   }
-
-  // gettingSlots() async {
-  //   // await vendorData();
-  //   await getBookedSlots();
-  //   slotsGenerate();
-  //   loadingBookedSlots();
-  // }
 
   bookSlot(int index, String notesControl) async {
     String stTime = time24List[index].startDateTime ?? "";
@@ -112,20 +105,13 @@ class Slots {
           },
         ])
         .select()
-        .then((value) {
-          // gettingSlots();
-          // notesControl.clear();
-          // Navigator.pop(context);
-        });
+        .then((value) {});
   }
 
   unbookSlot(int index) async {
     await Supabase.instance.client
         .from("bookings")
         .delete()
-        .match({"id": time24List[index].id!}).then((value) {
-      // gettingSlots();
-      // Navigator.pop(context);
-    });
+        .match({"id": time24List[index].id!}).then((value) {});
   }
 }

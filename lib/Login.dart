@@ -27,12 +27,13 @@ class _LoginPageState extends State<LoginPage>
               MaterialPageRoute(
                 builder: (context) => const Myfirstpage(),
               )));
-          }on AuthException catch (error) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(
-                 backgroundColor: const Color.fromARGB(255, 68, 213, 63),
-                content: Text(error.message,
-              style:  const TextStyle(fontSize: 20, color: Colors.black),)));
+    } on AuthException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+          content: Text(
+            error.message,
+            style: const TextStyle(fontSize: 20, color: Colors.black),
+          )));
     }
   }
 
@@ -40,18 +41,16 @@ class _LoginPageState extends State<LoginPage>
     try {
       await supabase.auth.signUp(password: password, email: email);
       if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(
-              backgroundColor: const Color.fromARGB(255, 68, 213, 63),
-              content: Text('open your email',
-            style:  const TextStyle(fontSize: 20, color: Colors.black))));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+            content: Text('open your email',
+                style: const TextStyle(fontSize: 20, color: Colors.black))));
       }
     } on AuthException catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(
-            backgroundColor: const Color.fromARGB(255, 68, 213, 63),
-            content: Text(error.message,
-          style:  const TextStyle(fontSize: 20, color: Colors.black))));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: const Color.fromARGB(255, 68, 213, 63),
+          content: Text(error.message,
+              style: const TextStyle(fontSize: 20, color: Colors.black))));
     }
   }
 
