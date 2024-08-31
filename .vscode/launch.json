@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "letsplay",
+            "name": "LetsPlay",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "letsplay (profile mode)",
+            "name": "LetsPlay (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "letsplay (release mode)",
+            "name": "LetsPlay (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

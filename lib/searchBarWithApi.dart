@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:letsplay/APIS/LetsPlay.dart';
+import 'package:LetsPlay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
-import 'package:letsplay/search_with_date_time.dart';
+import 'package:LetsPlay/search_with_date_time.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 

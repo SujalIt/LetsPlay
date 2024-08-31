@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:letsplay/time_slot.dart';
+import 'package:LetsPlay/time_slot.dart';
 
 // ignore: must_be_immutable
 class SearchDatewithTime extends StatefulWidget {

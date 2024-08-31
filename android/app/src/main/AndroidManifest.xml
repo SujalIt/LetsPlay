@@ -23,7 +23,7 @@
         </intent>
     </queries>
     <application
-        android:label="letsplay"
+        android:label="LetsPlay"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -52,7 +52,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data
                     android:host="login-callback"
-                    android:scheme="com.example.letsplay"/>
+                    android:scheme="com.example.LetsPlay"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

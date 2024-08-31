@@ -1,4 +1,4 @@
-package com.example.letsplay
+package com.example.LetsPlay
 
 import io.flutter.embedding.android.FlutterActivity
 

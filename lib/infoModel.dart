@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:letsplay/APIS/LetsPlay.dart';
+import 'package:LetsPlay/APIS/LetsPlay.dart';
 import 'package:http/http.dart' as http;
-import 'package:letsplay/APIS/bookings.dart';
+import 'package:LetsPlay/APIS/bookings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Slots {

@@ -1,6 +1,6 @@
 {
-    "name": "letsplay",
-    "short_name": "letsplay",
+    "name": "LetsPlay",
+    "short_name": "LetsPlay",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

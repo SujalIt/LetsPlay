@@ -1,4 +1,4 @@
-# letsplay
+# LetsPlay
 
 A new Flutter project.
 
